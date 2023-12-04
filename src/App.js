@@ -8,9 +8,9 @@ import './components/style/fonts.css'
 function App() {
     return (
         <AuthProvider>
-            <BrowserRouter basename="/">
+            <BrowserRouter basename="/myapp">
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/myapp" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                 </Routes>
