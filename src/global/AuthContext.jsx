@@ -1,8 +1,8 @@
-// src/AuthContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Login, Logout } from '../http/Auth';
 
 const AuthContext = createContext();
+export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -19,22 +19,24 @@ export const AuthProvider = ({ children }) => {
     Logout();
   };
 
-  const login=(username,password)=>{
-        if (Login(username,password)){
-            setLoggedIn(true);
-            return true;
-        }else{
-            return false;
-        }
+  const login =async (username, password) => {
+    const status=await Login(username, password);
+    if (status) {
+      setLoggedIn(true);
+      return true;
+    }
+    return false;
   }
 
+  const contextData = {
+    loggedIn,
+    login,
+    logout
+  };
+
   return (
-    <AuthContext.Provider value={{ loggedIn, login, logout }}>
+    <AuthContext.Provider value={contextData}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
 };

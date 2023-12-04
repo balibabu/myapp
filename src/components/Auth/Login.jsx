@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Login.css';
+import AuthContext from '../../global/AuthContext';
+import { Navigate } from "react-router-dom";
 
 export default function Login() {
     const [formDetail, setFormDetail] = useState({ username: "", password: "" });
+    const {login,loggedIn} = useContext(AuthContext);
 
     const onDetailChange = (event) => {
         const { name, value } = event.target;
@@ -12,10 +15,19 @@ export default function Login() {
         }));
     }
 
-    const onSubmit=(e)=>{
+    const onSubmit=async (e)=>{
         e.preventDefault();
-        console.log(formDetail);
-        setFormDetail({ username: "", password: "" });
+        const status=await login(formDetail.username,formDetail.password);
+        console.log(status);
+        if(!status){
+            alert("Either your username or password is wrong");
+        }else{
+            setFormDetail({ username: "", password: "" });
+        }
+    }
+
+    if(loggedIn){
+        return <Navigate to="/" replace={true} />;
     }
 
     return (
