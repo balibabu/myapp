@@ -18,7 +18,6 @@ export default function Login() {
     const onSubmit=async (e)=>{
         e.preventDefault();
         const status=await login(formDetail.username,formDetail.password);
-        console.log(status);
         if(!status){
             alert("Either your username or password is wrong");
         }else{

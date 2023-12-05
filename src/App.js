@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./components/Home";
 import { AuthProvider } from "./global/AuthContext";
 import './components/style/fonts.css'
+import TodoApp from "./Apps/Todo/TodoApp";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/todo" element={<TodoApp />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

@@ -1,6 +1,20 @@
 import axios from "axios";
 import { API_BASE_URL } from "../global/variables";
 
+
+export async function getUserInfo(token,setUsername){
+    try {
+        const response = await axios.get(`${API_BASE_URL}/user/`, {
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+        });
+        setUsername(response.data.username);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export async function Login(username, password) {
     try {
         const response = await axios.post(`${API_BASE_URL}/user/login/`, {
@@ -9,7 +23,7 @@ export async function Login(username, password) {
         });
         if (response.status === 200) {
             localStorage.setItem('token', response.data.token);
-            return true;
+            return response.data.token;
         }
         return false;
     } catch (error) {

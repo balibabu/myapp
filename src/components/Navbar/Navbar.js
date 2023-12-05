@@ -5,7 +5,7 @@ import Dropdown from './Dropdown';
 
 
 export default function Navbar() {
-    const { loggedIn } = useContext(AuthContext);
+    const { loggedIn,username } = useContext(AuthContext);
 
     return (
         <>
@@ -16,7 +16,7 @@ export default function Navbar() {
                         {
                             loggedIn ?
                                 <>
-                                    <h4 className='mt-2'>Hello Boss</h4>
+                                    <h4 className='mt-2'>Hello {username}</h4>
                                     <Dropdown />
                                 </>
                                 :
