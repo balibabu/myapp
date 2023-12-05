@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import AuthContext from '../../global/AuthContext';
+import { Register } from '../../http/Auth';
+import { Link, Navigate } from 'react-router-dom';
 
-const formate={ username: "", email:"",password: "", password2: "" };
-export default function Register() {
+const formate = { username: "", email: "", password: "", password2: "" };
+export default function RegisterPage() {
     const [formDetail, setFormDetail] = useState(formate);
+    const {login,loggedIn} = useContext(AuthContext);
 
     const onDetailChange = (event) => {
         const { name, value } = event.target;
@@ -12,13 +16,32 @@ export default function Register() {
         }));
     }
 
-    const onSubmit=(e)=>{
+    const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(formDetail);
+        if (!formDetail.username) {
+            alert('username cant be empty');
+            return;
+        } else if (formDetail.password !== formDetail.password2) {
+            alert('password didnt matched');
+            return;
+        }
+        // console.log(formDetail);
+        const status=await Register(formDetail.username,formDetail.email,formDetail.password);
+        if(status){
+            login(formDetail.username,formDetail.password);
+        }else{
+            return;
+        }
+
         setFormDetail(formate);
     }
-  return (
-    <div className="wrapper">
+
+    if (loggedIn) {
+        return <Navigate to="/" replace={true} />;
+    }
+
+    return (
+        <div className="wrapper">
             <div className="logo">
                 <img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />
             </div>
@@ -73,8 +96,8 @@ export default function Register() {
                 <button className="btn mt-3">Sign up</button>
             </form>
             <div className="text-center fs-6">
-                <a href="/login">Already a user?</a>
+                <Link to="/login">Already a user?</Link>
             </div>
         </div>
-  )
+    )
 }

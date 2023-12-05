@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './Login.css';
 import AuthContext from '../../global/AuthContext';
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 export default function Login() {
     const [formDetail, setFormDetail] = useState({ username: "", password: "" });
@@ -64,7 +64,7 @@ export default function Login() {
                 <button className="btn mt-3">Login</button>
             </form>
             <div className="text-center fs-6">
-                <a href="/contact">Forget password?</a> or <a href="/register">Sign up</a>
+                <a href="/notepad">Forget password?</a> or <Link to="/register">Sign up</Link>
             </div>
         </div>
     )
