@@ -28,7 +28,7 @@ export default function TodoApp() {
         }
     }
     return (
-        <div>
+        <div style={{backgroundColor:"#264653", height:"100vh"}}>
             <TodoRender todoList={todoList}/>
             <CreateTodo modalId={"createTodoModal"} onCreate={onCreate}/>
             <FloatButton modalTarget={"createTodoModal"}/>
