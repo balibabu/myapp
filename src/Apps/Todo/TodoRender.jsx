@@ -3,6 +3,7 @@ import TodoItem from './TodoItem'
 import './accordionStyle.css'
 
 export default function TodoRender(props) {
+  const {onUpdate,onDelete}=props;
   return (
     <div className="accordion custom-accordion" id="accordionExample">
       <div className="accordion-item">
@@ -17,7 +18,7 @@ export default function TodoRender(props) {
               <div className="row">
                 {props.todoList && props.todoList.map((item) => {
                   if (!item.completed) {
-                    return <TodoItem key={item.id} item={item} />
+                    return <TodoItem key={item.id} item={item} onUpdate={onUpdate} onDelete={onDelete}/>
                   }
                 })}
               </div>
@@ -37,7 +38,7 @@ export default function TodoRender(props) {
               <div className="row">
                 {props.todoList && props.todoList.map((item) => {
                   if (item.completed) {
-                    return <TodoItem key={item.id} item={item} />
+                    return <TodoItem key={item.id} item={item} onUpdate={onUpdate} onDelete={onDelete}/>
                   }
                 })}
               </div>

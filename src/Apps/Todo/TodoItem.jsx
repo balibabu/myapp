@@ -1,31 +1,49 @@
 import React, { useState } from 'react'
+import deleteImg from '../../images/delete.png';
 
 export default function TodoItem(props) {
 	const [isChecked, setIsChecked] = useState(props.item.completed);
 	const handleCheckboxChange = () => {
-		setIsChecked(!isChecked);
-		props.item.completed=isChecked;
-		console.log(props.item);
+		setIsChecked((prevState)=>{
+			const item={...props.item,completed:!prevState}
+			props.onUpdate(item)
+			return !prevState;
+		});
 	};
+
+	const deleteHandler=()=>{
+		props.onDelete(props.item.id);
+	}
+
 	return (
 		<div
 			className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 			<div
-				className='my-1 py-2 px-3 bg-info justify-between'
-				style={containerStyle}
+				className='my-1 py-2 px-3'
+				style={{...containerStyle,backgroundColor:isChecked?'#5bff6b':'#5fb1ff'}}
 			>
-				<input
-					className="form-check-input me-2"
-					onChange={handleCheckboxChange}
-					checked={isChecked}
-					type="checkbox"
-					value="" id="flexCheckDefault" />
-				{props.item.title}
+				<div>
+					<input
+						className="form-check-input me-2"
+						onChange={handleCheckboxChange}
+						checked={isChecked}
+						type="checkbox"
+						value="" id="flexCheckDefault" />
+					{props.item.title}
+				</div>
+				<img src={deleteImg} style={deleteImgStyle} alt='delete' onClick={deleteHandler}/>
 			</div>
 		</div>
 	)
 }
 
 const containerStyle = {
-	borderRadius: "10px",
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	borderRadius: '10px',
+};
+
+const deleteImgStyle = {
+	width: "24px",
 }
