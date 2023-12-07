@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import AuthContext from '../../global/AuthContext'
+import AuthContext from '../../../global/AuthContext'
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 
