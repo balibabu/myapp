@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import deleteImg from '../../../images/delete.png';
+import Tooltip from '../../../utility/Tooltip';
+import convertUtcToLocal from '../../../utility/AutoLocalTime';
 
 export default function TodoItem(props) {
 	const [isChecked, setIsChecked] = useState(props.item.completed);
@@ -16,8 +18,7 @@ export default function TodoItem(props) {
 	}
 
 	return (
-		<div
-			className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 			<div
 				className='my-1 py-2 px-3'
 				style={{ ...containerStyle, backgroundColor: isChecked ? '#5bff6b' : '#5fb1ff' }}
@@ -29,7 +30,7 @@ export default function TodoItem(props) {
 						checked={isChecked}
 						type="checkbox"
 						value="" id="flexCheckDefault" />
-						<p className='m-0'>{props.item.title}</p>
+						<Tooltip text={convertUtcToLocal(props.item.created_time)}><p className='m-0'>{props.item.title}</p></Tooltip>
 				</div>
 				<img src={deleteImg} style={deleteImgStyle} alt='delete' onClick={deleteHandler} />
 			</div>

@@ -1,22 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import AuthContext from '../../../global/AuthContext';
-import { AddTodo, DeleteTodoItem, GetTodoList, UpdateTodoItem } from '../../../http/Todo';
+import { AddTodo, DeleteTodoItem, UpdateTodoItem } from '../../../http/Todo';
 import TodoRender from './TodoRender';
 import CreateTodo from './CreateTodo';
 import FloatButton from '../../../utility/FloatButton';
+import VariableContext from '../../../global/VariableContext';
 
-//[{ id: 1, title: "hw", completed: false, created_time: "2023/12/5" }, { id: 2, title: "cw", completed: false, created_time: "2023/12/4" }]
 export default function TodoApp() {
-    const [todoList, setTodoList] = useState([]);
+    const { todoList,setTodoList, fetchTodoList } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
-    
+
     useEffect(() => {
-        const fetchData=async ()=>{
-            const list=await GetTodoList(token);
-            setTodoList(list);
+        if(todoList.length===0){
+            fetchTodoList();
         }
-        fetchData();
-    }, [token])
+    }, [todoList,fetchTodoList])
     
 
     const onCreate=async (title)=>{
