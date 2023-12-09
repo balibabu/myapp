@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import './style/fonts.css'
 import { AuthProvider } from './global/AuthContext';
 import Home from './components/Home/Home';
@@ -12,7 +12,7 @@ function App() {
     return (
         <AuthProvider>
             <VariableProvider>
-                <BrowserRouter basename="/myapp">
+                <HashRouter>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
@@ -20,7 +20,7 @@ function App() {
                         <Route path="/todo" element={<TodoApp />} />
                         <Route path='/notepad' element={<NotepadApp />} />
                     </Routes>
-                </BrowserRouter>
+                </HashRouter>
             </VariableProvider>
         </AuthProvider>
     );
