@@ -9,8 +9,8 @@ export default VariableContext;
 export const VariableProvider=({children})=>{
     const [todoList, setTodoList] = useState([]);
     const [notes, setNotes] = useState([]);
-
     const { token } = useContext(AuthContext);
+
 
     const fetchTodoList=async ()=>{
         const list=await GetTodoList(token);
