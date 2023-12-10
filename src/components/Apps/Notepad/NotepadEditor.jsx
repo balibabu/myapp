@@ -34,7 +34,7 @@ export default function NotepadEditor(props) {
                                     <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-12' placeholder='give a title' value={noteDetails.title} />
                                     <hr className='p-0 m-0' />
                                     <textarea style={textareaStyle} name='description' onChange={onValueChange} rows='10' className='col-12' placeholder='give a description' value={noteDetails.description} />
-                                    <div className='d-flex justify-content-between input-group'>
+                                    <div className='d-flex justify-content-between input-group mt-2'>
                                         <button className='col-6 btn btn-success' onClick={addHandler} data-bs-toggle="collapse" data-bs-target="#collapseOne">Add</button>
                                         <button className='col-6 btn btn-danger' onClick={()=>setNoteDetails(blankDetails)}>Clear</button>
                                     </div>

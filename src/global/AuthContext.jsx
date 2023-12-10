@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setLoggedIn(false);
     setToken(null);
-    Logout();
+    Logout().then(()=>window.location.reload());
   };
 
   const login = async (username, password) => {

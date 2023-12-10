@@ -4,16 +4,19 @@ import VariableContext from '../../../global/VariableContext'
 import AuthContext from '../../../global/AuthContext';
 import NoteRender from './NoteRender';
 import { onCreate, onDelete, onUpdate } from './NoteCRUD';
+import { Navigate } from 'react-router-dom';
 
 export default function NotepadApp() {
     const { notes, setNotes, fetchNotes } = useContext(VariableContext);
-    const { token } = useContext(AuthContext);
+    const { token,loggedIn } = useContext(AuthContext);
 
     useEffect(() => {
-        if (notes.length === 0) {
+        if (notes.length === 0 && loggedIn) {
             fetchNotes();
         }
-    }, [notes, fetchNotes])
+    }, [notes, fetchNotes, loggedIn])
+
+    if(!loggedIn) {return <Navigate to="/login" replace={true} />;}
 
     return (
         <div style={{ backgroundColor: "#002d4d", height: "100vh" }}>
