@@ -16,7 +16,7 @@ export default function NoteItem(props) {
         <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' onClick={onClickHandler}>
             <div className='bg-info mt-2 p-2 rounded-3'>
                 <div className='d-flex justify-content-between'>
-                    <h5 className='m-0'>{shortenTexts(props.note.title)}</h5>
+                    <h5 className='m-0' style={{overflow: "hidden",whiteSpace: "nowrap"}}>{props.note.title}</h5>
                     <button style={deleteButtonStyle} onClick={deleteHandler}>
                         <img src={deleteImg} alt="Delete" style={deleteImageStyle} />
                     </button>
@@ -36,12 +36,3 @@ const deleteImageStyle = {
     width: '20px',
     height: '20px',
 };
-
-
-function shortenTexts(text, size = 30) {
-
-    if (text.length <= size) {
-        return text.charAt(0).toUpperCase() + text.slice(1);
-    }
-    return text.substr(0, size).charAt(0).toUpperCase() + text.substr(0, size).slice(1) + "...";
-}

@@ -24,14 +24,23 @@ export default function NoteEditor() {
 
     const onValueChange = (e) => {
         const { name, value } = e.target;
-        setNoteDetails((prevNoteDetails) => ({
-            ...prevNoteDetails,
-            [name]: value,
-        }));
+        let processedValue=value;
+        
+        setNoteDetails((previousDetails)=>{
+            const prevDes=previousDetails.description
+            if(value[value.length-1]==='\n' && prevDes[prevDes.length-1]!=='-'){
+                const lines=value.split('\n')
+                const lastLine=lines[lines.length-2];
+                if(lastLine.substr(0,3)==='-> '){
+                    processedValue=value+'-> ';
+                }
+            }
+
+            return {...previousDetails,[name]: processedValue,}
+        })
     };
 
     const saveUpdateHandler = () => {
-        console.log(noteDetails);
         if (isNewNote) {
             onCreate(noteDetails, token, setNotes);
         } else {
