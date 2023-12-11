@@ -4,7 +4,7 @@ import VariableContext from '../../../global/VariableContext';
 import { onCreate, onUpdate } from './NoteCRUD';
 import AuthContext from '../../../global/AuthContext';
 
-const blankDetails = { title: "", description: "", color: "#b8c0ff" };
+const blankDetails = { title: "", description: "", color: "#dcdcdc" };
 export default function NoteEditor() {
     const { noteId } = useParams();
 
@@ -20,23 +20,23 @@ export default function NoteEditor() {
             setNoteDetails(foundNote);
             setIsNewNote(false);
         }
-    }, [noteId,notes])
+    }, [noteId, notes])
 
     const onValueChange = (e) => {
         const { name, value } = e.target;
-        let processedValue=value;
-        
-        setNoteDetails((previousDetails)=>{
-            const prevDes=previousDetails.description
-            if(value[value.length-1]==='\n' && prevDes[prevDes.length-1]!=='-'){
-                const lines=value.split('\n')
-                const lastLine=lines[lines.length-2];
-                if(lastLine.substr(0,3)==='-> '){
-                    processedValue=value+'-> ';
+        let processedValue = value;
+
+        setNoteDetails((previousDetails) => {
+            const prevDes = previousDetails.description
+            if (name === 'description' && value[value.length - 1] === '\n' && prevDes[prevDes.length - 1] !== '-') {
+                const lines = value.split('\n')
+                const lastLine = lines[lines.length - 2];
+                if (lastLine.substr(0, 3) === '-> ') {
+                    processedValue = value + '-> ';
                 }
             }
 
-            return {...previousDetails,[name]: processedValue,}
+            return { ...previousDetails, [name]: processedValue, }
         })
     };
 
@@ -62,7 +62,10 @@ export default function NoteEditor() {
         <div style={containerStyle} className='bg-info'>
             <div className='row m-0  justify-content-center'>
                 <div className='col-xl-8 col-md-10 col-sm-11 p-4'>
-                    <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-12' placeholder='give a title' value={noteDetails.title} />
+                    <div class="input-group">
+                        <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-11' placeholder='give a title' value={noteDetails.title} />
+                        <input type="color" class="form-control p-0" style={{height:"auto"}} name='color' value={noteDetails.color} onChange={onValueChange}/>
+                    </div>
                     <hr className='p-0 m-0' />
                     <textarea className='col-12' name="description" style={textareaStyle}
                         onChange={onValueChange}
@@ -102,5 +105,5 @@ const titleStyle = {
     fontSize: '20px',
     padding: '10px',
     backgroundColor: '#a5d3fb',
-    borderRadius: '15px 15px 0 0',
+    borderRadius: '15px 0 0 0',
 };

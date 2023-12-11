@@ -6,6 +6,7 @@ import convertUtcToLocal from '../../../utility/AutoLocalTime';
 export default function NoteItem(props) {
     const navigate = useNavigate();
     const onClickHandler = () => {
+        console.log(props.note);
         navigate(`/notepad/edit/${props.note.id}`);
     }
     const deleteHandler=(event)=>{
@@ -14,7 +15,7 @@ export default function NoteItem(props) {
     }
     return (
         <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' onClick={onClickHandler}>
-            <div className='bg-info mt-2 p-2 rounded-3'>
+            <div className='mt-2 p-2 rounded-3' style={{backgroundColor:props.note.color}}>
                 <div className='d-flex justify-content-between'>
                     <h5 className='m-0' style={{overflow: "hidden",whiteSpace: "nowrap"}}>{props.note.title}</h5>
                     <button style={deleteButtonStyle} onClick={deleteHandler}>
@@ -26,6 +27,7 @@ export default function NoteItem(props) {
         </div>
     )
 }
+// style={{backgroundColor:props.note.color}}
 
 const deleteButtonStyle = {
     backgroundColor: 'transparent',
