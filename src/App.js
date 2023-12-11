@@ -7,6 +7,7 @@ import RegisterPage from './components/Auth/RegisterPage';
 import TodoApp from './components/Apps/Todo/TodoApp';
 import NotepadApp from './components/Apps/Notepad/NotepadApp';
 import { VariableProvider } from './global/VariableContext';
+import NoteEditor from './components/Apps/Notepad/NoteEditor';
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/todo" element={<TodoApp />} />
                         <Route path='/notepad' element={<NotepadApp />} />
+                        <Route path="/notepad/edit/:noteId" element={<NoteEditor />} />
                     </Routes>
                 </HashRouter>
             </VariableProvider>

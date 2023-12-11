@@ -1,12 +1,13 @@
 import React from 'react'
-import Task from './Task'
+import NoteItem from './NoteItem'
 
 export default function NoteRender(props) {
+
   return (
-    <div className="d-flex flex-wrap">
-        {props.notes && props.notes.map((note)=>(
-            <Task task={note} key={note.id} onDelete={props.onDelete} onUpdate={props.onUpdate}/>
-        ))}
+    <div className='row m-0'>
+      {props.notes && props.notes.map((note) => (
+        <NoteItem note={note} onDelete={props.onDelete} key={note.id}/>
+      ))}
     </div>
   )
 }
