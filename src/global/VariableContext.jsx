@@ -9,6 +9,7 @@ export default VariableContext;
 export const VariableProvider=({children})=>{
     const [todoList, setTodoList] = useState([]);
     const [notes, setNotes] = useState([]);
+    const [loadingNoteItem, SetloadingNoteItem] = useState(null);
     const { token } = useContext(AuthContext);
 
 
@@ -28,6 +29,8 @@ export const VariableProvider=({children})=>{
         notes,
         setNotes,
         fetchNotes,
+        loadingNoteItem,
+        SetloadingNoteItem
     }
     return(
         <VariableContext.Provider value={contextData}>

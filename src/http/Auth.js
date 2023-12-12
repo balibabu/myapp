@@ -2,16 +2,21 @@ import axios from "axios";
 import { API_BASE_URL } from "../global/variables";
 
 
-export async function getUserInfo(token,setUsername){
+export async function getUserInfo(token){
     try {
         const response = await axios.get(`${API_BASE_URL}/user/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
         });
-        setUsername(response.data.username);
+        if(response.ok){
+            return response.data.username;
+        }else{
+            return false;
+        }
     } catch (error) {
         console.error(error);
+        return false;
     }
 }
 

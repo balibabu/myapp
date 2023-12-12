@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import VariableContext from '../../../global/VariableContext';
 import { onCreate, onUpdate } from './NoteCRUD';
 import AuthContext from '../../../global/AuthContext';
+import TitleExtractor from '../../../utility/TitleExtractor';
 
 const blankDetails = { title: "", description: "", color: "#dcdcdc" };
 export default function NoteEditor() {
@@ -10,7 +11,7 @@ export default function NoteEditor() {
 
     const [noteDetails, setNoteDetails] = useState(blankDetails);
     const [isNewNote, setIsNewNote] = useState(true);
-    const { notes, setNotes } = useContext(VariableContext);
+    const { notes, setNotes, SetloadingNoteItem} = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -42,19 +43,25 @@ export default function NoteEditor() {
 
     const saveUpdateHandler = () => {
         if (isNewNote) {
+            if(noteDetails.title.trim().length===0){
+                noteDetails.title=TitleExtractor(noteDetails.description,30);
+            }
             onCreate(noteDetails, token, setNotes);
         } else {
-            onUpdate(noteDetails, token, setNotes);
+            SetloadingNoteItem(noteDetails.id);
+            onUpdate(noteDetails, token, setNotes).then(()=>{
+                SetloadingNoteItem(null);
+            });
         }
         setNoteDetails(blankDetails);
-        navigate('/notepad');
+        navigate('/notepad',{ replace: true });
     }
 
     const clearCancel = () => {
         if (isNewNote) {
             setNoteDetails(blankDetails);
         } else {
-            navigate('/notepad');
+            navigate('/notepad',{ replace: true });
         }
     }
 
@@ -72,7 +79,7 @@ export default function NoteEditor() {
                         placeholder='give a description'
                         value={noteDetails.description}
                     />
-                    <div className='input-group'>
+                    <div className='input-group mt-2'>
                         <button className='col-6 btn btn-danger' onClick={clearCancel}>{isNewNote ? 'Clear' : 'Cancel'}</button>
                         <button className="col-6 btn btn-success" onClick={saveUpdateHandler}>{isNewNote ? 'Add' : 'Update'}</button>
                     </div>
