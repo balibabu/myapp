@@ -9,7 +9,7 @@ export async function getUserInfo(token){
                 'Authorization': `Token ${token}`,
             },
         });
-        if(response.ok){
+        if(response.status===200){
             return response.data.username;
         }else{
             return false;

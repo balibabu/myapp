@@ -11,7 +11,7 @@ export const onCreate = async (newNote,token,setNotes) => {
 
 export const onDelete = async (id,token,setNotes) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this item?");
-    if (!confirmDelete) { return; }
+    if (!confirmDelete) { return false; }
 
     const isSuccess = await DeleteNote(token, id);
     if (isSuccess) {

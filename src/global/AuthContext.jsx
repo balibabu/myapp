@@ -10,9 +10,15 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
+    const load=async()=>{
+      const usr=await getUserInfo(token);
+      if(usr){
+        setLoggedIn(true);
+        setUsername(usr);
+      }
+    }
     if (token) {
-      setLoggedIn(true);
-      getUserInfo(token, setUsername);
+      load();
     }
   }, [token]);
 
