@@ -8,7 +8,7 @@ import TodoApp from './components/Apps/Todo/TodoApp';
 import NotepadApp from './components/Apps/Notepad/NotepadApp';
 import { VariableProvider } from './global/VariableContext';
 import NoteEditor from './components/Apps/Notepad/NoteEditor';
-import SimonApp from './components/Apps/Simon/SimonApp';
+import SimonApp from './components/Apps/Games/Simon/SimonApp';
 
 function App() {
     return (
