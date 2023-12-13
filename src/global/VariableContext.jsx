@@ -20,6 +20,7 @@ export const VariableProvider=({children})=>{
     const fetchNotes=async ()=>{
         const list=await GetNoteList(token);
         setNotes(list); 
+        return list;
     }
 
     const contextData={

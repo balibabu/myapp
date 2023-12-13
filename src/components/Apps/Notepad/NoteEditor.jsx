@@ -11,17 +11,24 @@ export default function NoteEditor() {
 
     const [noteDetails, setNoteDetails] = useState(blankDetails);
     const [isNewNote, setIsNewNote] = useState(true);
-    const { notes, setNotes, SetloadingNoteItem} = useContext(VariableContext);
+    const { notes, setNotes, SetloadingNoteItem, fetchNotes } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!isNaN(noteId)) {
-            const foundNote = notes.find((note) => note.id === parseInt(noteId));
-            setNoteDetails(foundNote);
+            if (notes.length === 0) {
+                fetchNotes().then((_notes) => {
+                    const foundNote = _notes.find((note) => note.id === parseInt(noteId));
+                    setNoteDetails(foundNote);
+                })
+            } else {
+                const foundNote = notes.find((note) => note.id === parseInt(noteId));
+                setNoteDetails(foundNote);
+            }
             setIsNewNote(false);
         }
-    }, [noteId, notes])
+    }, [noteId, notes, fetchNotes])
 
     const onValueChange = (e) => {
         const { name, value } = e.target;
@@ -43,25 +50,25 @@ export default function NoteEditor() {
 
     const saveUpdateHandler = () => {
         if (isNewNote) {
-            if(noteDetails.title.trim().length===0){
-                noteDetails.title=TitleExtractor(noteDetails.description,30);
+            if (noteDetails.title.trim().length === 0) {
+                noteDetails.title = TitleExtractor(noteDetails.description, 30);
             }
             onCreate(noteDetails, token, setNotes);
         } else {
             SetloadingNoteItem(noteDetails.id);
-            onUpdate(noteDetails, token, setNotes).then(()=>{
+            onUpdate(noteDetails, token, setNotes).then(() => {
                 SetloadingNoteItem(null);
             });
         }
         setNoteDetails(blankDetails);
-        navigate('/notepad',{ replace: true });
+        navigate('/notepad', { replace: true });
     }
 
     const clearCancel = () => {
         if (isNewNote) {
             setNoteDetails(blankDetails);
         } else {
-            navigate('/notepad',{ replace: true });
+            navigate('/notepad', { replace: true });
         }
     }
 
@@ -71,7 +78,7 @@ export default function NoteEditor() {
                 <div className='col-xl-8 col-md-10 col-sm-11 p-4'>
                     <div class="input-group">
                         <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-11' placeholder='give a title' value={noteDetails.title} />
-                        <input type="color" class="form-control p-0" style={{height:"auto"}} name='color' value={noteDetails.color} onChange={onValueChange}/>
+                        <input type="color" class="form-control p-0" style={{ height: "auto" }} name='color' value={noteDetails.color} onChange={onValueChange} />
                     </div>
                     <hr className='p-0 m-0' />
                     <textarea className='col-12' name="description" style={textareaStyle}

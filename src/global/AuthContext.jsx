@@ -5,7 +5,7 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [username, setUsername] = useState('Boss');
   const [token, setToken] = useState(localStorage.getItem('token'));
 
@@ -13,8 +13,9 @@ export const AuthProvider = ({ children }) => {
     const load=async()=>{
       const usr=await getUserInfo(token);
       if(usr){
-        setLoggedIn(true);
         setUsername(usr);
+      }else{
+        setLoggedIn(false);
       }
     }
     if (token) {
