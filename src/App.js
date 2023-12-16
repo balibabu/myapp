@@ -9,6 +9,7 @@ import NotepadApp from './components/Apps/Notepad/NotepadApp';
 import { VariableProvider } from './global/VariableContext';
 import NoteEditor from './components/Apps/Notepad/NoteEditor';
 import SimonApp from './components/Apps/Games/Simon/SimonApp';
+import ExpenseApp from './components/Apps/Expense/ExpenseApp';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                         <Route path="/todo" element={<TodoApp />} />
                         <Route path='/notepad' element={<NotepadApp />} />
                         <Route path="/notepad/edit/:noteId" element={<NoteEditor />} />
+                        <Route path='/expense' element={<ExpenseApp/>} />
                         <Route path='/simon-game' element={<SimonApp/>} />
                     </Routes>
                 </HashRouter>
