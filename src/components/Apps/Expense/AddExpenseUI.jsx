@@ -48,7 +48,7 @@ export default function AddExpenseUI(props) {
                                             value={formDetails.title}
                                             onChange={handleInputChange}
                                         />
-                                        <input type="number" className="form-control" placeholder='amount'
+                                        <input type="number" className="form-control" placeholder='amount' min="0"
                                             name="amount"
                                             value={formDetails.amount}
                                             onChange={handleInputChange}

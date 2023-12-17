@@ -10,6 +10,7 @@ import { VariableProvider } from './global/VariableContext';
 import NoteEditor from './components/Apps/Notepad/NoteEditor';
 import SimonApp from './components/Apps/Games/Simon/SimonApp';
 import ExpenseApp from './components/Apps/Expense/ExpenseApp';
+import ChatApp from './components/Apps/Chat/ChatApp';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                         <Route path='/notepad' element={<NotepadApp />} />
                         <Route path="/notepad/edit/:noteId" element={<NoteEditor />} />
                         <Route path='/expense' element={<ExpenseApp/>} />
+                        <Route path='/chat' element={<ChatApp/>} />
                         <Route path='/simon-game' element={<SimonApp/>} />
                     </Routes>
                 </HashRouter>

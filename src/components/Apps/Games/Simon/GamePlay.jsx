@@ -18,6 +18,7 @@ export default function GamePlay(props) {
         if (gamePattern.length === 0) {
             playNextColor()
         }
+        // eslint-disable-next-line
     }, [])
 
 
