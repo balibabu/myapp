@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { onCreate } from './ExpenseCRUD';
 
-const dummyDetails = { title: '', amount: 0,recipient:'' };
+const dummyDetails = { title: '', amount: 0,note:'' };
 export default function AddExpenseUI(props) {
     const [formDetails, setFormDetails] = useState(dummyDetails);
-    const [note, setNote] = useState(false);
+    const [isNote, setIsNote] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -12,9 +12,9 @@ export default function AddExpenseUI(props) {
     };
 
     const handleCheckboxChange = () => {
-        setNote((prevNote) => {
+        setIsNote((prevNote) => {
             if(prevNote){
-                setFormDetails((prevDetails)=>({ ...prevDetails, recipient: '' }));
+                setFormDetails((prevDetails)=>({ ...prevDetails, note: '' }));
             }
             return !prevNote
         });
@@ -22,16 +22,10 @@ export default function AddExpenseUI(props) {
     };
 
     const handleAddExpense = () => {
-        if(formDetails.recipient.length===0){
-            const details={...formDetails,recipient: 'self'}
-            console.log(details);
-            onCreate(details,props.token,props.setExpenses);
-        }else{
-            console.log(formDetails);
-            onCreate(formDetails,props.token,props.setExpenses);
-        }
+        console.log(formDetails);
+        onCreate(formDetails,props.token,props.setExpenses);
         setFormDetails(dummyDetails);
-        setNote(false);
+        setIsNote(false);
     };
 
     return (
@@ -62,11 +56,11 @@ export default function AddExpenseUI(props) {
                                     </div>
                                     <div className="input-group mb-3">
                                         <div className="input-group-text">
-                                            <input className="form-check-input mt-0" type="checkbox" aria-label="Checkbox for following text input" onChange={handleCheckboxChange} checked={note}/>
+                                            <input className="form-check-input mt-0" type="checkbox" aria-label="Checkbox for following text input" onChange={handleCheckboxChange} checked={isNote}/>
                                         </div>
-                                        <input disabled={!note} type="text" className="form-control" aria-label="Text input with checkbox" placeholder='small note'
-                                            name="recipient"
-                                            value={formDetails.recipient}
+                                        <input disabled={!isNote} type="text" className="form-control" aria-label="Text input with checkbox" placeholder='small note'
+                                            name="note"
+                                            value={formDetails.note}
                                             onChange={handleInputChange}
                                         />
                                         <button className="btn btn-outline-success px-4" type="button" id="button-addon2" onClick={handleAddExpense}>Add</button>
