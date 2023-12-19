@@ -9,12 +9,17 @@ export default function SearchBox({ modalId, onSelect }) {
 
     useEffect(() => {
         fetchUserList();
-    }, [fetchUserList])
+        // eslint-disable-next-line
+    }, [])
 
     const onNameChange = (event) => {
         const inputValue = event.target.value;
         setUsername(inputValue);
-        setFilteredUsers(users.filter((user) => user.username.toLowerCase().includes(inputValue.toLowerCase())));
+        if(inputValue.trim().length<3){
+            setFilteredUsers([])
+        }else{
+            setFilteredUsers(users.filter((user) => user.username.toLowerCase().includes(inputValue.toLowerCase())));
+        }
     }
 
     return (

@@ -10,6 +10,7 @@ export default VariableContext;
 export const VariableProvider = ({ children }) => {
     const [todoList, setTodoList] = useState([]);
     const [notes, setNotes] = useState([]);
+    const [toast, setToast] = useState(null);
     const [loadingNoteItem, SetloadingNoteItem] = useState(null);
     const { token } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
@@ -29,6 +30,16 @@ export const VariableProvider = ({ children }) => {
         return list;
     }
 
+    const showToast = (message, type) => {
+        setToast({
+            msg: message,
+            type: type
+        })
+        setTimeout(() => {
+            setToast(null);
+        }, 2000);
+    }
+
     const contextData = {
         todoList,
         setTodoList,
@@ -40,7 +51,9 @@ export const VariableProvider = ({ children }) => {
         SetloadingNoteItem,
         users,
         setUsers,
-        fetchUserList
+        fetchUserList,
+        toast,
+        showToast,
     }
     return (
         <VariableContext.Provider value={contextData}>

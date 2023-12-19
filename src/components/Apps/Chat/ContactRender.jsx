@@ -4,7 +4,6 @@ import contactProfile from '../../../images/contactProfile.jpg';
 export default function ContactRender({ users, onSelect, modalname = "" }) {
 
     const onContactClick = (user) => {
-        console.log(user.username);
         onSelect(user);
     }
     return (
@@ -16,12 +15,8 @@ export default function ContactRender({ users, onSelect, modalname = "" }) {
                             <div className='col-2 d-flex justify-content-center align-items-center'>
                                 <img src={contactProfile} style={dpStyle} alt="dp" />
                             </div>
-                            <div className='col py-1'>
-                                <h4 className='m-0'>{user.username}</h4>
-                                <div className='row text-secondary'>
-                                    <div className='col'>last msg</div>
-                                    <div className='col text-end'>at time</div>
-                                </div>
+                            <div className='col d-flex align-items-center'>
+                                <h4 className='m-0 fs-3'>{user.username}</h4>
                             </div>
                         </div>
                     </div>
