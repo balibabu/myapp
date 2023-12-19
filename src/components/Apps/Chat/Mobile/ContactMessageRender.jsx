@@ -16,7 +16,7 @@ export default function ContactMessageRender({ message, setActiveUser, modalname
                     </div>
                     <div className='col py-1'>
                         <h4 className='m-0'>{message.sender.username}</h4>
-                        <div className='row text-secondary' style={{ fontSize: "0.8rem" }}>
+                        <div className='row text-secondary' style={{ fontSize: "0.8rem",overflow: "hidden", whiteSpace: "nowrap" }}>
                             <div className='col'>{message.content}</div>
                             <div className='col text-end'>{convertUtcToLocal(message.timestamp)}</div>
                         </div>
