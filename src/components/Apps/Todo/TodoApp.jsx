@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../../global/AuthContext';
 import TodoRender from './TodoRender';
 import CreateTodo from './CreateTodo';
@@ -9,16 +9,23 @@ import { Navigate } from 'react-router-dom';
 
 export default function TodoApp() {
     const { todoList, setTodoList, fetchTodoList } = useContext(VariableContext);
-    const { token,loggedIn } = useContext(AuthContext);
+    const { token, loggedIn } = useContext(AuthContext);
+    const [, setInitialFetch] = useState(false);
 
     useEffect(() => {
         if (todoList.length === 0 && loggedIn) {
-            fetchTodoList();
+            setInitialFetch((prev) => {
+                if (!prev) {
+                    fetchTodoList();
+                }
+                return true;
+            })
         }
-    }, [todoList, fetchTodoList, loggedIn])
+        // eslint-disable-next-line
+    }, [])
 
 
-    if(!loggedIn){
+    if (!loggedIn) {
         return <Navigate to="/login" replace={true} />;
     }
 

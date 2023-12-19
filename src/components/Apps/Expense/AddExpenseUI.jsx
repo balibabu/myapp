@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { onCreate } from './ExpenseCRUD';
 
 const dummyDetails = { title: '', amount: 0,note:'' };
 export default function AddExpenseUI(props) {
@@ -18,12 +17,10 @@ export default function AddExpenseUI(props) {
             }
             return !prevNote
         });
-
     };
 
     const handleAddExpense = () => {
-        console.log(formDetails);
-        onCreate(formDetails,props.token,props.setExpenses);
+        props.add(formDetails)
         setFormDetails(dummyDetails);
         setIsNote(false);
     };

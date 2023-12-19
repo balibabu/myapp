@@ -2,34 +2,36 @@ import React, { useContext, useEffect, useState } from 'react'
 import AddExpenseUI from './AddExpenseUI'
 import ExpenseRender from './ExpenseRender';
 import AuthContext from '../../../global/AuthContext';
-import GetExpenseList from '../../../http/Expense';
 import Analytics from './Analytics';
+import VariableContext from '../../../global/VariableContext';
+import { onCreate } from './ExpenseCRUD';
 
 export default function ExpenseApp() {
-    const [expenses, setExpenses] = useState([]);
     const { token } = useContext(AuthContext);
+    const [, setInitialFetch] = useState(false);
+    const { setAppData,appData,fetchExpenses } = useContext(VariableContext);
 
     useEffect(() => {
-        const fetch = async () => {
-            const list = await GetExpenseList(token);
-            setExpenses(list);
-        }
-        if (expenses.length === 0) {
-            fetch();
-        }
-    }, [token, expenses])
+        setInitialFetch((prev)=>{
+            if(!prev && !appData.expenseData){
+                fetchExpenses()
+            }
+            return true;
+        })
+        // eslint-disable-next-line
+      }, []);
 
     return (
         <div style={{ backgroundColor: "#403d39", height: "100vh", color: "wheat" }}>
             <div className='row m-0'>
                 <div className='col-lg-6 mt-3'>
-                    <ExpenseRender expenses={expenses} />
+                    <ExpenseRender expenses={appData.expenseData?appData.expenseData:[]} />
                 </div>
                 <div className='col-lg-6 mt-3'>
                     <Analytics/>
                 </div>
             </div>
-            <AddExpenseUI setExpenses={setExpenses} token={token} />
+            <AddExpenseUI add={(newExpense)=>onCreate(newExpense,token,setAppData)} />
         </div>
     )
 }

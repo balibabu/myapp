@@ -6,7 +6,7 @@ export default function FloatButton({ onPress, modalTarget }) {
             onClick={onPress}
             style={floatingButtonStyle}
             type="button"
-            className="btn btn-outline-success btn-lg"
+            className="btn btn-success btn-lg"
             data-bs-toggle={modalTarget && "modal"} data-bs-target={`#${modalTarget}`}
         >+</button>
     )

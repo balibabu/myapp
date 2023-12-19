@@ -28,7 +28,8 @@ export default function NoteEditor() {
             }
             setIsNewNote(false);
         }
-    }, [noteId, notes, fetchNotes])
+        // eslint-disable-next-line
+    }, [])
 
     const onValueChange = (e) => {
         const { name, value } = e.target;
@@ -76,9 +77,9 @@ export default function NoteEditor() {
         <div style={containerStyle} className='bg-info'>
             <div className='row m-0  justify-content-center'>
                 <div className='col-xl-8 col-md-10 col-sm-11 p-4'>
-                    <div class="input-group">
+                    <div className="input-group">
                         <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-11' placeholder='give a title' value={noteDetails.title} />
-                        <input type="color" class="form-control p-0" style={{ height: "auto" }} name='color' value={noteDetails.color} onChange={onValueChange} />
+                        <input type="color" className="form-control p-0" style={{ height: "auto" }} name='color' value={noteDetails.color} onChange={onValueChange} />
                     </div>
                     <hr className='p-0 m-0' />
                     <textarea className='col-12' name="description" style={textareaStyle}

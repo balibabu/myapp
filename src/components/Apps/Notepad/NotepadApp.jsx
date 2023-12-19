@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import VariableContext from '../../../global/VariableContext'
 import AuthContext from '../../../global/AuthContext';
 import NoteRender from './NoteRender';
@@ -8,12 +8,20 @@ import { Link, Navigate } from 'react-router-dom';
 export default function NotepadApp() {
     const { notes, setNotes, fetchNotes } = useContext(VariableContext);
     const { token, loggedIn } = useContext(AuthContext);
+    const [, setInitialFetch] = useState(false);
+
 
     useEffect(() => {
         if (notes.length === 0 && loggedIn) {
-            fetchNotes();
+            setInitialFetch((prev)=>{
+                if(!prev){
+                    fetchNotes();
+                }
+                return true;
+            })
         }
-    }, [notes, fetchNotes, loggedIn])
+        // eslint-disable-next-line
+    }, [])
 
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
