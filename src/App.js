@@ -11,6 +11,8 @@ import NoteEditor from './components/Apps/Notepad/NoteEditor';
 import SimonApp from './components/Apps/Games/Simon/SimonApp';
 import ExpenseApp from './components/Apps/Expense/ExpenseApp';
 import ChatApp from './components/Apps/Chat/ChatApp';
+import LinkShortApp from './components/Apps/LinkShortner/LinkShortApp';
+import RedirectPage from './components/Apps/LinkShortner/RedirectPage';
 
 function App() {
     return (
@@ -27,6 +29,8 @@ function App() {
                         <Route path='/expense' element={<ExpenseApp/>} />
                         <Route path='/chat' element={<ChatApp/>} />
                         <Route path='/simon-game' element={<SimonApp/>} />
+                        <Route path='/link-short' element={<LinkShortApp/>} />
+                        <Route path="/a/:linkId" element={<RedirectPage />} />
                     </Routes>
                 </HashRouter>
             </VariableProvider>

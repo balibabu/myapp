@@ -44,6 +44,9 @@ export default function GamePlay(props) {
 
     const playNextColor = () => {
         var randomNum = nextSequence()
+        while (gamePattern[gamePattern.length-1]===randomNum) {
+            randomNum=nextSequence()
+        }
         gamePattern.push(randomNum)
         counter = gamePattern.length
         setTimeout(() => {
