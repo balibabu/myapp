@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from './Navbar/Navbar'
 import { Link } from 'react-router-dom'
 import notepadIcon from '../../images/notepad.png'
 import todoIcon from '../../images/todo.png'
@@ -8,6 +7,7 @@ import simonIcon from '../../images/simon.png'
 import expenseIcon from '../../images/expense.png'
 import linkIcon from '../../images/link.png'
 import AppName from '../../utility/AppName'
+import Navbar from './Navbar'
 
 export default function Home() {
 	return (

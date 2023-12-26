@@ -74,3 +74,19 @@ export async function DeleteTodoItem(token,id){
         throw error;
     }
 }
+
+
+export async function getCompletedTodoLlist(token){
+    try {
+        const response = await axios.get(`${API_BASE_URL}/todo/completed/`, {
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+        })
+       if(response.status===200){
+        return response.data;
+       }
+    } catch (error) {
+        console.log(error);
+    }
+}

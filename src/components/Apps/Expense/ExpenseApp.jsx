@@ -7,31 +7,33 @@ import VariableContext from '../../../global/VariableContext';
 import { onCreate } from './ExpenseCRUD';
 
 export default function ExpenseApp() {
-    const { token } = useContext(AuthContext);
+    const { token, loggedIn } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
-    const { setAppData,appData,fetchExpenses } = useContext(VariableContext);
+    const { setExpenses, expenses, fetchExpenses } = useContext(VariableContext);
 
     useEffect(() => {
-        setInitialFetch((prev)=>{
-            if(!prev && !appData.expenseData){
-                fetchExpenses()
-            }
-            return true;
-        })
+        if (expenses.length === 0 && loggedIn) {
+            setInitialFetch((prev) => {
+                if (!prev) {
+                    fetchExpenses();
+                }
+                return true;
+            })
+        }
         // eslint-disable-next-line
-      }, []);
+    }, []);
 
     return (
         <div style={{ backgroundColor: "#403d39", height: "100vh", color: "wheat" }}>
             <div className='row m-0'>
                 <div className='col-lg-6 mt-3'>
-                    <ExpenseRender expenses={appData.expenseData?appData.expenseData:[]} />
+                    <ExpenseRender expenses={expenses} />
                 </div>
                 <div className='col-lg-6 mt-3'>
-                    <Analytics/>
+                    <Analytics />
                 </div>
             </div>
-            <AddExpenseUI add={(newExpense)=>onCreate(newExpense,token,setAppData)} />
+            <AddExpenseUI add={(newExpense) => onCreate(newExpense, token, setExpenses)} />
         </div>
     )
 }

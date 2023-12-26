@@ -9,9 +9,9 @@ const VariableContext = createContext();
 export default VariableContext;
 
 export const VariableProvider = ({ children }) => {
-    const [appData, setAppData] = useState({});
     const [todoList, setTodoList] = useState([]);
     const [notes, setNotes] = useState([]);
+    const [expenses, setExpenses] = useState([]);
     const [toast, setToast] = useState(null);
     const [loadingNoteItem, SetloadingNoteItem] = useState(null);
     const { token } = useContext(AuthContext);
@@ -32,9 +32,7 @@ export const VariableProvider = ({ children }) => {
     }
     const fetchExpenses = async () => {
         const list = await GetExpenseList(token);
-        setAppData((prevAppData)=>{
-            return {...prevAppData,expenseData:list}
-        })
+        setExpenses(list);
     }
 
 
@@ -62,9 +60,9 @@ export const VariableProvider = ({ children }) => {
         fetchUserList,
         toast,
         showToast,
-        appData,
+        expenses,
+        setExpenses,
         fetchExpenses,
-        setAppData
     }
     return (
         <VariableContext.Provider value={contextData}>

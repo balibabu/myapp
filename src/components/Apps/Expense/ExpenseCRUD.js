@@ -1,12 +1,9 @@
 import { AddExpense } from "../../../http/Expense";
 
-export const onCreate = async (newExpense,token,setAppData) => {
+export const onCreate = async (newExpense,token,setExpenses) => {
     const expense = await AddExpense(token, newExpense);
     if (expense) {
-        setAppData((prev)=>{
-            const newData=[expense,...prev.expenseData]
-            return {...prev,expenseData:newData}
-        })
+        setExpenses((prev)=>[newExpense,...prev])
     } else {
         alert('something went wrong');
     }

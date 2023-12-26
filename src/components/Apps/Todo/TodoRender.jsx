@@ -3,7 +3,7 @@ import TodoItem from './TodoItem'
 import './accordionStyle.css'
 
 export default function TodoRender(props) {
-	const { onUpdate, onDelete } = props;
+	const { onUpdate, onDelete, fetchCompletedList } = props;
 
 	const completed = props.todoList.filter((item) => item.completed);
 	const uncompleted = props.todoList.filter((item) => !item.completed);
@@ -28,7 +28,7 @@ export default function TodoRender(props) {
 					</div>
 				</div>
 			</div>
-			<div className="accordion-item">
+			<div className="accordion-item" onClick={()=>fetchCompletedList(completed)}>
 				<h2 className="accordion-header">
 					<button className="accordion-button collapsed complete" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 						Completed Tasks
@@ -49,4 +49,3 @@ export default function TodoRender(props) {
 		</div>
 	)
 }
-

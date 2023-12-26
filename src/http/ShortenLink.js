@@ -9,14 +9,14 @@ export async function AddLink(link){
     );
     if(response.status===201){
         console.log(response.data);
-        return response.data.id.toString(16);
+        return response.data.id.toString(36);
     }
     return 'something went wrong'
 }
 
 
 export async function GetLink(hexId){
-    const response=await axios.get(`${API_BASE_URL}/shorten/id/${parseInt(hexId,16)}/`);
+    const response=await axios.get(`${API_BASE_URL}/shorten/id/${parseInt(hexId,36)}/`);
     if(response.status===200){
         return response.data.full_link;
     }
