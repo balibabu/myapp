@@ -1,21 +1,15 @@
 import React from 'react'
-import MobileChat from '../Mobile/MobileChat'
-import ContactRender from '../ContactRender';
+import ConversationListArea from '../ConversationListArea';
 import MessageArea from '../Mobile/MessageArea';
-import ContactMessageRender from '../Mobile/ContactMessageRender';
 
 export default function DesktopChat(props) {
-	const { recentUsers, setActiveUser, activeUser, onSelect, messages } = props.sharedProps;
+	const { setActiveUser, activeUser, onSelect } = props.sharedProps;
 	return (
 		<div>
-			<i>Desktop Chat App is on hold due to Development process for Mobile App </i>
+			{/* <i>Desktop Chat App is on hold due to Development process for Mobile App </i> */}
 			<div className='row m-0'>
-				<h4 className='m-0 pt-3 ps-4'>Recently Opend Contacts</h4>
 				<div className='col-md-6 mt-0 px-lg-5 p-1'>
-					<ContactRender users={recentUsers} onSelect={onSelect} />
-					{messages.map((message) => {
-						return <ContactMessageRender key={message.id} message={message} setActiveUser={setActiveUser} />
-					})}
+					<ConversationListArea activeUser={activeUser} onSelect={onSelect}/>
 				</div>
 				<div className='col-md-6 mt-0 px-lg-5 p-1'>
 					{activeUser ?

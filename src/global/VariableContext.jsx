@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { GetTodoList } from "../http/Todo";
 import AuthContext from "./AuthContext";
 import { GetNoteList } from "../http/Note";
-import { getUserList } from "../http/chat";
+import { getConversationsList, getUserList } from "../http/chat";
 import GetExpenseList from "../http/Expense";
 
 const VariableContext = createContext();
@@ -12,6 +12,9 @@ export const VariableProvider = ({ children }) => {
     const [todoList, setTodoList] = useState([]);
     const [notes, setNotes] = useState([]);
     const [expenses, setExpenses] = useState([]);
+    const [conversations, setConversations] = useState([]);
+    const [messages, setMessages] = useState({});
+
     const [toast, setToast] = useState(null);
     const [loadingNoteItem, SetloadingNoteItem] = useState(null);
     const { token } = useContext(AuthContext);
@@ -34,6 +37,11 @@ export const VariableProvider = ({ children }) => {
         const list = await GetExpenseList(token);
         setExpenses(list);
     }
+    const fetchConversations = async () => {
+        const list = await getConversationsList(token);
+        setConversations(list);
+    }
+
 
 
     const showToast = (message, type) => {
@@ -63,6 +71,12 @@ export const VariableProvider = ({ children }) => {
         expenses,
         setExpenses,
         fetchExpenses,
+
+        conversations,
+        setConversations,
+        fetchConversations,
+        messages, 
+        setMessages
     }
     return (
         <VariableContext.Provider value={contextData}>

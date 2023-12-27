@@ -1,14 +1,21 @@
 import axios from "axios";
 import { API_BASE_URL } from "../global/variables";
 
-export async function getUserList(token){
+// chat/ users/ [name='user-list']
+// chat/ send-message/<int:userid>/ [name='send-message']
+// chat/ conversations/ [name='latest_messages']
+// chat/ conversations/<int:userid>/ [name='get_all_msg_with_user_x']
+// chat/ greet/ [name='greet']
+
+
+export async function getConversationsList(token) {
     try {
-        const response=await axios.get(`${API_BASE_URL}/chat/users/`,{
-            headers:{
-                'Authorization':`Token ${token}`,
+        const response = await axios.get(`${API_BASE_URL}/chat/conversations/`, {
+            headers: {
+                'Authorization': `Token ${token}`,
             },
         });
-        if(response.status===200){
+        if (response.status === 200) {
             return response.data;
         }
     } catch (error) {
@@ -16,14 +23,31 @@ export async function getUserList(token){
     }
 }
 
-export async function getMessages(token,userId){
+
+export async function getUserList(token) {
     try {
-        const response=await axios.get(`${API_BASE_URL}/chat/messages/${userId}/`,{
-            headers:{
-                'Authorization':`Token ${token}`
+        const response = await axios.get(`${API_BASE_URL}/chat/users/`, {
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+        });
+        if (response.status === 200) {
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export async function getMessages(token, userId) {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/chat/conversations/${userId}/`, {
+            headers: {
+                'Authorization': `Token ${token}`
             }
         });
-        if(response.status===200){
+        if (response.status === 200) {
             return response.data;
         }
     } catch (error) {
@@ -31,11 +55,11 @@ export async function getMessages(token,userId){
     }
 }
 
-export async function sendMessage(token, data) {
+export async function sendMessage(token, content, receiverid) {
     try {
         const response = await axios.post(
-            `${API_BASE_URL}/chat/send-message/`,
-            {...data},
+            `${API_BASE_URL}/chat/send-message/${receiverid}/`,
+            { content:content },
             {
                 headers: {
                     'Authorization': `Token ${token}`,
@@ -54,14 +78,14 @@ export async function sendMessage(token, data) {
     }
 }
 
-export async function getMessagesFromUniqueUser(token){
+export async function getMessagesFromUniqueUser(token) {
     try {
-        const response=await axios.get(`${API_BASE_URL}/chat/latest-messages/`,{
-            headers:{
-                'Authorization':`Token ${token}`,
+        const response = await axios.get(`${API_BASE_URL}/chat/latest-messages/`, {
+            headers: {
+                'Authorization': `Token ${token}`,
             },
         });
-        if(response.status===200){
+        if (response.status === 200) {
             return response.data;
         }
     } catch (error) {
