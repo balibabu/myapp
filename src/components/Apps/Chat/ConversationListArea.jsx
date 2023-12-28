@@ -15,6 +15,10 @@ export default function ConversationListArea({ onSelect }) {
             }
             return true;
         })
+
+        const intervalCallback = () => {fetchConversations()};
+		const intervalId = setInterval(intervalCallback, 5000);
+		return () => clearInterval(intervalId);
         // eslint-disable-next-line
     }, [])
 

@@ -78,6 +78,24 @@ export async function sendMessage(token, content, receiverid) {
     }
 }
 
+
+
+export async function getLatestMessages(token,last_msgid,userid){
+    try {
+        const response = await axios.get(`${API_BASE_URL}/chat/new-msg/${last_msgid}/${userid}/`, {
+            headers: {
+                'Authorization': `Token ${token}`
+            }
+        });
+        if (response.status === 200) {
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 export async function getMessagesFromUniqueUser(token) {
     try {
         const response = await axios.get(`${API_BASE_URL}/chat/latest-messages/`, {

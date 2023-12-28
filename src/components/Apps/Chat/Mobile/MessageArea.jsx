@@ -3,22 +3,26 @@ import { getMessages, sendMessage } from '../../../../http/chat'
 import AuthContext from '../../../../global/AuthContext';
 import VariableContext from '../../../../global/VariableContext';
 import sendSound from '../send.mp3';
+import { addMessages } from '../addMessages';
 
 export default function MessageArea(props) {
 	const [content, setContent] = useState('');
 	const { messages, setMessages } = useContext(VariableContext);
 	const { token, username } = useContext(AuthContext);
 	const dummy = useRef();
+	const lastMsgIdRef = useRef(null); 
+
 
 	const [, setInitialFetch] = useState(false);
 
 	useEffect(() => {
 		const fetchMsg = async () => {
 			const messages_userx = await getMessages(token, props.activeUser.id);
-			setMessages((prev) => ({ ...prev, [props.activeUser.id]: messages_userx }))
-			dummy.current.scrollIntoView({ behavior: 'smooth' });
+			if (messages_userx.length > 0) {
+				lastMsgIdRef.current = messages_userx[messages_userx.length - 1].id;
+			  }
+			setMessages((prev) => ({ ...prev, [props.activeUser.id]: messages_userx }));
 		}
-
 		setInitialFetch((prev) => {
 			if (!prev) {
 				if (!messages[props.activeUser.id]) {
@@ -27,9 +31,18 @@ export default function MessageArea(props) {
 			}
 			return true;
 		})
+
 		dummy.current.scrollIntoView({ behavior: 'smooth' });
+		const intervalCallback = () => {
+			addMessages(token,setMessages,props.activeUser,lastMsgIdRef);
+			dummy.current.scrollIntoView({ behavior: 'smooth' });
+		};
+		const intervalId = setInterval(intervalCallback, 3000);
+		return () => clearInterval(intervalId);
 		// eslint-disable-next-line
 	}, [])
+
+
 
 
 	const sendBtnHandler = async (e) => {
@@ -39,6 +52,7 @@ export default function MessageArea(props) {
 		if (content.trim().length > 0) {
 			const msg = await sendMessage(token, content, props.activeUser.id);
 			if (msg) {
+				lastMsgIdRef.current=msg.id;
 				setMessages((preMsg) => ({ ...preMsg, [props.activeUser.id]: [...messages[props.activeUser.id], msg] }))
 			}
 		}
@@ -60,7 +74,7 @@ export default function MessageArea(props) {
 						return <div key={message.id} className='text-primary'>{message.content}</div>
 					}
 				})}
-				<div ref={dummy} style={{height:"1rem"}}></div>
+				<div ref={dummy} style={{ height: "1rem" }}></div>
 			</div>
 
 			<form onSubmit={sendBtnHandler}>
