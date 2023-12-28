@@ -3,6 +3,7 @@ import SearchBox from './SearchBox'
 // import FloatButton from '../../../utility/FloatButton'
 import ConversationsRender from './ConversationsRender';
 import VariableContext from '../../../global/VariableContext';
+import incommingSound from './sound/incomming1.mp3';
 
 export default function ConversationListArea({ onSelect }) {
     const [, setInitialFetch] = useState(false);
@@ -16,7 +17,7 @@ export default function ConversationListArea({ onSelect }) {
             return true;
         })
 
-        const intervalCallback = () => {fetchConversations()};
+        const intervalCallback = () => {fetchConversations(incommingSound)};
 		const intervalId = setInterval(intervalCallback, 5000);
 		return () => clearInterval(intervalId);
         // eslint-disable-next-line

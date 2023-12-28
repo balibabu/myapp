@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { getMessages, sendMessage } from '../../../../http/chat'
 import AuthContext from '../../../../global/AuthContext';
 import VariableContext from '../../../../global/VariableContext';
-import sendSound from '../send.mp3';
+import sendSound from '../sound/send.mp3';
 import { addMessages } from '../addMessages';
 
 export default function MessageArea(props) {
@@ -11,7 +11,6 @@ export default function MessageArea(props) {
 	const { token, username } = useContext(AuthContext);
 	const dummy = useRef();
 	const lastMsgIdRef = useRef(null); 
-
 
 	const [, setInitialFetch] = useState(false);
 

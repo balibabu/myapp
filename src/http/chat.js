@@ -50,8 +50,10 @@ export async function getMessages(token, userId) {
         if (response.status === 200) {
             return response.data;
         }
+        return [];
     } catch (error) {
         console.log(error);
+        return [];
     }
 }
 
