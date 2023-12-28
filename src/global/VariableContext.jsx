@@ -4,6 +4,8 @@ import AuthContext from "./AuthContext";
 import { GetNoteList } from "../http/Note";
 import { getConversationsList, getUserList } from "../http/chat";
 import GetExpenseList from "../http/Expense";
+import receiveSound from '../components/Apps/Chat/outchat2.wav';
+
 
 const VariableContext = createContext();
 export default VariableContext;
@@ -39,7 +41,13 @@ export const VariableProvider = ({ children }) => {
     }
     const fetchConversations = async () => {
         const list = await getConversationsList(token);
-        setConversations(list);
+        setConversations((prevlist)=>{
+            if(JSON.stringify(list)!==JSON.stringify(prevlist)){
+                playSound();
+                return list;
+            }
+            return prevlist;
+        });
     }
 
 
@@ -83,4 +91,11 @@ export const VariableProvider = ({ children }) => {
             {children}
         </VariableContext.Provider>
     )
+}
+
+
+
+function playSound() {
+	var audio = new Audio(receiveSound);
+	audio.play();
 }

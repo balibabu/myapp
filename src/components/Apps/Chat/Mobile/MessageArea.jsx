@@ -88,7 +88,7 @@ export default function MessageArea(props) {
 	)
 }
 
-function playSound(colorName) {
+function playSound() {
 	var audio = new Audio(sendSound);
 	audio.play();
 }

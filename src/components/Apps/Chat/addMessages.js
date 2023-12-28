@@ -1,4 +1,5 @@
 import { getLatestMessages } from "../../../http/chat";
+import receiveSound from '../Chat/outchat.wav';
 
 export async function addMessages(token,setMessages,activeUser,lastMsgIdRef) {
     if(lastMsgIdRef.current===null){
@@ -12,6 +13,7 @@ export async function addMessages(token,setMessages,activeUser,lastMsgIdRef) {
     try {
         const newMsgs = await getLatestMessages(token, lastMsgIdRef.current, activeUser.id);
         if(newMsgs.length>0){
+            playSound();
             setMessages((prev)=>{
                 return {...prev,[activeUser.id]:[...prev[activeUser.id],...newMsgs]}
             })
@@ -20,4 +22,11 @@ export async function addMessages(token,setMessages,activeUser,lastMsgIdRef) {
     } catch (error) {
         console.error("Error fetching new messages:", error);
     }
+}
+
+
+
+function playSound() {
+	var audio = new Audio(receiveSound);
+	audio.play();
 }
