@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { getMessages, sendMessage } from '../../../../http/chat'
 import AuthContext from '../../../../global/AuthContext';
 import VariableContext from '../../../../global/VariableContext';
+import sendSound from '../send.mp3';
 
 export default function MessageArea(props) {
 	const [content, setContent] = useState('');
 	const { messages, setMessages } = useContext(VariableContext);
-	const [thisConversation, setThisConversation] = useState([]);
 	const { token, username } = useContext(AuthContext);
 	const dummy = useRef();
 
@@ -15,7 +15,6 @@ export default function MessageArea(props) {
 	useEffect(() => {
 		const fetchMsg = async () => {
 			const messages_userx = await getMessages(token, props.activeUser.id);
-			setThisConversation(messages_userx);
 			setMessages((prev) => ({ ...prev, [props.activeUser.id]: messages_userx }))
 			dummy.current.scrollIntoView({ behavior: 'smooth' });
 		}
@@ -24,23 +23,23 @@ export default function MessageArea(props) {
 			if (!prev) {
 				if (!messages[props.activeUser.id]) {
 					fetchMsg();
-				} else {
-					setThisConversation(messages[props.activeUser.id]);
 				}
 			}
 			return true;
 		})
+		dummy.current.scrollIntoView({ behavior: 'smooth' });
 		// eslint-disable-next-line
 	}, [])
 
 
 	const sendBtnHandler = async (e) => {
 		e.preventDefault();
+		playSound();
 		setContent('');
 		if (content.trim().length > 0) {
 			const msg = await sendMessage(token, content, props.activeUser.id);
 			if (msg) {
-				setMessages((preMsg) => [...preMsg, msg])
+				setMessages((preMsg) => ({ ...preMsg, [props.activeUser.id]: [...messages[props.activeUser.id], msg] }))
 			}
 		}
 		dummy.current.scrollIntoView({ behavior: 'smooth' });
@@ -53,14 +52,15 @@ export default function MessageArea(props) {
 				<button className='btn btn-secondary me-3' onClick={() => props.setActiveUser(null)}>{"<-"}</button>
 				<h3>{props.activeUser.username}</h3>
 			</div>
-			<div className='p-2 m-2 rounded' style={{ backgroundColor: "#8ecae6" }}>
-				{thisConversation.map((message) => {
+			<div className='p-2 m-2 rounded' style={{ backgroundColor: "#8ecae6", maxHeight: "78vh", overflowY: "auto" }}>
+				{messages[props.activeUser.id] && messages[props.activeUser.id].map((message) => {
 					if (message.sender.username === username) {
 						return <div key={message.id} className='text-success text-end'>{message.content}</div>
 					} else {
 						return <div key={message.id} className='text-primary'>{message.content}</div>
 					}
 				})}
+				<div ref={dummy} style={{height:"1rem"}}></div>
 			</div>
 
 			<form onSubmit={sendBtnHandler}>
@@ -70,9 +70,11 @@ export default function MessageArea(props) {
 					<button className='btn btn-success' onClick={sendBtnHandler}>Send</button>
 				</div>
 			</form>
-			<span ref={dummy}></span>
 		</div>
 	)
 }
 
-
+function playSound(colorName) {
+	var audio = new Audio(sendSound);
+	audio.play();
+}

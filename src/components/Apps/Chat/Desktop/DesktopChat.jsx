@@ -15,7 +15,7 @@ export default function DesktopChat(props) {
 					{activeUser ?
 						<MessageArea setActiveUser={setActiveUser} activeUser={activeUser} />
 						:
-						<i>Please select a contact to message</i>
+						<i>Warning!!! Use mobile size, Desktop size have some bugs</i>
 					}
 				</div>
 			</div>
