@@ -24,7 +24,7 @@ export default function ExpenseApp() {
     }, []);
 
     return (
-        <div style={{ backgroundColor: "#403d39", height: "100vh", color: "wheat" }}>
+        <div style={{ backgroundColor: "#403d39", height: "100dvh", color: "wheat" }}>
             <div className='row m-0'>
                 <div className='col-lg-6 mt-3'>
                     <ExpenseRender expenses={expenses} />

@@ -4,6 +4,7 @@ import VariableContext from '../../../global/VariableContext';
 import { onCreate, onUpdate } from './NoteCRUD';
 import AuthContext from '../../../global/AuthContext';
 import TitleExtractor from '../../../utility/TitleExtractor';
+import { GetNoteDetail } from '../../../http/Note';
 
 const blankDetails = { title: "", description: "", color: "#dcdcdc" };
 export default function NoteEditor() {
@@ -17,18 +18,28 @@ export default function NoteEditor() {
 
     useEffect(() => {
 
-        setInitialFetch((prev) => {
-            if (!prev) {
+        const fetchDetailedNote = async () => {
+            const foundNote = notes.find((note) => note.id === parseInt(noteId));
+            if(!foundNote.description){
+                const detailedNote = await GetNoteDetail(token, noteId);
+                setNoteDetails(detailedNote);
+                setNotes((oldList) =>
+                    oldList.map((note) => (note.id === detailedNote.id ? detailedNote : note))
+                );
+            }else{
+                setNoteDetails(foundNote);
+            }
+        }
+        setInitialFetch((prev)=>{
+            if(!prev){
                 //////////////////////////////// /main code//////////////////////////////// 
                 if (!isNaN(noteId)) {
                     if (notes.length === 0) {
                         fetchNotes().then((_notes) => {
-                            const foundNote = _notes.find((note) => note.id === parseInt(noteId));
-                            setNoteDetails(foundNote);
+                            fetchDetailedNote();
                         })
                     } else {
-                        const foundNote = notes.find((note) => note.id === parseInt(noteId));
-                        setNoteDetails(foundNote);
+                        fetchDetailedNote();
                     }
                 }
                 ////////////////////////// /////////////////////////////////////////////////
@@ -40,7 +51,20 @@ export default function NoteEditor() {
 
     const onValueChange = (e) => {
         const { name, value } = e.target;
-        setNoteDetails((previousDetails) => ({ ...previousDetails, [name]: value }));
+        let processedValue = value;
+
+        setNoteDetails((previousDetails) => {
+            const prevDes = previousDetails.description
+            if (name === 'description' && value[value.length - 1] === '\n' && prevDes[prevDes.length - 1] !== '-') {
+                const lines = value.split('\n')
+                const lastLine = lines[lines.length - 2];
+                if (lastLine.substr(0, 3) === '-> ') {
+                    processedValue = value + '-> ';
+                }
+            }
+
+            return { ...previousDetails, [name]: processedValue, }
+        })
     };
 
     const saveUpdateHandler = () => {
@@ -72,6 +96,13 @@ export default function NoteEditor() {
                         <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-9' placeholder='give a title' value={noteDetails.title} />
                         <input type="color" className="form-control p-0" style={{ height: "auto" }} name='color' value={noteDetails.color} onChange={onValueChange} />
                     </div>
+
+                    {/* <div className="input-group">
+                        <button className='btn'>{'<-'}</button>
+                        <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col' placeholder='give a title' value={noteDetails.title} />
+                        <input type="color" className="form-control p-0" style={{ height: "auto" }} name='color' value={noteDetails.color} onChange={onValueChange} />
+                    </div> */}
+                    {/* <hr className='p-0 m-0' /> */}
                     <textarea className='col-12' name="description" style={textareaStyle}
                         onChange={onValueChange}
                         placeholder='give a description'
@@ -87,17 +118,12 @@ export default function NoteEditor() {
     );
 }
 
-const fullScreenHeight={
-    height:"100vh",
-    height:"100dvh",
-}
 
 
 const containerStyle = {
-    // maxWidth: "100vw",
-    // minHeight: "100vh",
-    // maxHeight: "100vh",
-    // height:"100dvh",
+    maxWidth: "100vw",
+    minHeight: "100vh",
+    maxHeight: "100vh",
 }
 
 const textareaStyle = {
@@ -107,7 +133,7 @@ const textareaStyle = {
     backgroundColor: '#a5d3fb',
     // borderRadius: '0 0 15px 15px',
     borderRadius: '15px',
-    height: "80dvh"
+    height: "80vh"
 };
 
 const titleStyle = {

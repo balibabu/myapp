@@ -3,11 +3,7 @@ import receiveSound from '../Chat/sound/incomming2.mp3';
 
 export async function addMessages(token,setMessages,activeUser,lastMsgIdRef) {
     if(lastMsgIdRef.current===null){
-        setMessages((prev)=>{
-            const msgs=prev[activeUser.id];
-            lastMsgIdRef.current=msgs[msgs.length-1].id
-            return prev;
-        })
+        return;
     }
 
     try {

@@ -11,7 +11,7 @@ import Navbar from './Navbar'
 
 export default function Home() {
 	return (
-		<div style={{ backgroundColor: "rgb(54, 54, 54)", height: "100vh" }}>
+		<div style={{ backgroundColor: "rgb(54, 54, 54)", height: "100dvh" }}>
 			<Navbar />
 			<div className="container-fluid d-flex flex-wrap">
 				<Link to='/chat' style={{ textDecoration: 'none' }}><AppName image={chatIcon} appname='Messenger' /></Link>

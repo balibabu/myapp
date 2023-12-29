@@ -26,7 +26,7 @@ export default function NotepadApp() {
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
-        <div style={{ backgroundColor: "#002d4d", height: "100vh" }}>
+        <div style={{ backgroundColor: "#002d4d",maxHeight:"99dvh",overflowY: "auto"}}>
             <NoteRender
                 notes={notes}
                 onDelete={(id) => onDelete(id, token, setNotes)}

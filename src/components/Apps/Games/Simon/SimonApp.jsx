@@ -5,7 +5,7 @@ export default function SimonApp() {
 	const [gameState, setGameState] = useState(false);
 
 	return (
-		<div style={{ backgroundColor: "#2f3e46", height: "100vh" }}>
+		<div style={{ backgroundColor: "#2f3e46", height: "100dvh" }}>
 			{
 				gameState ?
 					<GamePlay setGameState={setGameState} />

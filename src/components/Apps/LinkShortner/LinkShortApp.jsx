@@ -8,10 +8,15 @@ export default function LinkShortApp() {
     const [shortlink, setShortlink] = useState('');
 
     const onShrink = async () => {
-        if (!shortlink) {
+        if(shortlink){
+            return;
+        }
+        if (link.trim().length > 0 && isValidURL(link)) {
             setShortlink('wait...generating...')
             const linkid = await AddLink(link);
             setShortlink(`balibabu.github.io/myapp#/a/${linkid}`);
+        }else{
+            setShortlink('please paste valid url')
         }
     }
 
@@ -30,30 +35,31 @@ export default function LinkShortApp() {
     }
     return (
         <div>
-            <div className='m-0' style={{backgroundColor: "#403d39",height:"20vh"}}>
+            <div className='m-0'>
                 <h1 className='bg-primary m-0 p-2'>Shorten Your Link</h1>
-                <p className='p-2 m-0' style={{color: "white"}}>Say goodbye to long, cumbersome URLs and hello to concise and shareable links! This Link Shortener empowers you to effortlessly shorten URLs, making them perfect for social media, messaging, and more.</p>
+                <p className='px-3 py-2' style={{ color: "white" }}>Say goodbye to long, cumbersome URLs and hello to concise and shareable links! This Link Shortener empowers you to effortlessly shorten URLs, making them perfect for social media, messaging, and more.</p>
             </div>
-            <div className='d-flex justify-content-center align-items-center' style={{ backgroundColor: "#403d39", height: "80vh", color: "wheat", paddingBottom: "60vh" }}>
+            <div className='d-flex justify-content-center align-items-center'>
                 <div className='col-12 col-md-8'>
                     <div className='row m-0'>
-                        <div className='input-group'>
+                        <div className='input-group mb-3'>
                             <input type="text"
-                                className='form-control mb-2'
+                                className='form-control'
                                 value={link}
                                 onChange={onLinkChange}
+                                placeholder='paste your link here'
                             />
                             <button
-                                className='btn btn-primary mb-2'
+                                className='btn btn-primary'
                                 onClick={onShrink}
                             >shrink</button>
                         </div>
                         <div>
-                            <pre style={{ backgroundColor: "black" }} className='rounded ps-2 text-primary d-flex justify-content-between'>
+                            <pre style={{ backgroundColor: "black" }} className='rounded text-primary d-flex justify-content-between align-items-center ps-2'>
                                 <code>
                                     {shortlink}
                                 </code>
-                                <button className='btn btn-info px-1 p-0' onClick={onCopy}>{copy}</button>
+                                <button className='btn btn-info' onClick={onCopy}>{copy}</button>
                             </pre>
                         </div>
                     </div>
@@ -61,4 +67,14 @@ export default function LinkShortApp() {
             </div>
         </div>
     )
+}
+
+
+
+function isValidURL(url) {
+    // Regular expression for a URL with an optional protocol (http/https)
+    var urlRegex = /^(https?|ftp):\/\/([^\s]+)$/;
+
+    // Test the URL against the regular expression
+    return urlRegex.test(url);
 }
