@@ -13,6 +13,7 @@ import ExpenseApp from './components/Apps/Expense/ExpenseApp';
 import ChatApp from './components/Apps/Chat/ChatApp';
 import LinkShortApp from './components/Apps/LinkShortner/LinkShortApp';
 import RedirectPage from './components/Apps/LinkShortner/RedirectPage';
+import LunarCalendarApp from './components/Apps/Lunar/LunarCalendarApp';
 
 function App() {
     return (
@@ -31,6 +32,8 @@ function App() {
                         <Route path='/simon-game' element={<SimonApp/>} />
                         <Route path='/link-short' element={<LinkShortApp/>} />
                         <Route path="/a/:linkId" element={<RedirectPage />} />
+                        <Route path='/lunar' element={<LunarCalendarApp/>} />
+
                     </Routes>
                 </HashRouter>
             </VariableProvider>

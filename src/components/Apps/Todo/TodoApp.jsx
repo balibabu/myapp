@@ -38,7 +38,7 @@ export default function TodoApp() {
     }
 
     return (
-        <div style={{ backgroundColor: "#264653", height: "100vh" }}>
+        <div style={{ backgroundColor: "#264653", height: "100dvh" }}>
             <TodoRender
                 todoList={todoList}
                 fetchCompletedList={fetchCompletedList}

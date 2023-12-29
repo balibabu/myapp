@@ -5,7 +5,8 @@ import todoIcon from '../../images/todo.png'
 import chatIcon from '../../images/chat.png'
 import simonIcon from '../../images/simon.png'
 import expenseIcon from '../../images/expense.png'
-import linkIcon from '../../images/link.png'
+import linkIcon from '../../images/link2.png'
+import lunarIcon from '../../images/lunar.png'
 import AppName from '../../utility/AppName'
 import Navbar from './Navbar'
 
@@ -19,7 +20,8 @@ export default function Home() {
 				<Link to='/todo' style={{ textDecoration: 'none' }}><AppName image={todoIcon} appname='Todo' /></Link>
 				<Link to='/expense' style={{ textDecoration: 'none' }}><AppName image={expenseIcon} appname='Expenses' /></Link>
 				<Link to='/simon-game' style={{ textDecoration: 'none' }}><AppName image={simonIcon} appname='Simon' /></Link>
-				<Link to='/link-short' style={{ textDecoration: 'none' }}><AppName image={linkIcon} appname='Shortener' /></Link>
+				<Link to='/link-short' style={{ textDecoration: 'none' }}><AppName image={linkIcon} appname='Short-URL' /></Link>
+				<Link to='/lunar' style={{ textDecoration: 'none' }}><AppName image={lunarIcon} appname='Calendar' /></Link>
 			</div>
 		</div>
 	)
