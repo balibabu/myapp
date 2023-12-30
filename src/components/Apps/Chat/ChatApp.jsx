@@ -6,7 +6,7 @@ import AuthContext from '../../../global/AuthContext';
 import { Navigate } from 'react-router-dom';
 
 export default function ChatApp() {
-    const { loggedIn } = useContext(AuthContext);
+	const { loggedIn } = useContext(AuthContext);
 	const isMobile = useMediaQuery({ maxWidth: 767 });
 	const [activeUser, setActiveUser] = useState(null);
 
@@ -21,11 +21,7 @@ export default function ChatApp() {
 	}
 	if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 	return (
-		<div
-			style={{ backgroundColor: "#0096c7", height: "100dvh", overflow: "auto" }}
-			className='p-2 pb-5'
-		>
-			<h3>Chats</h3>
+		<div style={{ backgroundColor: "#0096c7", height: "100dvh"}}>
 			{isMobile ? <MobileChat sharedProps={sharedProps} /> : <DesktopChat sharedProps={sharedProps} />}
 		</div>
 	)

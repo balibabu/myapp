@@ -24,7 +24,7 @@ export default function ConversationListArea({ onSelect }) {
     }, [])
 
     return (
-        <div className='position-relative' style={{ height: "88vh", overflow: "auto" }}>
+        <div className='position-relative' style={{ height: "88dvh", overflow: "auto" }}>
             <ConversationsRender conversations={conversations} onSelect={onSelect} />
             <SearchBox modalId={"searchUserModal"} onSelect={onSelect} />
             <button
@@ -32,7 +32,6 @@ export default function ConversationListArea({ onSelect }) {
                 className="btn btn-success btn-lg position-absolute bottom-0 end-0"
                 data-bs-toggle="modal" data-bs-target="#searchUserModal"
             >+</button>
-            {/* <FloatButton modalTarget={"searchUserModal"} /> */}
         </div>
     )
 }
