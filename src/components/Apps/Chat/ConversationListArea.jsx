@@ -10,16 +10,37 @@ export default function ConversationListArea({ onSelect }) {
     const { conversations, fetchConversations } = useContext(VariableContext);
 
     useEffect(() => {
+        // var count = 1;
+        let timeoutId;
+
+        // function doSomething() {
+        //     fetchConversations(incommingSound)
+        //     console.log(count);
+        //     count++;
+
+
+        // }
+        function logCountWithForLoop() {
+            for (let count = 0; count < 5; count++) {
+                // Use an IIFE (Immediately Invoked Function Expression) to create a closure
+                (function (currentCount) {
+                    timeoutId=setTimeout(function () {
+                        console.log(currentCount);
+                        fetchConversations(incommingSound)
+                    }, 2000 * (1+currentCount) * (1+currentCount));
+                })(count);
+            }
+        }
+
+
         setInitialFetch((prev) => {
             if (!prev) {
+                logCountWithForLoop();
                 fetchConversations();
             }
             return true;
         })
-
-        const intervalCallback = () => {fetchConversations(incommingSound)};
-		const intervalId = setInterval(intervalCallback, 5000);
-		return () => clearInterval(intervalId);
+        return ()=>clearTimeout(timeoutId);
         // eslint-disable-next-line
     }, [])
 

@@ -19,11 +19,13 @@ export default function ConversationsRender({ onSelect, conversations }) {
                             <div className='col-2 d-flex justify-content-center align-items-center'>
                                 <img src={contactProfile} style={dpStyle} alt="dp" />
                             </div>
-                            <div className='col py-1'>
-                                <h4 className='m-0'>{user.username}</h4>
-                                <div className='row text-secondary' style={{ fontSize: "0.8rem", overflow: "hidden", whiteSpace: "nowrap" }}>
-                                    <div className='col'>{message.content}</div>
-                                    <div className='col text-end'>{convertUtcToLocal(message.timestamp)}</div>
+                            <div className='col-10 py-1'>
+                                <div className='row'>
+                                    <div className=''>{user.username}</div>
+                                    <div className='text-secondary'>
+                                        <div className='' style={{ fontSize: "0.8rem", overflow: "hidden", whiteSpace: "nowrap" }}>{message.content}</div>
+                                        <div className='text-end' style={{ fontSize: "0.6rem"}}>{convertUtcToLocal(message.timestamp)}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

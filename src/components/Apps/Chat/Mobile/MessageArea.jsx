@@ -4,10 +4,13 @@ import AuthContext from '../../../../global/AuthContext';
 import VariableContext from '../../../../global/VariableContext';
 import sendSound from '../sound/send.mp3';
 import { addMessages } from '../addMessages';
+import ToastDialog from '../../../../utility/ToastDialog';
+import DisplayMessages from '../DisplayMessages';
 
 export default function MessageArea(props) {
 	const [content, setContent] = useState('');
-	const { messages, setMessages } = useContext(VariableContext);
+	const [lineType, setLineType] = useState('s');
+	const { messages, setMessages, showToast } = useContext(VariableContext);
 	const { token, username } = useContext(AuthContext);
 	const dummy = useRef();
 	const lastMsgIdRef = useRef(null);
@@ -30,13 +33,15 @@ export default function MessageArea(props) {
 			}
 			return true;
 		})
+		setTimeout(() => {
+			dummy.current.scrollIntoView({ behavior: 'smooth' });
+		}, 2000);
 
-		dummy.current.scrollIntoView({ behavior: 'smooth' });
 		const intervalCallback = () => {
 			addMessages(token, setMessages, props.activeUser, lastMsgIdRef);
 			// dummy.current.scrollIntoView({ behavior: 'smooth' });
 		};
-		const intervalId = setInterval(intervalCallback, 3000);
+		const intervalId = setInterval(intervalCallback, 5000);
 		return () => clearInterval(intervalId);
 		// eslint-disable-next-line
 	}, [])
@@ -60,6 +65,16 @@ export default function MessageArea(props) {
 		}
 	}
 
+	const onLineChange = () => {
+		if (lineType == 's') {
+			showToast('changed into multiline text', 'info');
+			setLineType('m');
+		} else {
+			showToast('changed into singleline text', 'info');
+			setLineType('s');
+		}
+	}
+
 
 	return (
 		<>
@@ -68,25 +83,24 @@ export default function MessageArea(props) {
 					<button className='btn btn-secondary me-3' onClick={() => props.setActiveUser(null)}>{"<-"}</button>
 					<div className='fs-2'>{props.activeUser.username}</div>
 				</div>
-				<div className='p-2 m-2 rounded' style={{ backgroundColor: "#8ecae6", height: "85dvh", overflowY: "auto" }}>
-					{messages[props.activeUser.id] && messages[props.activeUser.id].map((message) => {
-						if (message.sender.username === username) {
-							return <div key={message.id} className='text-success text-end pb-2'>{message.content}</div>
-						} else {
-							return <div key={message.id} className='text-primary pb-2'>{message.content}</div>
-						}
-					})}
+				<div className='p-2 m-2 rounded text-white' style={{ backgroundColor: "#8ecae6", height: "85dvh", overflowY: "auto" }}>
+					<DisplayMessages messages={messages} username={username} activeUser={props.activeUser} />
 					<div ref={dummy}></div>
 				</div>
 
 			</div>
 			<form onSubmit={sendBtnHandler}>
 				<div className='input-group px-2' >
-					{/* <textarea className='form-control' rows={content.split('\n').length} value={content} onChange={(e) => setContent(e.target.value)} /> */}
-					<input type="text" className='form-control' rows={content.split('\n').length} value={content} onChange={(e) => setContent(e.target.value)} />
+					{
+						lineType === 'm' ?
+							<textarea className='form-control' rows={content.split('\n').length} value={content} onChange={(e) => setContent(e.target.value)} /> :
+							<input type="text" className='form-control' value={content} onChange={(e) => setContent(e.target.value)} />
+					}
+					<input type='button' className='text-secondary' style={inputTextStyle} value={lineType} onClick={onLineChange} />
 					<button className='btn btn-success' onClick={sendBtnHandler}>Send</button>
 				</div>
 			</form>
+			<ToastDialog />
 		</>
 	)
 }
@@ -94,4 +108,12 @@ export default function MessageArea(props) {
 function playSound() {
 	var audio = new Audio(sendSound);
 	audio.play();
+}
+
+const inputTextStyle = {
+	// width:"1px", 
+	fontSize: "9px",
+	border: 'none',
+	outline: 'none',
+	backgroundColor: "white"
 }

@@ -1,4 +1,4 @@
-export default function convertUtcToLocal(utcTimeString, targetTimeZone) {
+export default function convertUtcToLocal(utcTimeString,userOptions, targetTimeZone) {
   const utcDate = new Date(utcTimeString);
   const localDateString = utcDate.toLocaleString('en-US', { timeZone: targetTimeZone });
   const localDate = new Date(localDateString);
@@ -11,6 +11,6 @@ export default function convertUtcToLocal(utcTimeString, targetTimeZone) {
     second: 'numeric',
   };
 
-  const formattedLocalDate = localDate.toLocaleString('en-US', options);
+  const formattedLocalDate = localDate.toLocaleString('en-US', userOptions || options);
   return formattedLocalDate.replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3/$1/$2 $4:$5:$6');
 }

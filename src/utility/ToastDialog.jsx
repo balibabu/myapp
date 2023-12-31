@@ -23,3 +23,8 @@ export default function ToastDialog() {
     )
 }
 
+
+// usage example
+// import show text from variables
+// insert Tag -> <ToastDialog/> in your componenet
+// set -> showToast('changed into multiline text','info');
