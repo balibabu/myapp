@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import SearchBox from './SearchBox'
 // import FloatButton from '../../../utility/FloatButton'
 import ConversationsRender from './ConversationsRender';
@@ -8,39 +8,28 @@ import incommingSound from './sound/incomming1.mp3';
 export default function ConversationListArea({ onSelect }) {
     const [, setInitialFetch] = useState(false);
     const { conversations, fetchConversations } = useContext(VariableContext);
+    const intervalRef = useRef(1000);
 
     useEffect(() => {
-        // var count = 1;
-        let timeoutId;
-
-        // function doSomething() {
-        //     fetchConversations(incommingSound)
-        //     console.log(count);
-        //     count++;
-
-
-        // }
-        function logCountWithForLoop() {
-            for (let count = 0; count < 5; count++) {
-                // Use an IIFE (Immediately Invoked Function Expression) to create a closure
-                (function (currentCount) {
-                    timeoutId=setTimeout(function () {
-                        console.log(currentCount);
-                        fetchConversations(incommingSound)
-                    }, 2000 * (1+currentCount) * (1+currentCount));
-                })(count);
-            }
-        }
-
-
         setInitialFetch((prev) => {
             if (!prev) {
-                logCountWithForLoop();
                 fetchConversations();
             }
             return true;
         })
-        return ()=>clearTimeout(timeoutId);
+
+
+        let intervalId ;
+        const intervalCallback = () => {
+                fetchConversations(incommingSound);
+                intervalRef.current=intervalRef.current+2000
+                clearInterval(intervalId);
+                intervalId = setInterval(intervalCallback, intervalRef.current);
+		};
+
+        intervalId = setInterval(intervalCallback, intervalRef.current);
+		return () => clearInterval(intervalId);
+
         // eslint-disable-next-line
     }, [])
 

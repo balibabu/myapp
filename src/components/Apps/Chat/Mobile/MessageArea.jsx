@@ -14,6 +14,7 @@ export default function MessageArea(props) {
 	const { token, username } = useContext(AuthContext);
 	const dummy = useRef();
 	const lastMsgIdRef = useRef(null);
+	const intervalRef = useRef(1000);
 
 	const [, setInitialFetch] = useState(false);
 
@@ -33,16 +34,25 @@ export default function MessageArea(props) {
 			}
 			return true;
 		})
-		setTimeout(() => {
+		const timeoutId = setTimeout(() => {
 			dummy.current.scrollIntoView({ behavior: 'smooth' });
 		}, 2000);
 
+
+
+		let intervalId;
 		const intervalCallback = () => {
 			addMessages(token, setMessages, props.activeUser, lastMsgIdRef);
-			// dummy.current.scrollIntoView({ behavior: 'smooth' });
+			intervalRef.current = intervalRef.current + 2000
+			clearInterval(intervalId);
+			intervalId = setInterval(intervalCallback, intervalRef.current);
 		};
-		const intervalId = setInterval(intervalCallback, 5000);
-		return () => clearInterval(intervalId);
+
+		intervalId = setInterval(intervalCallback, intervalRef.current);
+		return () => {
+			clearInterval(intervalId);
+			clearTimeout(timeoutId);
+		}
 		// eslint-disable-next-line
 	}, [])
 
@@ -63,10 +73,11 @@ export default function MessageArea(props) {
 				}, 200);
 			}
 		}
+		intervalRef.current = 1000;
 	}
 
 	const onLineChange = () => {
-		if (lineType == 's') {
+		if (lineType === 's') {
 			showToast('changed into multiline text', 'info');
 			setLineType('m');
 		} else {
