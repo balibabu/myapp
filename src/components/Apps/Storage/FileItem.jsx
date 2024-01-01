@@ -5,7 +5,7 @@ import fileImg from '../../../images/file.png';
 import convertUtcToLocal from '../../../utility/AutoLocalTime';
 import Dropdown from './Dropdown';
 import AuthContext from '../../../global/AuthContext';
-import { downloader, onDelete } from './FileCRUD';
+import { directDownload, downloader, onDelete } from './FileCRUD';
 
 
 export default function FileItem(props) {
@@ -18,8 +18,9 @@ export default function FileItem(props) {
     }
 
     const downLoadhandler = async () => {
-        downloader(props.file.url, props.file.originalName);
-        // console.log(props.file);
+        directDownload(props.file.url, props.file.originalName)
+        // downloader(props.file.url, props.file.originalName);
+        console.log(props.file);
     }
     return (
         <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' style={{ position: "relative", opacity: loadingFileItem === props.file.id ? "50%" : "" }}>
