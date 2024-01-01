@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { getMessages, sendMessage } from '../../../../http/chat'
+import { getMessages } from '../../../../http/chat'
 import AuthContext from '../../../../global/AuthContext';
 import VariableContext from '../../../../global/VariableContext';
-import sendSound from '../sound/send.mp3';
 import { addMessages } from '../addMessages';
 import ToastDialog from '../../../../utility/ToastDialog';
 import DisplayMessages from '../DisplayMessages';
+import SendForm from './SendForm';
 
 export default function MessageArea(props) {
-	const [content, setContent] = useState('');
-	const [lineType, setLineType] = useState('s');
 	const { messages, setMessages, showToast } = useContext(VariableContext);
 	const { token, username } = useContext(AuthContext);
 	const dummy = useRef();
@@ -36,9 +34,7 @@ export default function MessageArea(props) {
 		})
 		const timeoutId = setTimeout(() => {
 			dummy.current.scrollIntoView({ behavior: 'smooth' });
-		}, 2000);
-
-
+		}, 1000);
 
 		let intervalId;
 		const intervalCallback = () => {
@@ -56,36 +52,12 @@ export default function MessageArea(props) {
 		// eslint-disable-next-line
 	}, [])
 
-
-
-
-	const sendBtnHandler = async (e) => {
-		e.preventDefault();
-		playSound();
-		setContent('');
-		if (content.trim().length > 0) {
-			const msg = await sendMessage(token, content, props.activeUser.id);
-			if (msg) {
-				lastMsgIdRef.current = msg.id;
-				setMessages((preMsg) => ({ ...preMsg, [props.activeUser.id]: [...messages[props.activeUser.id], msg] }))
-				setTimeout(() => {
-					dummy.current.scrollIntoView({ behavior: 'smooth' });
-				}, 200);
-			}
-		}
-		intervalRef.current = 1000;
+	const sendFormData={
+		showToast,token,dummy,
+		activeUser:props.activeUser,lastMsgIdRef,
+		messages,setMessages,
+		intervalRef
 	}
-
-	const onLineChange = () => {
-		if (lineType === 's') {
-			showToast('changed into multiline text', 'info');
-			setLineType('m');
-		} else {
-			showToast('changed into singleline text', 'info');
-			setLineType('s');
-		}
-	}
-
 
 	return (
 		<>
@@ -100,31 +72,9 @@ export default function MessageArea(props) {
 				</div>
 
 			</div>
-			<form onSubmit={sendBtnHandler}>
-				<div className='input-group px-2' >
-					{
-						lineType === 'm' ?
-							<textarea className='form-control' rows={content.split('\n').length} value={content} onChange={(e) => setContent(e.target.value)} /> :
-							<input type="text" className='form-control' value={content} onChange={(e) => setContent(e.target.value)} />
-					}
-					<input type='button' className='text-secondary' style={inputTextStyle} value={lineType} onClick={onLineChange} />
-					<button className='btn btn-success' onClick={sendBtnHandler}>Send</button>
-				</div>
-			</form>
+			<SendForm  sendFormData={sendFormData}/>
 			<ToastDialog />
 		</>
 	)
 }
 
-function playSound() {
-	var audio = new Audio(sendSound);
-	audio.play();
-}
-
-const inputTextStyle = {
-	// width:"1px", 
-	fontSize: "9px",
-	border: 'none',
-	outline: 'none',
-	backgroundColor: "white"
-}

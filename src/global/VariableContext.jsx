@@ -4,6 +4,7 @@ import AuthContext from "./AuthContext";
 import { GetNoteList } from "../http/Note";
 import { getConversationsList, getUserList } from "../http/chat";
 import GetExpenseList from "../http/Expense";
+import { getFiles } from "../http/Storage";
 
 
 const VariableContext = createContext();
@@ -15,9 +16,11 @@ export const VariableProvider = ({ children }) => {
     const [expenses, setExpenses] = useState([]);
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState({});
+    const [files, setFiles] = useState([]);
 
     const [toast, setToast] = useState(null);
     const [loadingNoteItem, SetloadingNoteItem] = useState(null);
+    const [loadingFileItem, SetloadingFileItem] = useState(null);
     const { token } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
 
@@ -50,6 +53,13 @@ export const VariableProvider = ({ children }) => {
         });
     }
 
+    const fetchFiles = async () => {
+        const list = await getFiles(token);
+        setFiles(list);
+    }
+
+    
+
 
 
     const showToast = (message, type) => {
@@ -63,6 +73,9 @@ export const VariableProvider = ({ children }) => {
     }
 
     const contextData = {
+        files,
+        setFiles,
+        fetchFiles,
         todoList,
         setTodoList,
         fetchTodoList,
@@ -71,6 +84,8 @@ export const VariableProvider = ({ children }) => {
         fetchNotes,
         loadingNoteItem,
         SetloadingNoteItem,
+        loadingFileItem, 
+        SetloadingFileItem,
         users,
         setUsers,
         fetchUserList,

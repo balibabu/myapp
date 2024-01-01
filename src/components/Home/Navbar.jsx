@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import AuthContext from '../../global/AuthContext'
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
+import bellIcon from '../../images/bell.png';
 
 
 export default function Navbar() {
-    const { loggedIn,username } = useContext(AuthContext);
+    const { loggedIn, username } = useContext(AuthContext);
 
     return (
         <>
@@ -17,6 +18,15 @@ export default function Navbar() {
                             loggedIn ?
                                 <>
                                     <h4 className='mt-2'>Hello {username}</h4>
+                                    <div>
+                                        <button type="button" className="btn position-relative">
+                                            <img src={bellIcon} alt="bell" style={bellStyle}/>
+                                            <span className="position-absolute mt-3 p-1 top-45 start-10 translate-middle badge rounded-pill bg-danger">
+                                                9+
+                                                <span className="visually-hidden">unread messages</span>
+                                            </span>
+                                        </button>
+                                    </div>
                                     <Dropdown />
                                 </>
                                 :
@@ -38,4 +48,9 @@ const linkStyle = {
     textDecoration: "none",
     fontSize: "1rem",
     color: "#03A9F4",
+}
+
+const bellStyle={
+    border:"none",
+    height:"2rem",
 }

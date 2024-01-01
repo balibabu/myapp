@@ -71,10 +71,12 @@ export default function NoteEditor() {
                     <div className="input-group mb-2">
                         <button className="btn" style={{ backgroundColor: "#a5d3fb" }} onClick={() => navigate('/notepad', { replace: true })}>{'<-'}</button>
                         <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-lg-10 col-9' placeholder='give a title' value={noteDetails.title} />
-                        <input type="color" className="form-control p-0" style={{ height: "auto"}} name='color' value={noteDetails.color} onChange={onValueChange} />
-                        <Dropdown/>
+                        <input type="color" className="form-control p-0" style={{ height: "auto" }} name='color' value={noteDetails.color} onChange={onValueChange} />
+                        <Dropdown />
                     </div>
-                    <textarea className='col-12' name="description" style={textareaStyle}
+                    <textarea className='col-12' name="description"
+                        rows='16'
+                        style={textareaStyle}
                         onChange={onValueChange}
                         placeholder='give a description'
                         value={noteDetails.description}
