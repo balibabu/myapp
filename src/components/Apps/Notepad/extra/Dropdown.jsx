@@ -2,9 +2,9 @@ import ThreeDots from "../../../../images/ThreeDots";
 import LinkShortnerModal from "./LinkShortnerModal";
 import ToDoModal from "./ToDoModal";
 
-export default function Dropdown() {
+export default function Dropdown({color}) {
     return (
-        <div className="dropdown" style={{ backgroundColor: "#a5d3fb",borderRadius:"0 6px 6px 0"}} >
+        <div className="dropdown" style={{ backgroundColor: color,borderRadius:"0 6px 6px 0"}} >
             <ThreeDots />
             <ul className="dropdown-menu dropdown-menu-end">
                 <li>

@@ -3,10 +3,12 @@ import AuthContext from '../../../global/AuthContext';
 import VariableContext from '../../../global/VariableContext';
 import { uploadFile } from './FileCRUD';
 import { privateDetailsFormat } from '../../../global/variables';
-import Autofill from './extra/Autofill';
+import { PrivateDetailForm } from './extra/PrivateDetailForm';
+import { Header } from './extra/Header';
+import FilePresence from './extra/FilePresence';
 
 export default function UploadFileModal({ modalId }) {
-    const { setFiles, showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
+    const { files, setFiles, showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
     const [isPrivate, setIsPrivate] = useState(false);
@@ -32,7 +34,9 @@ export default function UploadFileModal({ modalId }) {
             formData.append("repo_name", privateDetails.repo_name);
             formData.append("token", privateDetails.token);
         }
-        uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles);
+        if(FilePresence(file,files)){
+            uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles);
+        }
     };
     return (
         <div className="modal fade" id={modalId} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -61,51 +65,4 @@ export default function UploadFileModal({ modalId }) {
 
 
 
-function Header({ isPrivate, setIsPrivate }) {
-    return (
-        <div className="modal-header p-1">
-            {isPrivate ?
-                <div className='text-success '>Now your file will be private</div>
-                :
-                <div className='text-danger '>This File will be public. Make it private, toggle switch {' ->'}</div>
-            }
-            <div className="form-check form-switch">
-                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                    checked={isPrivate}
-                    onChange={() => setIsPrivate(!isPrivate)} />
-            </div>
-        </div>
-    );
-}
 
-
-function PrivateDetailForm({ privateDetails,setPrivateDetails, handlerPrivateDetails }) {
-    return (
-        <div className='text-black'>
-            <div className="input-group mt-3">
-                <span className="input-group-text">Github Username</span>
-                <input type="text" className="form-control" placeholder="repo owner" aria-label="Username" aria-describedby="basic-addon1"
-                    value={privateDetails.repo_owner}
-                    onChange={handlerPrivateDetails}
-                    name='repo_owner'
-                />
-            </div>
-            <div className="input-group mt-3">
-                <span className="input-group-text">Repo name</span>
-                <input type="text" className="form-control" placeholder="eg. media, photos" aria-label="Username" aria-describedby="basic-addon1"
-                    value={privateDetails.repo_name}
-                    onChange={handlerPrivateDetails}
-                    name='repo_name'
-                />
-            </div>
-            <div className="input-group mt-3">
-                <input type="text" className="form-control" placeholder="Personal access Token" aria-label="Username" aria-describedby="basic-addon1"
-                    value={privateDetails.token}
-                    onChange={handlerPrivateDetails}
-                    name='token'
-                />
-            </div>
-            <Autofill setPrivateDetails={setPrivateDetails} />
-        </div>
-    );
-}

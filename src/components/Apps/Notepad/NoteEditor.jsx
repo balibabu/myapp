@@ -5,8 +5,9 @@ import { onCreate, onUpdate } from './NoteCRUD';
 import AuthContext from '../../../global/AuthContext';
 import TitleExtractor from '../../../utility/TitleExtractor';
 import Dropdown from './extra/Dropdown';
+import currentDateToColor from './extra/Colors';
 
-const blankDetails = { title: "", description: "", color: "#dcdcdc" };
+const blankDetails = { title: "", description: "", color: currentDateToColor() };
 export default function NoteEditor() {
     const { noteId } = useParams();
 
@@ -57,26 +58,27 @@ export default function NoteEditor() {
             });
         }
         setNoteDetails(blankDetails);
-        navigate('/notepad', { replace: true });
+        navigate(-1);
     }
 
     const Cancel = () => {
-        navigate('/notepad', { replace: true });
+        navigate(-1);
     }
 
     return (
-        <div style={containerStyle} className='bg-info'>
+        <div style={{...containerStyle,backgroundColor:"rgb(0,62,75)"}}>
             <div className='row m-0  justify-content-center'>
                 <div className='col-xl-8 col-md-10 col-sm-11 p-4'>
                     <div className="input-group mb-2">
-                        <button className="btn" style={{ backgroundColor: "#a5d3fb" }} onClick={() => navigate('/notepad', { replace: true })}>{'<-'}</button>
-                        <input style={titleStyle} name='title' type="text" onChange={onValueChange} className='col-lg-10 col-9' placeholder='give a title' value={noteDetails.title} />
-                        <input type="color" className="form-control p-0" style={{ height: "auto" }} name='color' value={noteDetails.color} onChange={onValueChange} />
-                        <Dropdown />
+                        <button className="btn" style={{ backgroundColor: noteDetails.color }} onClick={() => navigate(-1)}>{'<-'}</button>
+                        <input style={{...titleStyle,backgroundColor:noteDetails.color}} name='title' type="text" onChange={onValueChange} className='col-lg-10 col-9' placeholder='give a title' value={noteDetails.title} />
+                        <input type="color" className="form-control p-0" style={{ height: "auto",border:"none", margin:"0px"}} name='color' value={noteDetails.color} onChange={onValueChange} />
+                        <Dropdown color={noteDetails.color}/>
                     </div>
                     <textarea className='col-12' name="description"
                         rows='16'
-                        style={textareaStyle}
+                        // style={textareaStyle}
+                        style={{...textareaStyle,backgroundColor:noteDetails.color}}
                         onChange={onValueChange}
                         placeholder='give a description'
                         value={noteDetails.description}

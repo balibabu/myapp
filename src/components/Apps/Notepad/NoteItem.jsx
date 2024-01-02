@@ -9,7 +9,7 @@ export default function NoteItem(props) {
     const { loadingNoteItem, SetloadingNoteItem } = useContext(VariableContext);
     const navigate = useNavigate();
     const onClickHandler = () => {
-        navigate(`/notepad/edit/${props.note.id}`,{replace:true});
+        navigate(`/notepad/edit/${props.note.id}`);
     }
     const deleteHandler = async (event) => {
         event.stopPropagation();

@@ -14,12 +14,12 @@ export const onDelete = async (id, token, SetloadingFileItem, showToast, setFile
     }
 };
 
-
-export const downloader = (url, filename) => {
+// https://github.com/balibabu/tester_drf/blob/main/babu/1704186896.png
+export const downloader = (file, username) => {
     var anchor = document.createElement("a");
-    anchor.href = url;
+    anchor.href = `https://github.com/${file.github_info.repo_owner}/${file.github_info.repo_name}/blob/main/${username}/${file.uploadedName}`;
     anchor.target = "_blank";
-    anchor.download = filename;
+    anchor.download = file.originalName;
     var clickEvent = new MouseEvent("click", {
         view: window,
         bubbles: true,

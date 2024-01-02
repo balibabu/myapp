@@ -7,7 +7,7 @@ import simonIcon from '../../images/simon.png'
 import expenseIcon from '../../images/expense.png'
 import linkIcon from '../../images/link2.png'
 import lunarIcon from '../../images/lunar.png'
-import storageIcon from '../../images/storage.jpg'
+import storageIcon from '../../images/storage.png'
 import AppName from '../../utility/AppName'
 import Navbar from './Navbar'
 
