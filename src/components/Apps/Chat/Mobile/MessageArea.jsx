@@ -12,7 +12,7 @@ export default function MessageArea(props) {
 	const { token, username } = useContext(AuthContext);
 	const dummy = useRef();
 	const lastMsgIdRef = useRef(null);
-	const intervalRef = useRef(1000);
+	const intervalRef = useRef(3000);
 
 	const [, setInitialFetch] = useState(false);
 
@@ -29,6 +29,7 @@ export default function MessageArea(props) {
 				if (!messages[props.activeUser.id]) {
 					fetchMsg();
 				}
+				addMessages(token, setMessages, props.activeUser, lastMsgIdRef);
 			}
 			return true;
 		})
@@ -39,7 +40,7 @@ export default function MessageArea(props) {
 		let intervalId;
 		const intervalCallback = () => {
 			addMessages(token, setMessages, props.activeUser, lastMsgIdRef);
-			intervalRef.current = intervalRef.current + 2000
+			intervalRef.current = intervalRef.current + 3000
 			clearInterval(intervalId);
 			intervalId = setInterval(intervalCallback, intervalRef.current);
 		};
@@ -56,7 +57,7 @@ export default function MessageArea(props) {
 		showToast,token,dummy,
 		activeUser:props.activeUser,lastMsgIdRef,
 		messages,setMessages,
-		intervalRef
+		intervalRef,
 	}
 
 	return (

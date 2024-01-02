@@ -8,7 +8,7 @@ import incommingSound from './sound/incomming1.mp3';
 export default function ConversationListArea({ onSelect }) {
     const [, setInitialFetch] = useState(false);
     const { conversations, fetchConversations } = useContext(VariableContext);
-    const intervalRef = useRef(1000);
+    const intervalRef = useRef(5000);
 
     useEffect(() => {
         setInitialFetch((prev) => {

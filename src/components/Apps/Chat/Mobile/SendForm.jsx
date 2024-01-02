@@ -1,6 +1,7 @@
 import { sendMessage } from '../../../../http/chat'
 import React, { useEffect, useRef, useState } from 'react'
 import sendSound from '../sound/send.mp3';
+import { addMessages } from '../addMessages';
 
 export default function SendForm({sendFormData}) {
     const {
@@ -21,6 +22,7 @@ export default function SendForm({sendFormData}) {
 
     const sendBtnHandler = async (e) => {
 		e.preventDefault();
+		await addMessages(token, setMessages, activeUser, lastMsgIdRef);
 		if(isSending){return}
 		setIsSending(true);
 		setContent('');

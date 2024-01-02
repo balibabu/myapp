@@ -7,7 +7,7 @@
   position: absolute;
   top: 80%;
   /* Updated to show tooltip at the bottom */
-  left: 27%;
+  left: 30%;
   transform: translateX(-50%);
   background-color: #333;
   color: #fff;
@@ -15,7 +15,7 @@
   border-radius: 4px;
   font-size: 12px;
   opacity: 0.6;
-  z-index: 1;
-  width: auto;
+  z-index: 2;
+  width: '3rem';
 
 }

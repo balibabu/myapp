@@ -1,4 +1,21 @@
 import { AddNote, DeleteNote, UpdateNote } from "../../../http/Note";
+import TitleExtractor from "../../../utility/TitleExtractor";
+
+export const createUpdateHandler=(noteId,noteDetails,token,setNotes,SetloadingNoteItem)=>{
+    if (isNaN(noteId)) {
+        if (noteDetails.title.trim().length === 0) {
+            noteDetails.title = TitleExtractor(noteDetails.description, 30);
+        }
+        onCreate(noteDetails, token, setNotes);
+    } else {
+        SetloadingNoteItem(noteDetails.id);
+        onUpdate(noteDetails, token, setNotes).then(() => {
+            SetloadingNoteItem(null);
+        });
+    }
+
+}
+
 
 export const onCreate = async (newNote,token,setNotes) => {
     const note = await AddNote(token, newNote);
