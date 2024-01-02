@@ -28,8 +28,8 @@ export const downloader = (url, filename) => {
     anchor.dispatchEvent(clickEvent);
 };
 
-export const directDownload = (url,filename) => {
-    fetch(url)
+export const directDownload = (file, username) => {
+    fetch(`https://raw.githubusercontent.com/${file.github_info.repo_owner}/${file.github_info.repo_name}/main/${username}/${file.uploadedName}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.status}`);
@@ -40,7 +40,7 @@ export const directDownload = (url,filename) => {
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = filename; // Set the desired file name
+            link.download = file.originalName; // Set the desired file name
             link.click();
         })
         .catch(error => {
@@ -48,24 +48,22 @@ export const directDownload = (url,filename) => {
         });
 };
 
-export async function uploadFile(file, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles) {
+export async function uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles) {
     if (loadingFileItem === 'newfile') {
         showToast('please wait while for first file to be uploaded', 'warning');
         return;
     }
     SetloadingFileItem('newfile');
-    if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        showToast('file is being uploaded in the background, please wait', 'secondary');
-        const fileData = await UploadFile(token, formData);
-        SetloadingFileItem(null);
-        if (fileData) {
-            fileInputRef.current.value = null;
-            showToast('file uploaded successfully', 'success');
-            setFiles((prev) => [fileData, ...prev])
-        } else {
-            showToast('something went wrong, check console for details', 'danger');
-        }
+    showToast('file is being uploaded in the background, please wait', 'secondary');
+    const fileData = await UploadFile(token, formData);
+    SetloadingFileItem(null);
+    if (fileData) {
+        fileInputRef.current.value = null;
+        showToast('file uploaded successfully', 'success');
+        setFiles((prev) => [fileData, ...prev])
+    } else {
+        showToast('something went wrong, check console for details', 'danger');
     }
 }
+
+

@@ -6,11 +6,12 @@ import convertUtcToLocal from '../../../utility/AutoLocalTime';
 import Dropdown from './Dropdown';
 import AuthContext from '../../../global/AuthContext';
 import { directDownload, downloader, onDelete } from './FileCRUD';
+import { downloadFile } from '../../../http/Storage';
 
 
 export default function FileItem(props) {
     const { loadingFileItem, SetloadingFileItem, showToast, setFiles } = useContext(VariableContext);
-    const { token } = useContext(AuthContext);
+    const { token,username } = useContext(AuthContext);
 
     const deleteHandler = async (event) => {
         event.stopPropagation();
@@ -18,9 +19,11 @@ export default function FileItem(props) {
     }
 
     const downLoadhandler = async () => {
-        directDownload(props.file.url, props.file.originalName)
+        // directDownload('https://raw.githubusercontent.com/balibabu/media/main/babu/1704104491.png', props.file.originalName)
         // downloader(props.file.url, props.file.originalName);
-        console.log(props.file);
+        // directDownload(props.file,username);
+        downloadFile(token,props.file.id,props.file.originalName);
+        // console.log(props.file);
     }
     return (
         <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' style={{ position: "relative", opacity: loadingFileItem === props.file.id ? "50%" : "" }}>
@@ -36,7 +39,7 @@ export default function FileItem(props) {
                         <div className='m-0' style={{ overflow: "hidden", whiteSpace: "nowrap" }}>{props.file.originalName}</div>
                         <div className='d-flex justify-content-between'>
                             <small className='text-secondary pt-2' style={{ fontSize: "10px" }}>{convertUtcToLocal(props.file.timestamp).toString()}</small>
-                            <div className='text-secondary' style={{ fontSize: "14px" }}>{(parseFloat(props.file.fileSize)).toFixed(2)} KB</div>
+                            <div className='text-secondary' style={{ fontSize: "14px" }}>{(parseFloat(props.file.fileSize)/1024).toFixed(2)} KB</div>
                         </div>
                     </div>
                     <Dropdown deleteHandler={deleteHandler} downLoadhandler={downLoadhandler} />
