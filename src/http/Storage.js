@@ -9,7 +9,7 @@ export async function UploadFile(token, formData, setProgress) {
                 'Authorization': `Token ${token}`,
             },
             onUploadProgress: (progressEvent) => {
-                setProgress(progressEvent.progress*100);
+                setProgress((progressEvent.progress*100).toFixed(1));
             },
         });
         if (response.status === 200) {
