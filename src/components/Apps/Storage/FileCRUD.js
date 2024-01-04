@@ -48,15 +48,16 @@ export const directDownload = (file, username) => {
         });
 };
 
-export async function uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles) {
+export async function uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles, setProgress) {
     if (loadingFileItem === 'newfile') {
         showToast('please wait while for first file to be uploaded', 'warning');
         return;
     }
     SetloadingFileItem('newfile');
     showToast('file is being uploaded in the background, please wait', 'secondary');
-    const fileData = await UploadFile(token, formData);
+    const fileData = await UploadFile(token, formData, setProgress);
     SetloadingFileItem(null);
+    setProgress(0);
     if (fileData) {
         fileInputRef.current.value = null;
         showToast('file uploaded successfully', 'success');

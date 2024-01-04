@@ -8,9 +8,10 @@ import FloatButton from '../../../utility/FloatButton';
 import ToastDialog from '../../../utility/ToastDialog';
 
 export default function StorageApp() {
-    const { files,fetchFiles, showToast,} = useContext(VariableContext);
+    const { files, fetchFiles, showToast, } = useContext(VariableContext);
     const { loggedIn } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         if (files.length === 0 && loggedIn) {
@@ -29,8 +30,8 @@ export default function StorageApp() {
 
     return (
         <div className='text-white'>
-            <FileRender files={files}/>
-            <UploadFileModal modalId={"uploadFileModal"}/>
+            <FileRender files={files} progress={progress}/>
+            <UploadFileModal modalId={"uploadFileModal"} setProgress={setProgress}/>
             <FloatButton modalTarget={"uploadFileModal"} />
             <ToastDialog />
         </div>

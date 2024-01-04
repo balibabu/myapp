@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import AuthContext from '../../../global/AuthContext';
 import VariableContext from '../../../global/VariableContext';
 import { uploadFile } from './FileCRUD';
@@ -7,7 +7,7 @@ import { PrivateDetailForm } from './extra/PrivateDetailForm';
 import { Header } from './extra/Header';
 import FilePresence from './extra/FilePresence';
 
-export default function UploadFileModal({ modalId }) {
+export default function UploadFileModal({ modalId,setProgress }) {
     const { files, setFiles, showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
@@ -35,7 +35,7 @@ export default function UploadFileModal({ modalId }) {
             formData.append("token", privateDetails.token);
         }
         if(FilePresence(file,files)){
-            uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles);
+            uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles, setProgress);
         }
     };
     return (
@@ -54,7 +54,7 @@ export default function UploadFileModal({ modalId }) {
                             <button className='btn btn-success' data-bs-dismiss="modal" onClick={onUploadClick}>Upload</button>
                         </div>
                         {isPrivate &&
-                            <PrivateDetailForm privateDetails={privateDetails} handlerPrivateDetails={handlerPrivateDetails} setPrivateDetails={setPrivateDetails}  />
+                            <PrivateDetailForm privateDetails={privateDetails} handlerPrivateDetails={handlerPrivateDetails} setPrivateDetails={setPrivateDetails} />
                         }
                     </div>
                 </div>

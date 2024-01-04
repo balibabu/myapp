@@ -12,7 +12,9 @@ import IntelligentSize from './extra/IntelligentSize';
 
 export default function FileItem(props) {
     const { loadingFileItem, SetloadingFileItem, showToast, setFiles } = useContext(VariableContext);
-    const { token,username } = useContext(AuthContext);
+    const { token, username } = useContext(AuthContext);
+
+
 
     const deleteHandler = async (event) => {
         event.stopPropagation();
@@ -23,13 +25,12 @@ export default function FileItem(props) {
         // directDownload('https://raw.githubusercontent.com/balibabu/media/main/babu/1704104491.png', props.file.originalName)
         // downloader(props.file.url, props.file.originalName);
         // directDownload(props.file,username);
-        downloadFile(token,props.file.id,props.file.originalName);
-        // console.log(props.file);
+        downloadFile(token, props.file.id, props.file.originalName);
     }
 
-    const onClickHandler=()=>{
-        downloader(props.file,username);
-    } 
+    const onClickHandler = () => {
+        downloader(props.file, username);
+    }
 
     return (
         <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' style={{ position: "relative", opacity: loadingFileItem === props.file.id ? "50%" : "" }}>

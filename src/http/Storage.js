@@ -2,11 +2,14 @@ import axios from "axios";
 import { API_BASE_URL } from "../global/variables";
 import { saveAs } from 'file-saver';
 
-export async function UploadFile(token, formData) {
+export async function UploadFile(token, formData, setProgress) {
     try {
         const response = await axios.post(`${API_BASE_URL}/storage/upload/`, formData, {
             headers: {
                 'Authorization': `Token ${token}`,
+            },
+            onUploadProgress: (progressEvent) => {
+                setProgress(progressEvent.progress*100);
             },
         });
         if (response.status === 200) {
@@ -19,7 +22,7 @@ export async function UploadFile(token, formData) {
     }
 }
 
-export async function getFiles(token){
+export async function getFiles(token) {
     try {
         const response = await axios.get(`${API_BASE_URL}/storage/files/`, {
             headers: {
@@ -38,7 +41,7 @@ export async function getFiles(token){
 }
 
 
-export async function deleteFile(token,id){
+export async function deleteFile(token, id) {
     try {
         const response = await axios.delete(`${API_BASE_URL}/storage/delete/${id}/`, {
             headers: {
@@ -76,7 +79,7 @@ export async function downloadFile(token, storageId, filename) {
     }
 }
 
-export async function getGitIfos(token){
+export async function getGitIfos(token) {
     try {
         const response = await axios.get(`${API_BASE_URL}/storage/gits/`, {
             headers: {
