@@ -1,12 +1,12 @@
 import { AddNote, DeleteNote, UpdateNote } from "../../../../http/Note";
 import TitleExtractor from "./TitleExtractor";
 
-export const createUpdateHandler=(noteId,noteDetails,token,setNotes,SetloadingNoteItem)=>{
+export const createUpdateHandler = (noteId, noteDetails, token, setNotes, SetloadingNoteItem) => {
     if (isNaN(noteId)) {
         if (noteDetails.title.trim().length === 0) {
             noteDetails.title = TitleExtractor(noteDetails.description, 30);
         }
-        onCreate(noteDetails, token, setNotes);
+        onCreate(noteDetails, token, setNotes, SetloadingNoteItem);
     } else {
         SetloadingNoteItem(noteDetails.id);
         onUpdate(noteDetails, token, setNotes).then(() => {
@@ -17,8 +17,10 @@ export const createUpdateHandler=(noteId,noteDetails,token,setNotes,SetloadingNo
 }
 
 
-export const onCreate = async (newNote,token,setNotes) => {
+export const onCreate = async (newNote, token, setNotes, SetloadingNoteItem) => {
+    SetloadingNoteItem('newItem');
     const note = await AddNote(token, newNote);
+    SetloadingNoteItem(null);
     if (note) {
         setNotes((oldNotes) => [note, ...oldNotes]);
     } else {
@@ -26,7 +28,7 @@ export const onCreate = async (newNote,token,setNotes) => {
     }
 }
 
-export const onDelete = async (id,token,setNotes) => {
+export const onDelete = async (id, token, setNotes) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this item?");
     if (!confirmDelete) { return false; }
 
@@ -38,7 +40,7 @@ export const onDelete = async (id,token,setNotes) => {
     }
 };
 
-export const onUpdate = async (newNote,token,setNotes) => {
+export const onUpdate = async (newNote, token, setNotes) => {
     const updatedItem = await UpdateNote(token, newNote);
     if (updatedItem) {
         setNotes((oldList) =>

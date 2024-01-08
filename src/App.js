@@ -14,6 +14,7 @@ import LinkShortApp from './components/Apps/LinkShortner/LinkShortApp';
 import RedirectPage from './components/Apps/LinkShortner/RedirectPage';
 import LunarCalendarApp from './components/Apps/Lunar/LunarCalendarApp';
 import StorageApp from './components/Apps/Storage/StorageApp';
+import UnderDevelopment from './utility/UnderDevelopment';
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                         <Route path="/a/:linkId" element={<RedirectPage />} />
                         <Route path='/lunar' element={<LunarCalendarApp />} />
                         <Route path='/storage' element={<StorageApp />} />
+                        <Route path='/photo' element={<UnderDevelopment />} />
                     </Routes>
                 </HashRouter>
             </VariableProvider>

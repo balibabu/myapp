@@ -4,9 +4,10 @@ import AuthContext from '../../../global/AuthContext';
 import NoteRender from './NoteRender';
 import { Link, Navigate } from 'react-router-dom';
 import { onDelete } from './utility/NoteCRUD';
+import ProgressUI from './utility/ProgressUI';
 
 export default function NotepadApp() {
-    const { notes, setNotes, fetchNotes } = useContext(VariableContext);
+    const { notes, setNotes, fetchNotes, loadingNoteItem } = useContext(VariableContext);
     const { token, loggedIn } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
 
@@ -29,6 +30,7 @@ export default function NotepadApp() {
 
     return (
         <div style={{ backgroundColor: "#002d4d", maxHeight: "99dvh", overflowY: "auto" }}>
+            {loadingNoteItem === 'newItem' && <ProgressUI />}
             <NoteRender
                 notes={notes}
                 onDelete={(id) => onDelete(id, token, setNotes)}
