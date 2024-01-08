@@ -3,6 +3,6 @@ export const font={
         fontFamily: 'Playpen Sans, cursive'
     },
     Roboto:{
-        fontFamily: 'Roboto, sans-serif'
+        fontFamily: ''
     }
 }

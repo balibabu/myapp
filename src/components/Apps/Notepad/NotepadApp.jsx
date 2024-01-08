@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import VariableContext from '../../../global/VariableContext'
 import AuthContext from '../../../global/AuthContext';
 import NoteRender from './NoteRender';
-import { onDelete } from './NoteCRUD';
 import { Link, Navigate } from 'react-router-dom';
+import { onDelete } from './utility/NoteCRUD';
 
 export default function NotepadApp() {
     const { notes, setNotes, fetchNotes } = useContext(VariableContext);
@@ -13,8 +13,8 @@ export default function NotepadApp() {
 
     useEffect(() => {
         if (notes.length === 0 && loggedIn) {
-            setInitialFetch((prev)=>{
-                if(!prev){
+            setInitialFetch((prev) => {
+                if (!prev) {
                     fetchNotes();
                 }
                 return true;
@@ -25,14 +25,14 @@ export default function NotepadApp() {
 
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
-    
+
 
     return (
-        <div style={{ backgroundColor: "#002d4d",maxHeight:"99dvh",overflowY: "auto"}}>
+        <div style={{ backgroundColor: "#002d4d", maxHeight: "99dvh", overflowY: "auto" }}>
             <NoteRender
                 notes={notes}
                 onDelete={(id) => onDelete(id, token, setNotes)}
-                 />
+            />
             <Link
                 to='./edit/x'
                 style={floatingButtonStyle}

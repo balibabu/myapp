@@ -7,7 +7,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <App />
+    <div style={{ fontFamily: 'Nunito, sans-serif' }}>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+      </style>
+      <App />
+    </div>
   </React.StrictMode>
 );
 

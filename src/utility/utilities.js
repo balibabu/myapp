@@ -1,3 +1,5 @@
+// non-changeable and non customizable utilities are here 
+
 export function copyToClipboard(text) {
     // Check if the Clipboard API is supported
     if (navigator.clipboard) {
@@ -21,3 +23,9 @@ export function copyToClipboard(text) {
     }
 }
 
+
+export function Confirm(message) {
+    const confirmDelete = window.confirm(message);
+    if (!confirmDelete) { return false; }
+    return true;
+}

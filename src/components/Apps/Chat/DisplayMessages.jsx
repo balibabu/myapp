@@ -1,6 +1,6 @@
 import React from 'react'
 import convertUtcToLocal from '../../../utility/AutoLocalTime';
-import Tooltip from '../../../utility/Tooltip';
+import Tooltip from '../../../utility/Tooltip/Tooltip';
 
 export default function DisplayMessages({ messages, username, activeUser }) {
     return (

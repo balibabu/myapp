@@ -1,9 +1,3 @@
-/* Add this to your CSS */
-.custom-accordion {
-    /* Change the background color as needed */
-    /* background-color: #e80000; */
-  }
-  
   /* Optionally, you can style the accordion-button and accordion-body separately */
   .custom-accordion .uncomplete {
     /* Change the background color of the accordion header button */
@@ -17,7 +11,7 @@
   
   .custom-accordion .body-uncomplete {
     /* Change the background color of the accordion body */
-    background-color: #bde0fe;
+    background-color: #9fd1fd;
   }
   
   .custom-accordion .body-complete {

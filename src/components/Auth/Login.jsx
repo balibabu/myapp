@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import './Login.css';
 import AuthContext from '../../global/AuthContext';
 import { Link, Navigate } from "react-router-dom";
+import profileImg from '../../images/contactProfile.jpg';
 
 export default function Login() {
     const [formDetail, setFormDetail] = useState({ username: "", password: "" });
@@ -32,7 +33,7 @@ export default function Login() {
     return (
         <div className="wrapper">
             <div className="logo">
-                <img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />
+                <img src={profileImg} alt="" />
             </div>
             <div className="text-center mt-4 name">
                 Daily

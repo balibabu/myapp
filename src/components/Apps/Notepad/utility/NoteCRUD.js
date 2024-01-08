@@ -1,5 +1,5 @@
-import { AddNote, DeleteNote, UpdateNote } from "../../../http/Note";
-import TitleExtractor from "../../../utility/TitleExtractor";
+import { AddNote, DeleteNote, UpdateNote } from "../../../../http/Note";
+import TitleExtractor from "./TitleExtractor";
 
 export const createUpdateHandler=(noteId,noteDetails,token,setNotes,SetloadingNoteItem)=>{
     if (isNaN(noteId)) {

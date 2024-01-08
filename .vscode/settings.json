@@ -1,0 +1,18 @@
+{
+    "editor.fontSize": 15,
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.renderWhitespace": "trailing",
+    "editor.cursorStyle": "line",
+    "editor.insertSpaces": true,
+    "editor.wordWrap": "off",
+    "files.exclude": {
+        ".vscode": true,
+        "node_modules": true
+    },
+    "workbench.editor.enablePreview": true,
+    "editor.accessibilityPageSize": 10,
+    "workbench.tree.indent": 25,
+    "material-icon-theme.hidesExplorerArrows": true,
+    "workbench.tree.renderIndentGuides": "onHover",
+    "explorer.compactFolders": true
+}

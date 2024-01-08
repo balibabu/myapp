@@ -12,7 +12,7 @@ export default function TodoRender(props) {
 		<div className="accordion custom-accordion" id="accordionExample">
 			<div className="accordion-item">
 				<h2 className="accordion-header">
-					<button className="accordion-button uncomplete" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					<button className="accordion-button uncomplete fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 						Not Completed Tasks
 					</button>
 				</h2>
@@ -30,7 +30,7 @@ export default function TodoRender(props) {
 			</div>
 			<div className="accordion-item" onClick={()=>fetchCompletedList(completed)}>
 				<h2 className="accordion-header">
-					<button className="accordion-button collapsed complete" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+					<button className="accordion-button collapsed complete fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 						Completed Tasks
 					</button>
 				</h2>

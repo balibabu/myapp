@@ -1,5 +1,4 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import './style/fonts.css'
 import { AuthProvider } from './global/AuthContext';
 import Home from './components/Home/Home';
 import Login from './components/Auth/Login';
@@ -28,14 +27,13 @@ function App() {
                         <Route path="/todo" element={<TodoApp />} />
                         <Route path='/notepad' element={<NotepadApp />} />
                         <Route path="/notepad/edit/:noteId" element={<NoteEditor />} />
-                        <Route path='/expense' element={<ExpenseApp/>} />
-                        <Route path='/chat' element={<ChatApp/>} />
-                        <Route path='/simon-game' element={<SimonApp/>} />
-                        <Route path='/link-short' element={<LinkShortApp/>} />
+                        <Route path='/expense' element={<ExpenseApp />} />
+                        <Route path='/chat' element={<ChatApp />} />
+                        <Route path='/simon-game' element={<SimonApp />} />
+                        <Route path='/link-short' element={<LinkShortApp />} />
                         <Route path="/a/:linkId" element={<RedirectPage />} />
-                        <Route path='/lunar' element={<LunarCalendarApp/>} />
-                        <Route path='/storage' element={<StorageApp/>} />
-
+                        <Route path='/lunar' element={<LunarCalendarApp />} />
+                        <Route path='/storage' element={<StorageApp />} />
                     </Routes>
                 </HashRouter>
             </VariableProvider>

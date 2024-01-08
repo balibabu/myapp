@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import deleteImg from '../../../images/delete.png';
-import Tooltip from '../../../utility/Tooltip';
 import convertUtcToLocal from '../../../utility/AutoLocalTime';
+import Tooltip from '../../../utility/Tooltip/Tooltip';
 
 export default function TodoItem(props) {
 	const [isChecked, setIsChecked] = useState(props.item.completed);

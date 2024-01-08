@@ -7,7 +7,7 @@ import { PrivateDetailForm } from './extra/PrivateDetailForm';
 import { Header } from './extra/Header';
 import FilePresence from './extra/FilePresence';
 
-export default function UploadFileModal({ modalId,setProgress }) {
+export default function UploadFileModal({ modalId, setProgress }) {
     const { files, setFiles, showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
@@ -27,6 +27,10 @@ export default function UploadFileModal({ modalId,setProgress }) {
 
     const onUploadClick = async () => {
         if (!file) { return; }
+        if (file.size > 100_000_000) {
+            alert('size limit 100MB exceeded, please choose smaller size');
+            return;
+        }
         const formData = new FormData();
         formData.append("file", file);
         if (isPrivate) {
@@ -34,7 +38,7 @@ export default function UploadFileModal({ modalId,setProgress }) {
             formData.append("repo_name", privateDetails.repo_name);
             formData.append("token", privateDetails.token);
         }
-        if(FilePresence(file,files)){
+        if (FilePresence(file, files)) {
             uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles, setProgress);
         }
     };
