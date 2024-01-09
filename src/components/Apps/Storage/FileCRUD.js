@@ -7,10 +7,10 @@ export const onDelete = async (id, token, SetloadingFileItem, showToast, setFile
     const status = await deleteFile(token, id);
     SetloadingFileItem(null);
     if (status) {
-        showToast('file deleted successfully', 'danger');
+        showToast('file deleted successfully', 'success');
         setFiles((prev) => prev.filter((file) => file.id !== id));
     } else {
-        showToast('something went wrong', 'warning');
+        showToast('something went wrong', 'danger');
     }
 };
 

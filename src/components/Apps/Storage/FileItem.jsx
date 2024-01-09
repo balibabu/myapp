@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import LoadingUI from '../../../utility/LoadingUI';
 import VariableContext from '../../../global/VariableContext';
 import fileImg from '../../../images/file.png';
@@ -13,8 +13,8 @@ import IntelligentSize from './extra/IntelligentSize';
 export default function FileItem(props) {
     const { loadingFileItem, SetloadingFileItem, showToast, setFiles } = useContext(VariableContext);
     const { token, username } = useContext(AuthContext);
-
-
+    const [progress, setProgress] = useState(0);
+    const [downloadFileId, setDownloadFileId] = useState(null);
 
     const deleteHandler = async (event) => {
         event.stopPropagation();
@@ -25,7 +25,11 @@ export default function FileItem(props) {
         // directDownload('https://raw.githubusercontent.com/balibabu/media/main/babu/1704104491.png', props.file.originalName)
         // downloader(props.file.url, props.file.originalName);
         // directDownload(props.file,username);
-        downloadFile(token, props.file.id, props.file.originalName);
+        showToast('Downloading file', 'success');
+        setDownloadFileId(props.file.id);
+        await downloadFile(token, props.file.id, props.file.originalName, setProgress);
+        setDownloadFileId(null);
+        setProgress(0);
     }
 
     const onClickHandler = () => {
@@ -44,6 +48,7 @@ export default function FileItem(props) {
                     </div>
                     <div className='col-10 ps-2' >
                         <div className='m-0' style={{ overflow: "hidden", whiteSpace: "nowrap" }}>{props.file.originalName}</div>
+                        {downloadFileId === props.file.id && <DownloadingUI progress={progress} />}
                         <div className='d-flex justify-content-between'>
                             <small className='text-secondary pt-2' style={{ fontSize: "10px" }}>{convertUtcToLocal(props.file.timestamp).toString()}</small>
                             <div className='text-secondary' style={{ fontSize: "14px" }}>{IntelligentSize(props.file.fileSize)}</div>
@@ -54,4 +59,14 @@ export default function FileItem(props) {
             </div>
         </div>
     )
+}
+
+
+const DownloadingUI = ({ progress }) => {
+    return (
+        <div className="progress" role="progressbar">
+            <div className="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+            style={{ width: `${progress}%` }}>{`${progress}%`}</div>
+        </div>
+    );
 }

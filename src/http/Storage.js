@@ -60,11 +60,14 @@ export async function deleteFile(token, id) {
 }
 
 
-export async function downloadFile(token, storageId, filename) {
+export async function downloadFile(token, storageId, filename, setProgress) {
     try {
         const response = await axios.get(`${API_BASE_URL}/storage/download/${storageId}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
+            },
+            onDownloadProgress: (progressEvent) => {
+                setProgress((progressEvent.progress*100).toFixed(1));
             },
             responseType: 'blob',
         });
