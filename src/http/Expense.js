@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../global/variables";
+import { API_BASE_URL } from "./_baseURL";
 
 export default async function GetExpenseList(token){
     try {

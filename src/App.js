@@ -7,14 +7,14 @@ import TodoApp from './components/Apps/Todo/TodoApp';
 import NotepadApp from './components/Apps/Notepad/NotepadApp';
 import { VariableProvider } from './global/VariableContext';
 import NoteEditor from './components/Apps/Notepad/NoteEditor';
-import SimonApp from './components/Apps/Games/Simon/SimonApp';
 import ExpenseApp from './components/Apps/Expense/ExpenseApp';
 import ChatApp from './components/Apps/Chat/ChatApp';
 import LinkShortApp from './components/Apps/LinkShortner/LinkShortApp';
 import RedirectPage from './components/Apps/LinkShortner/RedirectPage';
-import LunarCalendarApp from './components/Apps/Lunar/LunarCalendarApp';
 import StorageApp from './components/Apps/Storage/StorageApp';
 import UnderDevelopment from './utility/UnderDevelopment';
+import SimonApp from './components/Apps/Public/Games/Simon/SimonApp';
+import LunarCalendarApp from './components/Apps/Public/Lunar/LunarCalendarApp';
 
 function App() {
     return (

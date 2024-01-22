@@ -11,7 +11,7 @@ export default function SimonApp() {
 					<GamePlay setGameState={setGameState} />
 					:
 					<>
-						<div>Game Logs</div>
+						<div>Game Logs, not implemented yet</div>
 						<button
 							style={floatingButtonStyle}
 							onClick={() => setGameState(true)}

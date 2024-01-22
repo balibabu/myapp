@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../global/variables";
+import { API_BASE_URL } from "./_baseURL";
 import { saveAs } from 'file-saver';
 
 export async function UploadFile(token, formData, setProgress) {

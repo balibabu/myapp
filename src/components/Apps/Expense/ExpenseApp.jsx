@@ -30,7 +30,7 @@ export default function ExpenseApp() {
                     <ExpenseRender expenses={expenses} />
                 </div>
                 <div className='col-lg-6 mt-3'>
-                    <Analytics />
+                    <Analytics expenses={expenses}/>
                 </div>
             </div>
             <AddExpenseUI add={(newExpense) => onCreate(newExpense, token, setExpenses)} />

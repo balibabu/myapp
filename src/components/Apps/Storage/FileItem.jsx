@@ -22,9 +22,6 @@ export default function FileItem(props) {
     }
 
     const downLoadhandler = async () => {
-        // directDownload('https://raw.githubusercontent.com/balibabu/media/main/babu/1704104491.png', props.file.originalName)
-        // downloader(props.file.url, props.file.originalName);
-        // directDownload(props.file,username);
         showToast('Downloading file', 'success');
         setDownloadFileId(props.file.id);
         await downloadFile(token, props.file.id, props.file.originalName, setProgress);

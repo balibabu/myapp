@@ -1,5 +1,5 @@
-import { API_BASE_URL } from "../global/variables";
 import axios from "axios";
+import { API_BASE_URL } from "./_baseURL";
 
 export async function AddLink(link){
     const response=await axios.post(`${API_BASE_URL}/shorten/`,

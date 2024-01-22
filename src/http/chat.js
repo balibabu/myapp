@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../global/variables";
+import { API_BASE_URL } from "./_baseURL";
 
 // chat/ users/ [name='user-list']
 // chat/ send-message/<int:userid>/ [name='send-message']

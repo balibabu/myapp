@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
 export default function ExpenseRender(props) {
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState({ date: '', note: '' });
+  // console.log(props.expenses);
   return (
     <div>
       <h3 className='ps-2'>Expenses</h3>
@@ -32,7 +33,7 @@ export default function ExpenseRender(props) {
 function Modal({ selected }) {
   return (
     <div className="modal fade text-secondary" id="expenseDetail" tabIndex="-1" aria-labelledby="expenseDetail" aria-hidden="true">
-      <div className="modal-dialog ">
+      <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header py-2">
             <div className="modal-title fs-5" id="staticBackdropLabel">Expense Detail</div>
@@ -41,7 +42,8 @@ function Modal({ selected }) {
           <div className="modal-body py-1">
             <div>Title: {selected.title}</div>
             <div>Price: {selected.amount}</div>
-            <div>Note: {selected.note}</div>
+            {selected.note.length > 0 && <div>Note: {selected.note}</div>}
+            <div>Date: {selected.date}</div>
           </div>
         </div>
       </div>

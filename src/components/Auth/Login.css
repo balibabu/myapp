@@ -40,7 +40,7 @@ body {
     font-size: 1.4rem;
     letter-spacing: 1.3px;
     padding-left: 10px;
-    color: #555;
+    color: #ffffff;
 }
 
 .wrapper .form-field input {
@@ -50,7 +50,7 @@ body {
     outline: none;
     background: none;
     font-size: 1.2rem;
-    color: #666;
+    color: #ffffff;
     padding: 10px 15px 10px 10px;
     /* border: 1px solid red; */
 }
@@ -79,7 +79,7 @@ body {
 }
 
 .wrapper .btn:hover {
-    background-color: #039ae5c0;
+    background-color: #00d5ff;
 }
 
 .wrapper a {
