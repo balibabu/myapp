@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import TodoRender from '../TodoRender';
+import TodoRender from './TodoRender';
 
 export default function Category(props) {
     const [tabStyle, setTabStyle] = useState({});
     useEffect(() => {
         setTabStyle({
             [props.selectedTab - 1]: {
-                borderRadius: '0 0 1rem 0',
+                borderRadius: '0 0 1.5rem 0',
                 width: ''
             },
             [props.selectedTab]: {
-                borderRadius: '.7rem .7rem 0 0',
+                borderRadius: '1.5rem 1.5rem 0 0',
                 backgroundColor: 'rgb(109, 184, 255)',
                 color: 'white',
                 width: '',
                 // fontSize:'18px'
             },
             [props.selectedTab + 1]: {
-                borderRadius: '0 0 0 1rem',
+                borderRadius: '0 0 0 1.5rem',
                 width: ''
             }
         })
@@ -46,10 +46,10 @@ export default function Category(props) {
 }
 
 const tabContainerStyle = {
-    fontSize: '16px',
-    height: '24px',
+    fontSize: '18px',
+    height: '43px',
     overflow: 'hidden',
-    cursor: 'pointer'
+    cursor: 'pointer',
 }
 const defaulTabStyle = {
     color: 'wheat',
@@ -57,7 +57,9 @@ const defaulTabStyle = {
     textOverflow: 'ellipsis',
     // width: '70px',
     backgroundColor: 'rgb(75,77,90)',
+    padding: '.5rem',
     paddingRight: '1.2rem',
     paddingLeft: '1.2rem',
+    // paddingTop: '1.2rem',
     whiteSpace: 'nowrap'
 }

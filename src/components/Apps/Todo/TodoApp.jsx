@@ -5,7 +5,7 @@ import FloatButton from '../../../utility/FloatButton';
 import VariableContext from '../../../global/VariableContext';
 import { onCreate, onDelete, onUpdate } from './TodoCRUD';
 import { Navigate } from 'react-router-dom';
-import Category from './Category/Category';
+import Category from './Category';
 
 export default function TodoApp() {
     const { todoList, setTodoList, fetchTodoList } = useContext(VariableContext);
