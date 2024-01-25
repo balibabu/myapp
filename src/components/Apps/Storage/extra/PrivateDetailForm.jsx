@@ -11,14 +11,6 @@ export function PrivateDetailForm({ privateDetails, setPrivateDetails, handlerPr
                     name='repo_owner'
                 />
             </div>
-            <div className="input-group mt-3">
-                <span className="input-group-text">Repo name</span>
-                <input type="text" className="form-control" placeholder="eg. media, photos" aria-label="Username" aria-describedby="basic-addon1"
-                    value={privateDetails.repo_name}
-                    onChange={handlerPrivateDetails}
-                    name='repo_name'
-                />
-            </div>
             <div className="input-group mt-3 position-relative">
                 <input type="text" className="form-control" placeholder="Personal access Token" aria-label="Username" aria-describedby="basic-addon1"
                     value={privateDetails.token}
@@ -26,10 +18,10 @@ export function PrivateDetailForm({ privateDetails, setPrivateDetails, handlerPr
                     name='token'
                     autoComplete="off"
                 />
-                <a target="_blank"
+                <a target="_blank" rel="noreferrer"
                     className="position-absolute top-50 start-100 translate-middle px-2"
                     style={infoStyle}
-                    href="balibabu.github.io/myapp#/a/g"> i </a>
+                    href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"> i </a>
             </div>
             <Autofill setPrivateDetails={setPrivateDetails} />
         </div>

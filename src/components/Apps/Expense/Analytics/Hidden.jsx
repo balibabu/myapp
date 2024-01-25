@@ -13,7 +13,7 @@ export default function Hidden({ expenses }) {
                     <tr><th>Action</th><th>Week</th><th>Month</th><th>Year</th><th>Last<input style={inputStyle} type='text' value={day} onChange={(e) => setDay(e.target.value)} /></th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>Sum</td><td>{f(expenses, 7)}</td><td>{f(expenses, 30)}</td><td>{f(expenses, 365)}</td><td>{(f(expenses, day) / day).toFixed(1)}</td></tr>
+                    <tr><td>Sum</td><td>{f(expenses, 7)}</td><td>{f(expenses, 30)}</td><td>{f(expenses, 365)}</td><td>{(f(expenses, day)).toFixed(1)}</td></tr>
                     <tr><td>per day</td><td>{(f(expenses, 7) / 7).toFixed(1)}</td><td>{(f(expenses, 30) / 30).toFixed(1)}</td><td>{(f(expenses, 365) / 365).toFixed(1)}</td><td>{(f(expenses, day) / day).toFixed(1)}</td></tr>
                 </tbody>
             </table>

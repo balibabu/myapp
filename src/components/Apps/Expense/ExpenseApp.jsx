@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import AddExpenseUI from './AddExpenseUI'
 import ExpenseRender from './ExpenseRender';
 import AuthContext from '../../../global/AuthContext';
-import Analytics from './Analytics';
+import Analytics from './Analytics/Analytics';
 import VariableContext from '../../../global/VariableContext';
 import { onCreate } from './ExpenseCRUD';
 

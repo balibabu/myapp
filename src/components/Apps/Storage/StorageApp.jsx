@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import VariableContext from '../../../global/VariableContext';
 import AuthContext from '../../../global/AuthContext';
 import FileRender from './FileRender';

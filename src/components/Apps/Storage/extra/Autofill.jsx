@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { privateDetails } from '../../../../global/variables';
 import { getGitIfos } from '../../../../http/Storage';
 import AuthContext from '../../../../global/AuthContext';
 

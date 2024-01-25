@@ -1,52 +1,35 @@
 import React, { useState } from 'react'
+import { EDetailModal } from './EDetailModal';
 
 export default function ExpenseRender(props) {
-  const [selected, setSelected] = useState({ date: '', note: '' });
-  // console.log(props.expenses);
-  return (
-    <div>
-      <h3 className='ps-2'>Expenses</h3>
-      <div className='px-5' style={{ maxHeight: "70vh", overflowY: "auto" }}>
-        {props.expenses.map((expense) => {
-          return (
-            <div key={expense.id}>
-              <div className='d-flex justify-content-between'>
-                <p className='mb-0 mt-2 ' style={{ cursor: "pointer" }}
-                  data-bs-toggle="modal" data-bs-target="#expenseDetail"
-                  onClick={() => setSelected(expense)}
-                >{expense.title}</p>
-                <p className='mb-0 mt-2'>{expense.amount}</p>
-              </div>
-              <hr className='m-0' />
-            </div>
-          )
-        })}
-      </div>
-      <Modal selected={selected} />
-    </div>
-  )
+    const [selected, setSelected] = useState({ date: '', note: '' });
+    const [collapsed, setCollapsed] = useState(false);
+
+    return (
+        <div>
+            <div className='ps-2 fs-3' onClick={() => setCollapsed(!collapsed)} style={{ cursor: "pointer" }}>Expenses</div>
+            {collapsed && <div className='px-5' style={{ maxHeight: "75vh", overflowY: "auto" }}>
+                {props.expenses.map((expense) => <ExpenseItem key={expense.id} setSelected={setSelected} expense={expense} />)}
+            </div>}
+            <EDetailModal selected={selected} />
+        </div>
+    )
 }
 
-
-
-
-function Modal({ selected }) {
-  return (
-    <div className="modal fade text-secondary" id="expenseDetail" tabIndex="-1" aria-labelledby="expenseDetail" aria-hidden="true">
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header py-2">
-            <div className="modal-title fs-5" id="staticBackdropLabel">Expense Detail</div>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div className="modal-body py-1">
-            <div>Title: {selected.title}</div>
-            <div>Price: {selected.amount}</div>
-            {selected.note.length > 0 && <div>Note: {selected.note}</div>}
-            <div>Date: {selected.date}</div>
-          </div>
+function ExpenseItem({ setSelected, expense }) {
+    return (
+        <div>
+            <div className='d-flex justify-content-between position-relative'>
+                <div className='mt-2 ' style={{ cursor: "pointer" }}
+                    data-bs-toggle="modal" data-bs-target="#expenseDetail"
+                    onClick={() => setSelected(expense)}
+                >{expense.title}</div>
+                <div className='mt-2'>
+                    <div className='position-absolute bottom-0' style={{ fontSize: '9px', color: '#666',right:'3rem'  }}>{expense.date.substr(5)}</div>
+                    <div>{expense.amount}</div>
+                </div>
+            </div>
+            <hr className='m-0' />
         </div>
-      </div>
-    </div>
-  );
+    );
 }

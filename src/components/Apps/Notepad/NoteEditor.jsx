@@ -48,12 +48,13 @@ export default function NoteEditor() {
     };
 
     const saveUpdateHandler = () => {
-        if(changed){
+        if (changed) {
             createUpdateHandler(noteId, noteDetails, token, setNotes, SetloadingNoteItem);
         }
         setNoteDetails(blankDetails);
         navigate(-1);
     }
+
 
     const Cancel = () => {
         if (changed) {
@@ -61,18 +62,24 @@ export default function NoteEditor() {
                 saveUpdateHandler();
                 return;
             }
-        } 
+        }
         navigate(-1);
     }
+    const handleKeyDown = (event) => {
+        if (event.key === 's' && event.ctrlKey) {
+            event.preventDefault();
+            saveUpdateHandler()
+        }
+    };
 
     return (
-        <div style={{ ...containerStyle, backgroundColor: "rgb(0,62,75)" }}>
+        <div style={{ ...containerStyle, backgroundColor: "rgb(0,62,75)" }} onKeyDown={handleKeyDown}>
             <div className='row m-0  justify-content-center'>
                 <div className='col-xl-8 col-md-10 col-sm-11 p-4'>
                     <div className="input-group mb-2">
-                        <button className="btn" style={{ backgroundColor: noteDetails.color, borderRight:'solid 1px white' }} onClick={Cancel}>{'<-'}</button>
+                        <button className="btn" style={{ backgroundColor: noteDetails.color, borderRight: 'solid 1px white' }} onClick={Cancel}>{'<-'}</button>
                         <input style={{ ...titleStyle, backgroundColor: noteDetails.color }} name='title' type="text" onChange={onValueChange} className='col-lg-10 col-9' placeholder='give a title' value={noteDetails.title} />
-                        <input type="color" className="form-control p-0" style={{ height: "auto", margin: "0px", border:'none' }} name='color' value={noteDetails.color} onChange={onValueChange} />
+                        <input type="color" className="form-control p-0" style={{ height: "auto", margin: "0px", border: 'none' }} name='color' value={noteDetails.color} onChange={onValueChange} />
                         <Dropdown color={noteDetails.color} />
                     </div>
                     <textarea className='col-12' name="description"

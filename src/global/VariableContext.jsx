@@ -12,7 +12,7 @@ export default VariableContext;
 
 export const VariableProvider = ({ children }) => {
     const [todoList, setTodoList] = useState([]);
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState();
     const [expenses, setExpenses] = useState([]);
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState({});

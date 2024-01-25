@@ -1,7 +1,7 @@
 import { AddTodo, DeleteTodoItem, UpdateTodoItem } from "../../../http/Todo";
 
-export const onCreate = async (title,token,setTodoList) => {
-    const item = await AddTodo(token, title);
+export const onCreate = async (data,token,setTodoList) => {
+    const item = await AddTodo(token, data);
     if (item) {
         setTodoList((oldList) => [item, ...oldList]);
     } else {

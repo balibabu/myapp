@@ -13,7 +13,7 @@ export default function NotepadApp() {
 
 
     useEffect(() => {
-        if (notes.length === 0 && loggedIn) {
+        if (notes === undefined && loggedIn) {
             setInitialFetch((prev) => {
                 if (!prev) {
                     fetchNotes();
@@ -29,8 +29,10 @@ export default function NotepadApp() {
 
 
     return (
-        <div style={{ backgroundColor: "#002d4d", maxHeight: "99dvh", overflowY: "auto" }}>
-            {loadingNoteItem === 'newItem' && <ProgressUI />}
+        <div style={{ maxHeight: "99dvh", overflowY: "auto" }}>
+            {loadingNoteItem === 'newItem' && <ProgressUI title='Creating New Note Please wait' />}
+            {notes === undefined && <ProgressUI title='Fetching notes please wait' />}
+
             <NoteRender
                 notes={notes}
                 onDelete={(id) => onDelete(id, token, setNotes)}

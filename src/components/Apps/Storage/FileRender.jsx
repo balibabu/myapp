@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import FileItem from './FileItem';
-import VariableContext from '../../../global/VariableContext';
-import LoadingUI from '../../../utility/LoadingUI';
 
 export default function FileRender(props) {
 

@@ -3,16 +3,17 @@ import TodoItem from './TodoItem'
 import './accordionStyle.css'
 
 export default function TodoRender(props) {
-	const { onUpdate, onDelete, fetchCompletedList } = props;
+	const { onUpdate, onDelete } = props;
 
 	const completed = props.todoList.filter((item) => item.completed);
 	const uncompleted = props.todoList.filter((item) => !item.completed);
+	// console.log(props.todoList);
 
 	return (
-		<div className="accordion custom-accordion" id="accordionExample">
-			<div className="accordion-item">
+		<div className="accordion custom-accordion" id="accordionExample" >
+			<div className="accordion-item" >
 				<h2 className="accordion-header">
-					<button className="accordion-button uncomplete fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					<button className="accordion-button uncomplete fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
 						Not Completed Tasks
 					</button>
 				</h2>
@@ -28,7 +29,7 @@ export default function TodoRender(props) {
 					</div>
 				</div>
 			</div>
-			<div className="accordion-item" onClick={()=>fetchCompletedList(completed)}>
+			<div className="accordion-item">
 				<h2 className="accordion-header">
 					<button className="accordion-button collapsed complete fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 						Completed Tasks

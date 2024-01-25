@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../../global/AuthContext';
-import TodoRender from './TodoRender';
 import CreateTodo from './CreateTodo';
 import FloatButton from '../../../utility/FloatButton';
 import VariableContext from '../../../global/VariableContext';
 import { onCreate, onDelete, onUpdate } from './TodoCRUD';
 import { Navigate } from 'react-router-dom';
-import { getCompletedTodoLlist } from '../../../http/Todo';
+import Category from './Category/Category';
 
 export default function TodoApp() {
     const { todoList, setTodoList, fetchTodoList } = useContext(VariableContext);
     const { token, loggedIn } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
+    const [selectedTab, setSelectedTab] = useState(0);
+    const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
         if (todoList.length === 0 && loggedIn) {
@@ -22,16 +23,9 @@ export default function TodoApp() {
                 return true;
             })
         }
+        setTabs([...new Set(todoList.map(item => item.category))])
         // eslint-disable-next-line
-    }, [])
-
-    const fetchCompletedList=async (completed)=>{
-        if(completed.length===0){
-            const list=await getCompletedTodoLlist(token);
-            setTodoList((prevList)=>[...prevList,...list]);
-        }
-    }
-
+    }, [todoList])
 
     if (!loggedIn) {
         return <Navigate to="/login" replace={true} />;
@@ -39,12 +33,26 @@ export default function TodoApp() {
 
     return (
         <div style={{ backgroundColor: "#264653", height: "100dvh" }}>
-            <TodoRender
+            <Category
+                tabs={tabs}
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+                todoList={todoList}
+                onDelete={(id) => onDelete(id, token, setTodoList)}
+                onUpdate={(item) => onUpdate(item, token, setTodoList)} />
+            {/* <TodoRender
                 todoList={todoList}
                 fetchCompletedList={fetchCompletedList}
                 onDelete={(id) => onDelete(id, token, setTodoList)}
-                onUpdate={(item) => onUpdate(item, token, setTodoList)} />
-            <CreateTodo modalId={"createTodoModal"} onCreate={(title) => onCreate(title, token, setTodoList)} />
+                onUpdate={(item) => onUpdate(item, token, setTodoList)} /> */}
+            <CreateTodo
+                tabs={tabs}
+                todoList={todoList}
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+                modalId={"createTodoModal"}
+                onCreate={(data) => onCreate(data, token, setTodoList)} />
+
             <FloatButton modalTarget={"createTodoModal"} />
         </div>
     )
