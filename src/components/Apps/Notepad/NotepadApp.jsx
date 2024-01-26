@@ -26,12 +26,11 @@ export default function NotepadApp() {
 
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
-
-
     return (
         <div style={{ maxHeight: "99dvh", overflowY: "auto" }}>
             {loadingNoteItem === 'newItem' && <ProgressUI title='Creating New Note Please wait' />}
             {notes === undefined && <ProgressUI title='Fetching notes please wait' />}
+            {notes && notes.length===0 && <h1 className='text-primary'>You Dont have any notes, go ahead and click + to create new note</h1>}
 
             <NoteRender
                 notes={notes}

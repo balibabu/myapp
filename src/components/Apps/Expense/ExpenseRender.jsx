@@ -7,8 +7,8 @@ export default function ExpenseRender(props) {
 
     return (
         <div>
-            <div className='ps-2 fs-3' onClick={() => setCollapsed(!collapsed)} style={{ cursor: "pointer" }}>Expenses</div>
-            {collapsed && <div className='px-5' style={{ maxHeight: "75vh", overflowY: "auto" }}>
+            <div className='ps-2 fs-3' onClick={() => setCollapsed(!collapsed)} style={{ cursor: "pointer" }}>{collapsed?'+':'-'} Expenses</div>
+            {!collapsed && <div className='px-5' style={{ maxHeight: "75vh", overflowY: "auto" }}>
                 {props.expenses.map((expense) => <ExpenseItem key={expense.id} setSelected={setSelected} expense={expense} />)}
             </div>}
             <EDetailModal selected={selected} />
@@ -25,7 +25,7 @@ function ExpenseItem({ setSelected, expense }) {
                     onClick={() => setSelected(expense)}
                 >{expense.title}</div>
                 <div className='mt-2'>
-                    <div className='position-absolute bottom-0' style={{ fontSize: '9px', color: '#666',right:'3rem'  }}>{expense.date.substr(5)}</div>
+                    <div className='position-absolute bottom-0' style={{ fontSize: '11px', color: '#666',right:'3rem'  }}>{expense.date.substr(5)}</div>
                     <div>{expense.amount}</div>
                 </div>
             </div>

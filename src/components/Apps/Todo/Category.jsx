@@ -6,18 +6,18 @@ export default function Category(props) {
     useEffect(() => {
         setTabStyle({
             [props.selectedTab - 1]: {
-                borderRadius: '0 0 1.5rem 0',
+                borderRadius: '0 0 1.8rem 0',
                 width: ''
             },
             [props.selectedTab]: {
-                borderRadius: '1.5rem 1.5rem 0 0',
+                borderRadius: '1.2rem 1.2rem 0 0',
                 backgroundColor: 'rgb(109, 184, 255)',
-                color: 'white',
+                color: 'black',
                 width: '',
                 // fontSize:'18px'
             },
             [props.selectedTab + 1]: {
-                borderRadius: '0 0 0 1.5rem',
+                borderRadius: '0 0 0 1.8rem',
                 width: ''
             }
         })

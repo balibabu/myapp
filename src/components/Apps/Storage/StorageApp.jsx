@@ -23,6 +23,7 @@ export default function StorageApp() {
                 return true;
             })
         }
+        console.log(files);
         // eslint-disable-next-line
     }, [])
 

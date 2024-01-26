@@ -32,7 +32,7 @@ export default function AddExpenseUI(props) {
                     <div className="accordion" id="addExpenseAccordion">
                         <div className="accordion-item">
                             <h2 className="accordion-header">
-                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExpenseEditor" aria-expanded="true" aria-controls="collapseExpenseEditor">
+                                <button className="accordion-button bg-secondary text-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExpenseEditor" aria-expanded="true" aria-controls="collapseExpenseEditor">
                                     Add an expense
                                 </button>
                             </h2>
