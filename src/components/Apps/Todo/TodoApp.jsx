@@ -40,20 +40,13 @@ export default function TodoApp() {
                 todoList={todoList}
                 onDelete={(id) => onDelete(id, token, setTodoList)}
                 onUpdate={(item) => onUpdate(item, token, setTodoList)} />
-            {/* <TodoRender
-                todoList={todoList}
-                fetchCompletedList={fetchCompletedList}
-                onDelete={(id) => onDelete(id, token, setTodoList)}
-                onUpdate={(item) => onUpdate(item, token, setTodoList)} /> */}
+
             <CreateTodo
                 tabs={tabs}
                 todoList={todoList}
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
-                modalId={"createTodoModal"}
                 onCreate={(data) => onCreate(data, token, setTodoList)} />
-
-            <FloatButton modalTarget={"createTodoModal"} />
         </div>
     )
 }

@@ -33,8 +33,7 @@ export default function StorageApp() {
         <div className='text-white'>
             {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
             <FileRender files={files} />
-            <UploadFileModal modalId={"uploadFileModal"} setProgress={setProgress} />
-            <FloatButton modalTarget={"uploadFileModal"} />
+            <UploadFileModal setProgress={setProgress} />
             <ToastDialog />
         </div>
     )

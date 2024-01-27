@@ -6,8 +6,11 @@ import { privateDetailsFormat } from '../../../global/variables';
 import { PrivateDetailForm } from './extra/PrivateDetailForm';
 import { Header } from './extra/Header';
 import FilePresence from './extra/FilePresence';
+import CustomModal from '../../../utility/CustomModal';
+import FloatButton from '../../../utility/FloatButton';
 
-export default function UploadFileModal({ modalId, setProgress }) {
+export default function UploadFileModal({ setProgress }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { files, setFiles, showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
@@ -26,6 +29,7 @@ export default function UploadFileModal({ modalId, setProgress }) {
     }
 
     const onUploadClick = async () => {
+        setIsModalOpen(false);
         if (!file) { return; }
         if (file.size > 100_000_000) {
             alert('size limit 100MB exceeded, please choose smaller size');
@@ -39,14 +43,33 @@ export default function UploadFileModal({ modalId, setProgress }) {
             formData.append("token", privateDetails.token);
         }
         if (FilePresence(file, files)) {
-            uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, fileInputRef, setFiles, setProgress);
+            uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, setFiles, setProgress);
         }
     };
     return (
-        <div className="modal fade" id={modalId} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-top">
-                <div className="modal-content">
-                    <Header isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
+        <div>
+            <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} top='20'>
+                <Header isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
+                <div className='input-group'>
+                    <input
+                        className="form-control"
+                        type="file"
+                        onChange={handleImageInputChange}
+                        ref={fileInputRef}
+                    />
+                    <button className='btn btn-success' onClick={onUploadClick}>Upload</button>
+                </div>
+                {isPrivate &&
+                    <PrivateDetailForm privateDetails={privateDetails} handlerPrivateDetails={handlerPrivateDetails} setPrivateDetails={setPrivateDetails} />
+                }
+            </CustomModal>
+            <FloatButton onPress={() => setIsModalOpen(true)} />
+        </div>
+    )
+}
+
+
+{/* <Header isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
                     <div className="modal-body">
                         <div className='input-group'>
                             <input
@@ -60,13 +83,15 @@ export default function UploadFileModal({ modalId, setProgress }) {
                         {isPrivate &&
                             <PrivateDetailForm privateDetails={privateDetails} handlerPrivateDetails={handlerPrivateDetails} setPrivateDetails={setPrivateDetails} />
                         }
-                    </div>
+                    </div> 
+                
+                
+                <div className="modal fade" id={modalId} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-top">
+                <div className="modal-content">
+                    
                 </div>
             </div>
-        </div>
-    )
-}
-
-
+        </div>*/}
 
 

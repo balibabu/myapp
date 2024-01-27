@@ -1,6 +1,6 @@
 export function Header({ isPrivate, setIsPrivate }) {
     return (
-        <div className="modal-header px-4">
+        <div className="modal-header px-2">
             <div className="form-check form-switch">
                 <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
                     checked={isPrivate}
