@@ -5,6 +5,7 @@ import Tooltip from '../../../utility/Tooltip/Tooltip';
 
 export default function TodoItem(props) {
 	const [isChecked, setIsChecked] = useState(props.item.completed);
+	const [isHidden, setIsHidden] = useState(true);
 	const handleCheckboxChange = () => {
 		setIsChecked((prevState) => {
 			const item = { ...props.item, completed: !prevState }
@@ -23,14 +24,16 @@ export default function TodoItem(props) {
 				className='my-1 py-2 px-3'
 				style={{ ...containerStyle, backgroundColor: isChecked ? '#5bff6b' : '#5fb1ff' }}
 			>
-				<div style={{display:"flex"}}>
+				<div className='d-flex me-1' style={isHidden ? hiddenStyle : {}}>
 					<input
 						className="form-check-input me-2"
 						onChange={handleCheckboxChange}
 						checked={isChecked}
 						type="checkbox"
 						value="" id="flexCheckDefault" />
-						<Tooltip text={convertUtcToLocal(props.item.created_time)}><p className='m-0'>{props.item.title}</p></Tooltip>
+					<Tooltip text={convertUtcToLocal(props.item.created_time)}>
+						<div className='m-0' onClick={() => setIsHidden(!isHidden)}>{props.item.title}</div>
+					</Tooltip>
 				</div>
 				<img src={deleteImg} style={deleteImgStyle} alt='delete' onClick={deleteHandler} />
 			</div>
@@ -47,4 +50,10 @@ const containerStyle = {
 
 const deleteImgStyle = {
 	width: "24px",
+}
+
+const hiddenStyle = {
+	overflow: "hidden",
+	whiteSpace: "nowrap",
+	textOverflow: "ellipsis"
 }

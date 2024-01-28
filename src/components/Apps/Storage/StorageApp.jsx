@@ -10,6 +10,7 @@ import ToastDialog from '../../../utility/ToastDialog';
 export default function StorageApp() {
     const { files, fetchFiles, showToast, loadingFileItem } = useContext(VariableContext);
     const { loggedIn } = useContext(AuthContext);
+    const [file, setFile] = useState(null);
     const [, setInitialFetch] = useState(false);
     const [progress, setProgress] = useState(0);
 
@@ -27,13 +28,25 @@ export default function StorageApp() {
         // eslint-disable-next-line
     }, [])
 
+    const handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const droppedFile = event.dataTransfer.files[0];
+        setFile(droppedFile);
+    };
+
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
-        <div className='text-white'>
+        <div className='text-white'
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}>
             {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
             <FileRender files={files} />
-            <UploadFileModal setProgress={setProgress} />
+            <UploadFileModal setProgress={setProgress} file={file} setFile={setFile}/>
             <ToastDialog />
         </div>
     )

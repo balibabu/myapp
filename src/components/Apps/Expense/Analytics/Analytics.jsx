@@ -19,9 +19,13 @@ export default function Analytics({ expenses }) {
         <div style={{ overflowY: "auto" }}>
             <div className='ps-2 fs-3' style={{ cursor: "pointer" }} onClick={collapseHandler}>{collapsed ? '+' : '-'} Analytics</div>
             {!collapsed && <div className='px-5 pt-2' style={{ fontSize: '14px' }}>
-                <div className='mb-2'>Today : Rs {getLastXDaysAmountSum(expenses, 1)}</div>
-                <div className='mb-2'>This Week : Rs {sumMoneyForCurrentWeek(expenses)}</div>
-                <div className='mb-2'>This Month : Rs {sumMoneyForCurrentMonth(expenses)}</div>
+                <table>
+                    <tbody>
+                        <tr><td>Today </td><td>: Rs {getLastXDaysAmountSum(expenses, 1)}</td></tr>
+                        <tr><td>This Week </td><td>: Rs {sumMoneyForCurrentWeek(expenses)}</td></tr>
+                        <tr><td>This Month </td><td>: Rs {sumMoneyForCurrentMonth(expenses)}</td></tr>
+                    </tbody>
+                </table>
                 {hidden && <Hidden expenses={expenses} />}
             </div>}
         </div>
