@@ -18,7 +18,7 @@ export default function TodoItem(props) {
 	}
 
 	return (
-		<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 position-relative">
 			<div
 				className='my-1 py-2 px-3'
 				style={{ ...containerStyle, backgroundColor: isChecked ? '#5bff6b' : '#5fb1ff' }}

@@ -1,9 +1,13 @@
 import Autofill from "./Autofill";
 
-export function PrivateDetailForm({ privateDetails, setPrivateDetails, handlerPrivateDetails }) {
+export function PrivateDetailForm({ privateDetails, setPrivateDetails }) {
+    const handlerPrivateDetails = (e) => {
+        const { name, value } = e.target;
+        setPrivateDetails((prev) => ({ ...prev, [name]: value }));
+    }
     return (
         <div className='text-black'>
-            <div className="input-group mt-3">
+            <div className="input-group mt-1">
                 <span className="input-group-text">Github Username</span>
                 <input type="text" className="form-control" placeholder="repo owner" aria-label="Username" aria-describedby="basic-addon1"
                     value={privateDetails.repo_owner}
@@ -11,7 +15,7 @@ export function PrivateDetailForm({ privateDetails, setPrivateDetails, handlerPr
                     name='repo_owner'
                 />
             </div>
-            <div className="input-group mt-3 position-relative">
+            <div className="input-group mt-1 position-relative">
                 <input type="text" className="form-control" placeholder="Personal access Token" aria-label="Username" aria-describedby="basic-addon1"
                     value={privateDetails.token}
                     onChange={handlerPrivateDetails}
@@ -31,9 +35,9 @@ export function PrivateDetailForm({ privateDetails, setPrivateDetails, handlerPr
 const infoStyle = {
     cursor: "pointer",
     textDecoration: 'none',
-    backgroundColor:'rgb(199, 199, 199)',
-    borderRadius:'100%',
-    border:'solid black 1px'
+    backgroundColor: 'rgb(199, 199, 199)',
+    borderRadius: '100%',
+    border: 'solid black 1px'
 
 }
 // mb-1 px-2 me-2

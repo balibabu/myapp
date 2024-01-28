@@ -8,6 +8,7 @@ import { Header } from './extra/Header';
 import FilePresence from './extra/FilePresence';
 import CustomModal from '../../../utility/CustomModal';
 import FloatButton from '../../../utility/FloatButton';
+import DragDrop from './DragDrop';
 
 export default function UploadFileModal({ setProgress }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,17 +19,8 @@ export default function UploadFileModal({ setProgress }) {
     const [privateDetails, setPrivateDetails] = useState(privateDetailsFormat);
     const fileInputRef = useRef(null);
 
-    const handleImageInputChange = (event) => {
-        const selectedFile = event.target.files[0];
-        setFile(selectedFile);
-    };
 
-    const handlerPrivateDetails = (e) => {
-        const { name, value } = e.target;
-        setPrivateDetails((prev) => ({ ...prev, [name]: value }));
-    }
-
-    const onUploadClick = async () => {
+    const onUploadClick = async (file) => {
         setIsModalOpen(false);
         if (!file) { return; }
         if (file.size > 100_000_000) {
@@ -48,9 +40,9 @@ export default function UploadFileModal({ setProgress }) {
     };
     return (
         <div>
-            <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} top='20'>
-                <Header isPrivate={isPrivate} setIsPrivate={setIsPrivate} />
-                <div className='input-group'>
+            <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} top='35'>
+                {/* <Header isPrivate={isPrivate} setIsPrivate={setIsPrivate} /> */}
+                {/* <div className='input-group'>
                     <input
                         className="form-control"
                         type="file"
@@ -58,10 +50,15 @@ export default function UploadFileModal({ setProgress }) {
                         ref={fileInputRef}
                     />
                     <button className='btn btn-success' onClick={onUploadClick}>Upload</button>
-                </div>
+                </div> */}
+                <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                        checked={isPrivate}
+                        onChange={() => setIsPrivate(!isPrivate)} /> For more privacy</div>
                 {isPrivate &&
-                    <PrivateDetailForm privateDetails={privateDetails} handlerPrivateDetails={handlerPrivateDetails} setPrivateDetails={setPrivateDetails} />
+                    <PrivateDetailForm privateDetails={privateDetails} setPrivateDetails={setPrivateDetails} />
                 }
+                <DragDrop setIsModalOpen={setIsModalOpen} onUploadClick={onUploadClick} />
             </CustomModal>
             <FloatButton onPress={() => setIsModalOpen(true)} />
         </div>

@@ -37,7 +37,7 @@ export default function Autofill({setPrivateDetails}) {
 
     return (
         <div>
-            <div className="input-group mt-3">
+            <div className="input-group mt-1 mb-2">
                 <label className="input-group-text" htmlFor="inputGroupSelect01">
                     AutoFill
                 </label>
