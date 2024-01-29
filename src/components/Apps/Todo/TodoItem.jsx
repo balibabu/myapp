@@ -21,18 +21,17 @@ export default function TodoItem(props) {
 	return (
 		<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 position-relative">
 			<div
-				className='my-1 py-2 px-3'
+				className='my-1 py-2 px-2'
 				style={{ ...containerStyle, backgroundColor: isChecked ? '#5bff6b' : '#5fb1ff' }}
 			>
 				<div className='d-flex me-1' style={isHidden ? hiddenStyle : {}}>
-					<input
-						className="form-check-input me-2"
+					<input className="form-check-input me-2"
 						onChange={handleCheckboxChange}
 						checked={isChecked}
 						type="checkbox"
 						value="" id="flexCheckDefault" />
 					<Tooltip text={convertUtcToLocal(props.item.created_time)}>
-						<div className='m-0' onClick={() => setIsHidden(!isHidden)}>{props.item.title}</div>
+						<div onClick={() => setIsHidden(!isHidden)}>{props.item.title}</div>
 					</Tooltip>
 				</div>
 				<img src={deleteImg} style={deleteImgStyle} alt='delete' onClick={deleteHandler} />

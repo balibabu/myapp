@@ -11,12 +11,12 @@ const VariableContext = createContext();
 export default VariableContext;
 
 export const VariableProvider = ({ children }) => {
-    const [todoList, setTodoList] = useState([]);
+    const [todoList, setTodoList] = useState();
     const [notes, setNotes] = useState();
-    const [expenses, setExpenses] = useState([]);
+    const [expenses, setExpenses] = useState();
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState({});
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState();
 
     const [toast, setToast] = useState(null);
     const [loadingNoteItem, SetloadingNoteItem] = useState(null);
@@ -55,6 +55,7 @@ export const VariableProvider = ({ children }) => {
 
     const fetchFiles = async () => {
         const list = await getFiles(token);
+        console.log(list);
         setFiles(list);
     }
 

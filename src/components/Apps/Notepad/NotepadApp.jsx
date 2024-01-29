@@ -4,7 +4,8 @@ import AuthContext from '../../../global/AuthContext';
 import NoteRender from './NoteRender';
 import { Link, Navigate } from 'react-router-dom';
 import { onDelete } from './utility/NoteCRUD';
-import ProgressUI from './utility/ProgressUI';
+import ProgressUI from '../../Shared/ProgressUI';
+import Fetching from '../../Shared/Fetching';
 
 export default function NotepadApp() {
     const { notes, setNotes, fetchNotes, loadingNoteItem } = useContext(VariableContext);
@@ -28,9 +29,9 @@ export default function NotepadApp() {
 
     return (
         <div style={{ maxHeight: "99dvh", overflowY: "auto" }}>
+            <Fetching status={notes} title='Notes'/>
             {loadingNoteItem === 'newItem' && <ProgressUI title='Creating New Note Please wait' />}
-            {notes === undefined && <ProgressUI title='Fetching notes please wait' />}
-            {notes && notes.length===0 && <h1 className='text-primary'>You Dont have any notes, go ahead and click + to create new note</h1>}
+            {/* {notes === undefined && <ProgressUI title='Fetching notes please wait' />} */}
 
             <NoteRender
                 notes={notes}

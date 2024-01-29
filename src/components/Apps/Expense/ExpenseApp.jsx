@@ -5,6 +5,7 @@ import AuthContext from '../../../global/AuthContext';
 import Analytics from './Analytics/Analytics';
 import VariableContext from '../../../global/VariableContext';
 import { onCreate } from './ExpenseCRUD';
+import Fetching from '../../Shared/Fetching';
 
 export default function ExpenseApp() {
     const { token, loggedIn } = useContext(AuthContext);
@@ -12,7 +13,7 @@ export default function ExpenseApp() {
     const { setExpenses, expenses, fetchExpenses } = useContext(VariableContext);
 
     useEffect(() => {
-        if (expenses.length === 0 && loggedIn) {
+        if (expenses === undefined && loggedIn) {
             setInitialFetch((prev) => {
                 if (!prev) {
                     fetchExpenses();
@@ -25,14 +26,15 @@ export default function ExpenseApp() {
 
     return (
         <div style={{ backgroundColor: "#403d39", height: "100dvh", color: "wheat" }}>
-            <div className='row m-0'>
+            <Fetching status={expenses} title='Expenses'/>
+            {expenses && expenses.length > 0 && <div className='row m-0'>
                 <div className='col-lg-6 mt-3'>
                     <ExpenseRender expenses={expenses} />
                 </div>
                 <div className='col-lg-6 mt-3'>
-                    <Analytics expenses={expenses}/>
+                    <Analytics expenses={expenses} />
                 </div>
-            </div>
+            </div>}
             <AddExpenseUI add={(newExpense) => onCreate(newExpense, token, setExpenses)} />
         </div>
     )

@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom';
 import UploadFileModal from './UploadFileModal';
 import FloatButton from '../../../utility/FloatButton';
 import ToastDialog from '../../../utility/ToastDialog';
+import Fetching from '../../Shared/Fetching';
 
 export default function StorageApp() {
     const { files, fetchFiles, showToast, loadingFileItem } = useContext(VariableContext);
@@ -15,7 +16,7 @@ export default function StorageApp() {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        if (files.length === 0 && loggedIn) {
+        if (files === undefined && loggedIn) {
             setInitialFetch((prev) => {
                 if (!prev) {
                     fetchFiles();
@@ -44,9 +45,10 @@ export default function StorageApp() {
         <div className='text-white'
             onDragOver={handleDragOver}
             onDrop={handleDrop}>
+            <Fetching status={files} title='Files and Folders' />
             {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
             <FileRender files={files} />
-            <UploadFileModal setProgress={setProgress} file={file} setFile={setFile}/>
+            <UploadFileModal setProgress={setProgress} file={file} setFile={setFile} />
             <ToastDialog />
         </div>
     )

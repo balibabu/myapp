@@ -18,7 +18,7 @@ export default function UploadFileModal({ file, setFile, setProgress }) {
     const [privateDetails, setPrivateDetails] = useState(privateDetailsFormat);
 
     useEffect(() => {
-        if (file){
+        if (file) {
             setIsModalOpen(true);
         }
     }, [file])
@@ -37,6 +37,7 @@ export default function UploadFileModal({ file, setFile, setProgress }) {
             formData.append("repo_owner", privateDetails.repo_owner);
             formData.append("repo_name", privateDetails.repo_name);
             formData.append("token", privateDetails.token);
+            formData.append("folder", 'root');
         }
         if (FilePresence(file, files)) {
             uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, setFiles, setProgress);

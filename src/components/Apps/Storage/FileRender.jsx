@@ -5,7 +5,7 @@ export default function FileRender(props) {
 
     return (
         <div className='row m-0 pt-2'>
-            {props.files.map((file) => {
+            {props.files && props.files.map((file) => {
                 return (
                     <FileItem key={file.id} file={file} />
                 );

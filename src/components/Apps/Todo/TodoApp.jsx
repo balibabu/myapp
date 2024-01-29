@@ -6,6 +6,7 @@ import VariableContext from '../../../global/VariableContext';
 import { onCreate, onDelete, onUpdate } from './TodoCRUD';
 import { Navigate } from 'react-router-dom';
 import Category from './Category';
+import Fetching from '../../Shared/Fetching';
 
 export default function TodoApp() {
     const { todoList, setTodoList, fetchTodoList } = useContext(VariableContext);
@@ -15,7 +16,7 @@ export default function TodoApp() {
     const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
-        if (todoList.length === 0 && loggedIn) {
+        if (todoList === undefined && loggedIn) {
             setInitialFetch((prev) => {
                 if (!prev) {
                     fetchTodoList();
@@ -23,7 +24,7 @@ export default function TodoApp() {
                 return true;
             })
         }
-        setTabs([...new Set(todoList.map(item => item.category))])
+        setTabs([...new Set(todoList && todoList.map(item => item.category))])
         // eslint-disable-next-line
     }, [todoList])
 
@@ -33,13 +34,17 @@ export default function TodoApp() {
 
     return (
         <div style={{ backgroundColor: "#264653", height: "100dvh" }}>
-            <Category
-                tabs={tabs}
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-                todoList={todoList}
-                onDelete={(id) => onDelete(id, token, setTodoList)}
-                onUpdate={(item) => onUpdate(item, token, setTodoList)} />
+            <Fetching status={todoList} title='todo list' />
+            {todoList && todoList.length > 0 && <>
+                <Category
+                    tabs={tabs}
+                    selectedTab={selectedTab}
+                    setSelectedTab={setSelectedTab}
+                    todoList={todoList}
+                    onDelete={(id) => onDelete(id, token, setTodoList)}
+                    onUpdate={(item) => onUpdate(item, token, setTodoList)} />
+            </>
+            }
 
             <CreateTodo
                 tabs={tabs}
