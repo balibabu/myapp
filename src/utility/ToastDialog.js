@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import VariableContext from '../global/VariableContext';
+import VariableContext from '../components/Contexts/VariableContext';
 
 export default function ToastDialog() {
     const { toast } = useContext(VariableContext);

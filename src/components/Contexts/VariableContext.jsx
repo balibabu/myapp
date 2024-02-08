@@ -1,10 +1,10 @@
 import { createContext, useContext, useState } from "react";
-import { GetTodoList } from "../http/Todo";
+import { GetTodoList } from "../../http/Todo";
 import AuthContext from "./AuthContext";
-import { GetNoteList } from "../http/Note";
-import { getConversationsList, getUserList } from "../http/chat";
-import GetExpenseList from "../http/Expense";
-import { getFiles } from "../http/Storage";
+import { GetNoteList } from "../../http/Note";
+import { getConversationsList, getMessages, getUserList } from "../../http/chat";
+import GetExpenseList from "../../http/Expense";
+import { getFiles } from "../../http/Storage";
 
 
 const VariableContext = createContext();
@@ -17,12 +17,13 @@ export const VariableProvider = ({ children }) => {
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState({});
     const [files, setFiles] = useState();
+    const [folders, setFolders] = useState();
 
     const [toast, setToast] = useState(null);
     const [loadingNoteItem, SetloadingNoteItem] = useState(null);
     const [loadingFileItem, SetloadingFileItem] = useState(null);
     const { token } = useContext(AuthContext);
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState();
 
     const fetchUserList = async () => {
         const list = await getUserList(token);
@@ -44,8 +45,8 @@ export const VariableProvider = ({ children }) => {
     }
     const fetchConversations = async (sound) => {
         const list = await getConversationsList(token);
-        setConversations((prevlist)=>{
-            if(JSON.stringify(list)!==JSON.stringify(prevlist)){
+        setConversations((prevlist) => {
+            if (JSON.stringify(list) !== JSON.stringify(prevlist)) {
                 playSound(sound);
                 return list;
             }
@@ -55,13 +56,13 @@ export const VariableProvider = ({ children }) => {
 
     const fetchFiles = async () => {
         const list = await getFiles(token);
-        console.log(list);
         setFiles(list);
     }
 
-    
-
-
+    const fetchMessage = async (activeUser) => {
+        const messages_userx = await getMessages(token, activeUser.id);
+        setMessages((prev) => ({ ...prev, [activeUser.id]: messages_userx }));
+    }
 
     const showToast = (message, type) => {
         setToast({
@@ -85,7 +86,7 @@ export const VariableProvider = ({ children }) => {
         fetchNotes,
         loadingNoteItem,
         SetloadingNoteItem,
-        loadingFileItem, 
+        loadingFileItem,
         SetloadingFileItem,
         users,
         setUsers,
@@ -99,8 +100,9 @@ export const VariableProvider = ({ children }) => {
         conversations,
         setConversations,
         fetchConversations,
-        messages, 
-        setMessages
+        messages,
+        setMessages,
+        fetchMessage
     }
     return (
         <VariableContext.Provider value={contextData}>
@@ -112,6 +114,6 @@ export const VariableProvider = ({ children }) => {
 
 
 function playSound(sound) {
-	var audio = new Audio(sound);
-	audio.play();
+    var audio = new Audio(sound);
+    audio.play();
 }

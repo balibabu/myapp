@@ -1,0 +1,43 @@
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import './Breadcrumbs.css'
+
+export default function BreadCrumbs({ selected, folders }) {
+    const [paths, setPaths] = useState([{ title: 'Home', id: -1 }]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (folders) {
+            let folder = folders.find(item => item.id === parseInt(selected));
+            folder = folder ? folder : { title: 'Home', id: -1 }
+            const index = paths.findIndex(item => item.id === parseInt(selected));
+            if (!isNaN(selected) && index === -1) {
+                setPaths((prev) => [...prev, folder]);
+            } else {
+                if (index === -1) {
+                    setPaths((prev) => prev.filter((_, i) => i <= 0));
+
+                } else {
+                    setPaths((prev) => prev.filter((_, i) => i <= index));
+                }
+            }
+        }
+
+    }, [folders, selected])
+
+    function pathClickHan(id) {
+        const index = paths.findIndex(item => item.id === id);
+        navigate(-(paths.length - index - 1));
+    }
+
+    return (
+        <nav className="breadcrumbs">
+            {paths.map((path, index) => {
+                if ((index + 1) === paths.length) {
+                    return <span className='breadcrumbs__item is-active'>{path.title}</span>
+                }
+                return <span className='text-primary breadcrumbs__item' onClick={() => pathClickHan(path.id)}>{path.title}</span>
+            })}
+        </nav>
+    )
+}

@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import AuthContext from '../../../global/AuthContext';
 import CreateTodo from './CreateTodo';
-import FloatButton from '../../../utility/FloatButton';
-import VariableContext from '../../../global/VariableContext';
 import { onCreate, onDelete, onUpdate } from './TodoCRUD';
 import { Navigate } from 'react-router-dom';
 import Category from './Category';
 import Fetching from '../../Shared/Fetching';
+import VariableContext from '../../Contexts/VariableContext';
+import AuthContext from '../../Contexts/AuthContext';
 
 export default function TodoApp() {
     const { todoList, setTodoList, fetchTodoList } = useContext(VariableContext);

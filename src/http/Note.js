@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_BASE_URL } from "./_baseURL";
 
 export async function GetNoteList(token) {
+    console.log('GetNoteList')
     try {
         const response = await axios.get(`${API_BASE_URL}/note/`, {
             headers: {
@@ -18,6 +19,7 @@ export async function GetNoteList(token) {
 
 
 export async function AddNote(token, note) {
+    console.log('AddNote')
     try {
         const response = await axios.post(
             `${API_BASE_URL}/note/`,
@@ -41,6 +43,7 @@ export async function AddNote(token, note) {
 }
 
 export async function UpdateNote(token, newNote) {
+    console.log('UpdateNote')
     try {
         const response = await axios.put(`${API_BASE_URL}/note/id/${newNote.id}/`, {
             ...newNote
@@ -59,6 +62,7 @@ export async function UpdateNote(token, newNote) {
 }
 
 export async function DeleteNote(token, id) {
+    console.log('DeleteNote')
     try {
         const response = await axios.delete(`${API_BASE_URL}/note/id/${id}/`, {
             headers: {
@@ -77,6 +81,7 @@ export async function DeleteNote(token, id) {
 
 
 export async function GetNoteDetail(token, id) {
+    console.log('GetNoteDetail')
     try {
         const response = await axios.get(`${API_BASE_URL}/note/id/${id}/`, {
             headers: {

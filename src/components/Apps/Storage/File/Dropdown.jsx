@@ -1,5 +1,5 @@
 import React from 'react'
-import ThreeDots from '../../../images/ThreeDots'
+import ThreeDots from '../../../../images/ThreeDots'
 
 export default function Dropdown({ deleteHandler, downLoadhandler }) {
     return (

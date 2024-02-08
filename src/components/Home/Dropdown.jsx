@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import AuthContext from '../../global/AuthContext'
 import profileImg from '../../images/contactProfile.jpg'
 import { UploadProfile } from '../../http/User';
+import AuthContext from '../Contexts/AuthContext';
 
 export default function Dropdown() {
     const { logout } = useContext(AuthContext);

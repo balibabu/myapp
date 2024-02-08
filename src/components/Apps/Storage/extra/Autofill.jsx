@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { getGitIfos } from '../../../../http/Storage';
-import AuthContext from '../../../../global/AuthContext';
+import AuthContext from '../../../Contexts/AuthContext';
 
 export default function Autofill({setPrivateDetails}) {
     const [selectedOption, setSelectedOption] = useState(""); // Initialize state for the selected option

@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_BASE_URL } from "./_baseURL";
 
 export async function getUserInfo(token){
+    console.log('getUserInfo');
     try {
         const response = await axios.get(`${API_BASE_URL}/user/`, {
             headers: {
@@ -20,6 +21,7 @@ export async function getUserInfo(token){
 }
 
 export async function Login(username, password) {
+    console.log('Login');
     try {
         const response = await axios.post(`${API_BASE_URL}/user/login/`, {
             username,
@@ -36,6 +38,7 @@ export async function Login(username, password) {
 }
 
 export async function Register(username, email, password) {
+    console.log('Register');
     try {
         const response = await axios.post(`${API_BASE_URL}/user/register/`, {
             username: username,
@@ -59,6 +62,7 @@ export async function Register(username, email, password) {
 
 
 export async function Logout() {
+    console.log('Logout');
     try {
         const response = await axios.post(`${API_BASE_URL}/user/logout/`);
         console.log(response.data);

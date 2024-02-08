@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import AuthContext from '../../global/AuthContext'
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import bellIcon from '../../images/bell.png';
+import AuthContext from '../Contexts/AuthContext';
 
 
 export default function Navbar() {

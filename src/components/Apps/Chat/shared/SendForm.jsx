@@ -1,14 +1,11 @@
 import { sendMessage } from '../../../../http/chat'
 import React, { useEffect, useRef, useState } from 'react'
 import sendSound from '../sound/send.mp3';
-import { addMessages } from '../addMessages';
 
 export default function SendForm({ sendFormData }) {
 	const {
 		showToast, token, dummy,
-		activeUser, lastMsgIdRef,
-		messages, setMessages,
-		intervalRef
+		activeUser, fetchMessage
 	} = sendFormData;
 
 	const [lineType, setLineType] = useState('s');
@@ -22,22 +19,17 @@ export default function SendForm({ sendFormData }) {
 
 	const sendBtnHandler = async (e) => {
 		e.preventDefault();
-		await addMessages(token, setMessages, activeUser, lastMsgIdRef);
 		if (isSending) { return }
 		setIsSending(true);
 		setContent('');
 		if (content.trim().length > 0) {
-			const msg = await sendMessage(token, content, activeUser.id);
+			await sendMessage(token, content, activeUser.id);
+			await fetchMessage(activeUser);
 			playSound();
-			if (msg) {
-				lastMsgIdRef.current = msg.id;
-				setMessages((preMsg) => ({ ...preMsg, [activeUser.id]: [...messages[activeUser.id], msg] }))
-				setTimeout(() => {
-					dummy.current.scrollIntoView({ behavior: 'smooth' });
-				}, 200);
-			}
+			setTimeout(() => {
+				dummy.current.scrollIntoView({ behavior: 'smooth' });
+			}, 200);
 		}
-		intervalRef.current = 1000;
 		setIsSending(false);
 	}
 
@@ -52,7 +44,7 @@ export default function SendForm({ sendFormData }) {
 	}
 	return (
 		<form onSubmit={sendBtnHandler}>
-			<div className='input-group px-2' >
+			<div className='input-group px-3' >
 				<input type='button' style={inputTextStyle} value={lineType} onClick={onLineChange} />
 				{
 					lineType === 'm' ?

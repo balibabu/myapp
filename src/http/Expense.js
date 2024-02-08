@@ -1,26 +1,28 @@
 import axios from "axios";
 import { API_BASE_URL } from "./_baseURL";
 
-export default async function GetExpenseList(token){
+export default async function GetExpenseList(token) {
+    console.log('GetExpenseList')
     try {
         const response = await axios.get(`${API_BASE_URL}/expense/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
         })
-       if(response.status===200){
-        return response.data;
-       }
+        if (response.status === 200) {
+            return response.data;
+        }
     } catch (error) {
         console.log(error);
     }
 }
 
 export async function AddExpense(token, newExpense) {
+    console.log('AddExpense')
     try {
         const response = await axios.post(
             `${API_BASE_URL}/expense/`,
-            {...newExpense},
+            { ...newExpense },
             {
                 headers: {
                     'Authorization': `Token ${token}`,
@@ -40,14 +42,15 @@ export async function AddExpense(token, newExpense) {
 }
 
 
-export async function DeleteExpenseItem(token,id){
+export async function DeleteExpenseItem(token, id) {
+    console.log('DeleteExpenseItem')
     try {
-        const response=await axios.delete(`${API_BASE_URL}/expense/id/${id}/`,{
+        const response = await axios.delete(`${API_BASE_URL}/expense/id/${id}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
         })
-        if(response.status===204){
+        if (response.status === 204) {
             return true;
         }
         return false;

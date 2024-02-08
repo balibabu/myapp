@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import VariableContext from '../../../global/VariableContext';
-import AuthContext from '../../../global/AuthContext';
 import Dropdown from './extra/Dropdown';
 import { createUpdateHandler } from './utility/NoteCRUD';
 import currentDateToColor from './utility/Colors';
 import { Confirm } from '../../../utility/utilities';
+import AuthContext from '../../Contexts/AuthContext';
+import VariableContext from '../../Contexts/VariableContext';
 
 const blankDetails = { title: "", description: "", color: currentDateToColor() };
 export default function NoteEditor() {
@@ -16,10 +16,11 @@ export default function NoteEditor() {
     const { notes, setNotes, SetloadingNoteItem, fetchNotes } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
+    const titleFieldRef = useRef();
+
     const navigate = useNavigate();
 
     useEffect(() => {
-
         setInitialFetch((prev) => {
             if (!prev) {
                 //////////////////////////////// /main code//////////////////////////////// 
@@ -38,6 +39,7 @@ export default function NoteEditor() {
             }
             return true;
         })
+        if (isNaN(noteId)) { titleFieldRef.current.focus() }
         // eslint-disable-next-line
     }, [])
 
@@ -78,7 +80,7 @@ export default function NoteEditor() {
                 <div className='col-xl-8 col-md-10 col-sm-11 p-4'>
                     <div className="input-group mb-2">
                         <button className="btn" style={{ backgroundColor: noteDetails.color, borderRight: 'solid 1px white' }} onClick={Cancel}>{'<-'}</button>
-                        <input style={{ ...titleStyle, backgroundColor: noteDetails.color }} name='title' type="text" onChange={onValueChange} className='col-lg-10 col-9' placeholder='give a title' value={noteDetails.title} />
+                        <input ref={titleFieldRef} style={{ ...titleStyle, backgroundColor: noteDetails.color }} name='title' type="text" onChange={onValueChange} className='col-lg-10 col-9' placeholder='give a title' value={noteDetails.title} />
                         <input type="color" className="form-control p-0" style={{ height: "auto", margin: "0px", border: 'none' }} name='color' value={noteDetails.color} onChange={onValueChange} />
                         <Dropdown color={noteDetails.color} />
                     </div>

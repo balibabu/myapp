@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import VariableContext from '../../../global/VariableContext'
-import AuthContext from '../../../global/AuthContext';
 import NoteRender from './NoteRender';
 import { Link, Navigate } from 'react-router-dom';
 import { onDelete } from './utility/NoteCRUD';
 import ProgressUI from '../../Shared/ProgressUI';
 import Fetching from '../../Shared/Fetching';
+import VariableContext from '../../Contexts/VariableContext';
+import AuthContext from '../../Contexts/AuthContext';
 
 export default function NotepadApp() {
     const { notes, setNotes, fetchNotes, loadingNoteItem } = useContext(VariableContext);

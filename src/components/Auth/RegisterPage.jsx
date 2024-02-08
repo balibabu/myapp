@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import AuthContext from '../../global/AuthContext';
 import { Register } from '../../http/Auth';
 import { Link, Navigate } from 'react-router-dom';
+import AuthContext from '../Contexts/AuthContext';
 
 const formate = { username: "", email: "", password: "", password2: "" };
 export default function RegisterPage() {

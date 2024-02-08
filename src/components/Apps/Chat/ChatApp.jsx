@@ -1,14 +1,28 @@
 import { useMediaQuery } from 'react-responsive';
 import MobileChat from './Mobile/MobileChat';
 import DesktopChat from './Desktop/DesktopChat';
-import { useContext, useState } from 'react';
-import AuthContext from '../../../global/AuthContext';
+import { useContext, useEffect, useState } from 'react';
+import AuthContext from '../../Contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
+import VariableContext from '../../Contexts/VariableContext';
 
 export default function ChatApp() {
 	const { loggedIn } = useContext(AuthContext);
 	const isMobile = useMediaQuery({ maxWidth: 767 });
 	const [activeUser, setActiveUser] = useState(null);
+
+    const { users, fetchUserList } = useContext(VariableContext);
+    const [, setInitialFetch] = useState(false);
+
+    useEffect(() => {
+        setInitialFetch((prev) => {
+			if (!prev && users === undefined) {
+                fetchUserList();
+            }
+            return true;
+        })
+        // eslint-disable-next-line
+    }, [])
 
 	const onSelect = (user) => {
 		setActiveUser(user);
@@ -21,7 +35,7 @@ export default function ChatApp() {
 	}
 	if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 	return (
-		<div style={{ backgroundColor: "#0096c7", height: "100dvh"}}>
+		<div style={{ backgroundColor: "#0096c7", height: "100dvh" }}>
 			{isMobile ? <MobileChat sharedProps={sharedProps} /> : <DesktopChat sharedProps={sharedProps} />}
 		</div>
 	)

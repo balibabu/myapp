@@ -1,32 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import ContactRender from './ContactRender';
-import VariableContext from '../../../global/VariableContext';
+import VariableContext from '../../../Contexts/VariableContext';
 
 export default function SearchBox({ modalId, onSelect }) {
     const [username, setUsername] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const { users, fetchUserList } = useContext(VariableContext);
+    const { users } = useContext(VariableContext);
 
-    const [, setInitialFetch] = useState(false);
-
-    useEffect(() => {
-        setInitialFetch((prev) => {
-            if (!prev) {
-                fetchUserList();
-            }
-            return true;
-        })
-        // eslint-disable-next-line
-    }, [])
 
     const onNameChange = (event) => {
         const inputValue = event.target.value;
         setUsername(inputValue);
-        if (inputValue.trim().length < 3) {
-            setFilteredUsers([])
-        } else {
-            setFilteredUsers(users.filter((user) => user.username.toLowerCase().includes(inputValue.toLowerCase())));
-        }
+        setFilteredUsers(users.filter((user) => user.username.toLowerCase().includes(inputValue.toLowerCase())));
     }
 
     return (

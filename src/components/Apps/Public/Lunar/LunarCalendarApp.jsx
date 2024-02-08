@@ -20,7 +20,7 @@ export default function LunarCalendarApp() {
     }
     return (
         <div style={{ ...lunarCalendarStyle, backgroundImage: `url(${process.env.PUBLIC_URL}/images/${FullNewMoon}.jpg)` }}>
-            <h1>Under Development</h1>
+            <h1>Lunar Phase</h1>
             <div>Illumination: {data.illumination}</div>
             {imgNum && <img src={process.env.PUBLIC_URL + `/images/${imgNum}.jpg`} alt={`${imgNum}`} style={imgStyle} />}
             <footer style={footerStyle}>

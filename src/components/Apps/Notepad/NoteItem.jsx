@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import deleteImg from '../../../images/delete.png';
 import convertUtcToLocal from '../../../utility/AutoLocalTime';
 import LoadingUI from '../../../utility/LoadingUI';
-import VariableContext from '../../../global/VariableContext';
+import VariableContext from '../../Contexts/VariableContext';
 
 export default function NoteItem(props) {
     const { loadingNoteItem, SetloadingNoteItem } = useContext(VariableContext);

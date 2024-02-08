@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AddExpenseUI from './AddExpenseUI'
 import ExpenseRender from './ExpenseRender';
-import AuthContext from '../../../global/AuthContext';
 import Analytics from './Analytics/Analytics';
-import VariableContext from '../../../global/VariableContext';
 import { onCreate } from './ExpenseCRUD';
 import Fetching from '../../Shared/Fetching';
+import AuthContext from '../../Contexts/AuthContext';
+import ExpenseContext from '../../Contexts/ExpenseContext';
 
 export default function ExpenseApp() {
     const { token, loggedIn } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
-    const { setExpenses, expenses, fetchExpenses } = useContext(VariableContext);
+    const { setExpenses, expenses, fetchExpenses } = useContext(ExpenseContext);
 
     useEffect(() => {
         if (expenses === undefined && loggedIn) {

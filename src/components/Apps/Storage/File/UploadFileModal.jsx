@@ -1,31 +1,29 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import AuthContext from '../../../global/AuthContext';
-import VariableContext from '../../../global/VariableContext';
-import { uploadFile } from './FileCRUD';
-import { privateDetailsFormat } from '../../../global/variables';
-import { PrivateDetailForm } from './extra/PrivateDetailForm';
-import { Header } from './extra/Header';
-import FilePresence from './extra/FilePresence';
-import CustomModal from '../../../utility/CustomModal';
-import FloatButton from '../../../utility/FloatButton';
+import { uploadFile } from '../FileCRUD';
+import { PrivateDetailForm } from '../extra/PrivateDetailForm';
+import { Header } from '../extra/Header';
+import FilePresence from '../extra/FilePresence';
+import CustomModal from '../../../../utility/CustomModal';
+import FloatButton from '../../../../utility/FloatButton';
 import DragDrop from './DragDrop';
+import VariableContext from '../../../Contexts/VariableContext';
+import AuthContext from '../../../Contexts/AuthContext';
 
-export default function UploadFileModal({ file, setFile, setProgress }) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+export default function UploadFileModal({ file, setFile, setProgress, fileModal, setFileModal,selected }) {
     const { files, setFiles, showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [isPrivate, setIsPrivate] = useState(false);
-    const [privateDetails, setPrivateDetails] = useState(privateDetailsFormat);
+    const [privateDetails, setPrivateDetails] = useState({});
 
     useEffect(() => {
         if (file) {
-            setIsModalOpen(true);
+            setFileModal(true);
         }
     }, [file])
 
 
     const onUploadClick = async (file) => {
-        setIsModalOpen(false);
+        setFileModal(false);
         if (!file) { return; }
         if (file.size > 100_000_000) {
             alert('size limit 100MB exceeded, please choose smaller size');
@@ -37,8 +35,8 @@ export default function UploadFileModal({ file, setFile, setProgress }) {
             formData.append("repo_owner", privateDetails.repo_owner);
             formData.append("repo_name", privateDetails.repo_name);
             formData.append("token", privateDetails.token);
-            formData.append("folder", 'root');
         }
+        formData.append("inside", selected);
         if (FilePresence(file, files)) {
             uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, setFiles, setProgress);
         }
@@ -46,7 +44,7 @@ export default function UploadFileModal({ file, setFile, setProgress }) {
     };
     return (
         <div>
-            <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} top='35'>
+            <CustomModal isModalOpen={fileModal} setIsModalOpen={setFileModal} top='35'>
                 <div className="form-check form-switch">
                     <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
                         checked={isPrivate}
@@ -54,9 +52,9 @@ export default function UploadFileModal({ file, setFile, setProgress }) {
                 {isPrivate &&
                     <PrivateDetailForm privateDetails={privateDetails} setPrivateDetails={setPrivateDetails} />
                 }
-                <DragDrop file={file} setFile={setFile} setIsModalOpen={setIsModalOpen} onUploadClick={onUploadClick} />
+                <DragDrop file={file} setFile={setFile} setIsModalOpen={setFileModal} onUploadClick={onUploadClick} />
             </CustomModal>
-            <FloatButton onPress={() => setIsModalOpen(true)} />
+            {/* <FloatButton onPress={() => setIsModalOpen(true)} /> */}
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import contactProfile from '../../../images/contactProfile.jpg';
+import contactProfile from '../../../../images/contactProfile.jpg';
 
 export default function ContactRender({ users, onSelect, modalname = "" }) {
 

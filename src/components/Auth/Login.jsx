@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import './Login.css';
-import AuthContext from '../../global/AuthContext';
 import { Link, Navigate } from "react-router-dom";
 import profileImg from '../../images/contactProfile.jpg';
+import AuthContext from '../Contexts/AuthContext';
 
 export default function Login() {
     const [formDetail, setFormDetail] = useState({ username: "", password: "" });

@@ -1,31 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react'
-import VariableContext from '../../../global/VariableContext';
-import AuthContext from '../../../global/AuthContext';
-import FileRender from './FileRender';
-import { Navigate } from 'react-router-dom';
-import UploadFileModal from './UploadFileModal';
-import FloatButton from '../../../utility/FloatButton';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import ToastDialog from '../../../utility/ToastDialog';
 import Fetching from '../../Shared/Fetching';
+import FolderRenderer from './Folder/FolderRenderer';
+import AddButton from './AddButton';
+import FileRenderer from './File/FileRenderer';
+import VariableContext from '../../Contexts/VariableContext';
+import StorageContext from '../../Contexts/StorageContext';
+import AuthContext from '../../Contexts/AuthContext';
+import BreadCrumbs from './Breadcrumbs/BreadCrumbs';
 
 export default function StorageApp() {
-    const { files, fetchFiles, showToast, loadingFileItem } = useContext(VariableContext);
-    const { loggedIn } = useContext(AuthContext);
+    const { selected } = useParams();
+    const navigate = useNavigate();
+    const { showToast, loadingFileItem } = useContext(VariableContext);
+    const { loggedIn, token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
     const [, setInitialFetch] = useState(false);
     const [progress, setProgress] = useState(0);
+    const { files, folders, fetchFilesAndFolders } = useContext(StorageContext);
 
     useEffect(() => {
         if (files === undefined && loggedIn) {
             setInitialFetch((prev) => {
                 if (!prev) {
-                    fetchFiles();
+                    fetchFilesAndFolders()
                     showToast('enjoy free unlimited storage', 'primary')
                 }
                 return true;
             })
         }
-        console.log(files);
         // eslint-disable-next-line
     }, [])
 
@@ -44,12 +48,16 @@ export default function StorageApp() {
     return (
         <div className='text-white'
             onDragOver={handleDragOver}
-            onDrop={handleDrop}>
-            <Fetching status={files} title='Files and Folders' />
+            onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
+            <Fetching status={files} title='Files and Folders' /> <ToastDialog />
             {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
-            <FileRender files={files} />
-            <UploadFileModal setProgress={setProgress} file={file} setFile={setFile} />
-            <ToastDialog />
+            {/* <button onClick={() => navigate(-1)}>Back</button> */}
+            <BreadCrumbs {...{selected,folders}}/>
+            <hr />
+            {folders && folders.length > 0 && <FolderRenderer {...{ folders, selected }} />}
+            <hr />
+            {files && files.length > 0 && <FileRenderer {...{ files, selected }} />}
+            <AddButton {...{ selected, setProgress, file, setFile }} />
         </div>
     )
 }
@@ -62,3 +70,4 @@ const UploadingUI = ({ progress }) => {
         </div>
     );
 }
+

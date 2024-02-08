@@ -1,21 +1,19 @@
 import React from 'react'
-import MessageArea from './MessageArea';
-import ConversationListArea from '../ConversationListArea';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import ConversationListArea from '../shared/ConversationListArea';
+import MobileMessageArea from './MobileMessageArea';
 
 export default function MobileChat(props) {
-  const { setActiveUser, activeUser, onSelect } = props.sharedProps;
+  const { setActiveUser, activeUser } = props.sharedProps;
+  const navigate = useNavigate();
+  const onSelect = (user) => {
+    navigate(`/chat/${user.id}`);
+  }
   return (
-    <div className='container pt-3'>
-      {
-        activeUser ?
-          <MessageArea setActiveUser={setActiveUser} activeUser={activeUser} />
-          :
-          <>
-            <h3>Chats</h3>
-            <ConversationListArea activeUser={activeUser} onSelect={onSelect} />
-          </>
-      }
-    </div>
+    <Routes>
+      <Route path='/' element={<ConversationListArea activeUser={activeUser} onSelect={onSelect} />} />
+      <Route path=':id/' element={<MobileMessageArea setActiveUser={setActiveUser} activeUser={activeUser} />} />
+    </Routes>
   )
 }
 

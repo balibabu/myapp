@@ -3,6 +3,7 @@ import { API_BASE_URL } from "./_baseURL";
 
 
 export async function GetTodoList(token) {
+    console.log('GetTodoList');
     try {
         const response = await axios.get(`${API_BASE_URL}/todo/`, {
             headers: {
@@ -19,6 +20,7 @@ export async function GetTodoList(token) {
 }
 
 export async function AddTodo(token, data) {
+    console.log('AddTodo');
     try {
         const response = await axios.post(
             `${API_BASE_URL}/todo/`,
@@ -42,6 +44,7 @@ export async function AddTodo(token, data) {
 }
 
 export async function UpdateTodoItem(token, newItem) {
+    console.log('UpdateTodoItem');
     try {
         const response = await axios.put(`${API_BASE_URL}/todo/id/${newItem.id}/`, {
             ...newItem
@@ -60,6 +63,7 @@ export async function UpdateTodoItem(token, newItem) {
 }
 
 export async function DeleteTodoItem(token, id) {
+    console.log('DeleteTodoItem');
     try {
         const response = await axios.delete(`${API_BASE_URL}/todo/id/${id}/`, {
             headers: {
@@ -78,6 +82,7 @@ export async function DeleteTodoItem(token, id) {
 
 
 export async function getCompletedTodoLlist(token) {
+    console.log('getCompletedTodoLlist');
     try {
         const response = await axios.get(`${API_BASE_URL}/todo/completed/`, {
             headers: {

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import AuthContext from '../../../global/AuthContext';
-import contactProfile from '../../../images/contactProfile.jpg';
-import convertUtcToLocal from '../../../utility/AutoLocalTime';
+import contactProfile from '../../../../images/contactProfile.jpg';
+import convertUtcToLocal from '../../../../utility/AutoLocalTime';
+import AuthContext from '../../../Contexts/AuthContext';
 
 export default function ConversationsRender({ onSelect, conversations }) {
     const { username } = useContext(AuthContext);

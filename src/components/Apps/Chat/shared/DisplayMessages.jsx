@@ -1,12 +1,12 @@
 import React from 'react'
-import convertUtcToLocal from '../../../utility/AutoLocalTime';
-import Tooltip from '../../../utility/Tooltip/Tooltip';
+import convertUtcToLocal from '../../../../utility/AutoLocalTime';
+import Tooltip from '../../../../utility/Tooltip/Tooltip';
 
 export default function DisplayMessages({ messages, username, activeUser }) {
     return (
         <div>
             {messages[activeUser.id] && messages[activeUser.id].map((message) => {
-                return <Message message={message} isSent={message.sender.username === username} />
+                return <Message key={message.id} message={message} isSent={message.sender.username === username} />
             })}
         </div>
     )

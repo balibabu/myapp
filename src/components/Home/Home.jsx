@@ -17,7 +17,7 @@ export default function Home() {
 		<div style={{ backgroundColor: "rgb(54, 54, 54)", height: "100dvh" }}>
 			<Navbar />
 			<div className="container-fluid d-flex flex-wrap">
-				<Link to='/storage' style={{ textDecoration: 'none' }}><AppName image={storageIcon} appname='Storage' /></Link>
+				<Link to='/storage/null' style={{ textDecoration: 'none' }}><AppName image={storageIcon} appname='Storage' /></Link>
 				<Link to='/notepad' style={{ textDecoration: 'none' }}><AppName image={notepadIcon} appname='Notepad' /></Link>
 				<Link to='/todo' style={{ textDecoration: 'none' }}><AppName image={todoIcon} appname='Todo' /></Link>
 				<Link to='/expense' style={{ textDecoration: 'none' }}><AppName image={expenseIcon} appname='Expenses' /></Link>

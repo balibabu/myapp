@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
-import LoadingUI from '../../../utility/LoadingUI';
-import VariableContext from '../../../global/VariableContext';
-import fileImg from '../../../images/file.png';
-import convertUtcToLocal from '../../../utility/AutoLocalTime';
+import LoadingUI from '../../../../utility/LoadingUI';
+import fileImg from '../../../../images/file.png';
+import convertUtcToLocal from '../../../../utility/AutoLocalTime';
 import Dropdown from './Dropdown';
-import AuthContext from '../../../global/AuthContext';
-import { downloader, onDelete } from './FileCRUD';
-import { downloadFile } from '../../../http/Storage';
-import IntelligentSize from './extra/IntelligentSize';
+import { downloader, onDelete } from '../FileCRUD';
+import { downloadFile } from '../../../../http/Storage';
+import IntelligentSize from '../extra/IntelligentSize';
+import VariableContext from '../../../Contexts/VariableContext';
+import AuthContext from '../../../Contexts/AuthContext';
 
 
 export default function FileItem(props) {

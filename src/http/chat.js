@@ -9,6 +9,7 @@ import { API_BASE_URL } from "./_baseURL";
 
 
 export async function getConversationsList(token) {
+    console.log('getConversationsList');
     try {
         const response = await axios.get(`${API_BASE_URL}/chat/conversations/`, {
             headers: {
@@ -25,6 +26,7 @@ export async function getConversationsList(token) {
 
 
 export async function getUserList(token) {
+    console.log(' getUserList')
     try {
         const response = await axios.get(`${API_BASE_URL}/chat/users/`, {
             headers: {
@@ -41,6 +43,7 @@ export async function getUserList(token) {
 
 
 export async function getMessages(token, userId) {
+    console.log(' getMessages')
     try {
         const response = await axios.get(`${API_BASE_URL}/chat/conversations/${userId}/`, {
             headers: {
@@ -58,6 +61,7 @@ export async function getMessages(token, userId) {
 }
 
 export async function sendMessage(token, content, receiverid) {
+    console.log(' sendMessage')
     try {
         const response = await axios.post(
             `${API_BASE_URL}/chat/send-message/${receiverid}/`,
@@ -83,6 +87,7 @@ export async function sendMessage(token, content, receiverid) {
 
 
 export async function getLatestMessages(token,last_msgid,userid){
+    console.log(' getLatestMessages')
     try {
         const response = await axios.get(`${API_BASE_URL}/chat/new-msg/${last_msgid}/${userid}/`, {
             headers: {
@@ -99,6 +104,7 @@ export async function getLatestMessages(token,last_msgid,userid){
 
 
 export async function getMessagesFromUniqueUser(token) {
+    console.log(' getMessagesFromUniqueUser')
     try {
         const response = await axios.get(`${API_BASE_URL}/chat/latest-messages/`, {
             headers: {
