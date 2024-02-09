@@ -8,16 +8,17 @@ import { downloadFile } from '../../../../http/Storage';
 import IntelligentSize from '../extra/IntelligentSize';
 import VariableContext from '../../../Contexts/VariableContext';
 import AuthContext from '../../../Contexts/AuthContext';
+import StorageContext from '../../../Contexts/StorageContext';
 
 
 export default function FileItem(props) {
-    const { loadingFileItem, SetloadingFileItem, showToast, setFiles } = useContext(VariableContext);
+    const { loadingFileItem, SetloadingFileItem, showToast } = useContext(VariableContext);
     const { token, username } = useContext(AuthContext);
     const [progress, setProgress] = useState(0);
     const [downloadFileId, setDownloadFileId] = useState(null);
+    const { setFiles } = useContext(StorageContext);
 
-    const deleteHandler = async (event) => {
-        event.stopPropagation();
+    const deleteHandler = async () => {
         onDelete(props.file.id, token, SetloadingFileItem, showToast, setFiles);
     }
 
@@ -62,8 +63,8 @@ export default function FileItem(props) {
 const DownloadingUI = ({ progress }) => {
     return (
         <div className="progress" role="progressbar">
-            <div className="progress-bar progress-bar-striped progress-bar-animated bg-success" 
-            style={{ width: `${progress}%` }}>{`${progress}%`}</div>
+            <div className="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                style={{ width: `${progress}%` }}>{`${progress}%`}</div>
         </div>
     );
 }

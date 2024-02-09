@@ -16,7 +16,6 @@ export default function CreateFolder({ folderModal, setFolderModal, selected }) 
         }
         const res = await createFolder(token, folderInfo);
         setFolders((prev) => [...prev, res]);
-        console.log(res);
         setFolderModal(false);
         setFolder('new folder');
     }

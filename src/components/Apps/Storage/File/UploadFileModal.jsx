@@ -8,12 +8,15 @@ import FloatButton from '../../../../utility/FloatButton';
 import DragDrop from './DragDrop';
 import VariableContext from '../../../Contexts/VariableContext';
 import AuthContext from '../../../Contexts/AuthContext';
+import StorageContext from '../../../Contexts/StorageContext';
 
 export default function UploadFileModal({ file, setFile, setProgress, fileModal, setFileModal,selected }) {
-    const { files, setFiles, showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
+    const { showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [isPrivate, setIsPrivate] = useState(false);
     const [privateDetails, setPrivateDetails] = useState({});
+    const { files, setFiles } = useContext(StorageContext);
+
 
     useEffect(() => {
         if (file) {

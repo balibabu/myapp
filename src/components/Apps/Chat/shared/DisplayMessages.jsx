@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import convertUtcToLocal from '../../../../utility/AutoLocalTime';
-import Tooltip from '../../../../utility/Tooltip/Tooltip';
 
 export default function DisplayMessages({ messages, username, activeUser }) {
     return (
@@ -14,42 +13,28 @@ export default function DisplayMessages({ messages, username, activeUser }) {
 
 
 function Message({ message, isSent }) {
-    let class1 = 'd-flex';
+    const [showTime, setShowTime] = useState(false);
+    let class1 = 'd-flex pe-5';
     let bg = 'bg-primary';
-    let borderRadius = '2rem 2rem 2rem 0';
+    let borderRadius = '1rem 1rem 1rem 0';
     let textAlign = '';
 
     if (isSent) {
-        class1 = 'd-flex justify-content-end';
+        class1 = 'd-flex justify-content-end ps-5';
         bg = 'bg-success';
-        borderRadius = '2rem 2rem 0 2rem';
+        borderRadius = '1rem 1rem 0 1rem';
         textAlign = 'text-end';
     }
     return (
         <div className={class1}>
-            <div className='mb-2'>
+            <div className='mb-1'>
                 <div className={bg} style={{ whiteSpace: 'pre-line', borderRadius: borderRadius }}>
-                    <Tooltip text={convertUtcToLocal(message.timestamp,options2)}>
-                        <div className='px-3'>{message.content}</div>
-                    </Tooltip>
-                    <div className={textAlign} style={dateTimeStyle}>{convertUtcToLocal(message.timestamp, options)}</div>
+                    <div className='px-2 p-1' onClick={() => setShowTime(!showTime)}>{message.content}</div>
                 </div>
+                {showTime && <div className={textAlign} style={dateTimeStyle}>{convertUtcToLocal(message.timestamp)}</div>}
             </div>
         </div>
     );
-}
-
-
-const options = {
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-};
-
-const options2={
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
 }
 
 const dateTimeStyle = {

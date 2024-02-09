@@ -31,12 +31,12 @@ export default function BreadCrumbs({ selected, folders }) {
     }
 
     return (
-        <nav className="breadcrumbs">
+        <nav className="breadcrumbs m-2">
             {paths.map((path, index) => {
                 if ((index + 1) === paths.length) {
-                    return <span className='breadcrumbs__item is-active'>{path.title}</span>
+                    return <span key={index} className='breadcrumbs__item is-active'>{path.title}</span>
                 }
-                return <span className='text-primary breadcrumbs__item' onClick={() => pathClickHan(path.id)}>{path.title}</span>
+                return <span key={index} className='breadcrumbs__item' onClick={() => pathClickHan(path.id)}>{path.title}</span>
             })}
         </nav>
     )

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import ToastDialog from '../../../utility/ToastDialog';
 import Fetching from '../../Shared/Fetching';
 import FolderRenderer from './Folder/FolderRenderer';
@@ -12,7 +12,6 @@ import BreadCrumbs from './Breadcrumbs/BreadCrumbs';
 
 export default function StorageApp() {
     const { selected } = useParams();
-    const navigate = useNavigate();
     const { showToast, loadingFileItem } = useContext(VariableContext);
     const { loggedIn, token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
@@ -50,12 +49,10 @@ export default function StorageApp() {
             onDragOver={handleDragOver}
             onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
             <Fetching status={files} title='Files and Folders' /> <ToastDialog />
-            {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
-            {/* <button onClick={() => navigate(-1)}>Back</button> */}
             <BreadCrumbs {...{selected,folders}}/>
-            <hr />
+            <hr className='m-0 mb-2'/>
             {folders && folders.length > 0 && <FolderRenderer {...{ folders, selected }} />}
-            <hr />
+            {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
             {files && files.length > 0 && <FileRenderer {...{ files, selected }} />}
             <AddButton {...{ selected, setProgress, file, setFile }} />
         </div>

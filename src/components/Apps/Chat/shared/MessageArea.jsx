@@ -20,7 +20,8 @@ export default function MessageArea(props) {
 		})
 		const id = setTimeout(() => {
 			setInitialFetch(false);
-		}, 500);
+			dummy.current.scrollIntoView({ behavior: 'smooth' });
+		}, 1000);
 		return () => {
 			clearTimeout(id);
 		}
@@ -31,7 +32,7 @@ export default function MessageArea(props) {
 	const sendFormData = {
 		showToast, token, dummy,
 		activeUser: props.activeUser,
-		messages, setMessages,fetchMessage
+		messages, setMessages, fetchMessage
 	}
 
 	return (
@@ -45,7 +46,6 @@ export default function MessageArea(props) {
 					<DisplayMessages messages={messages} username={username} activeUser={props.activeUser} />
 					<div ref={dummy}></div>
 				</div>
-
 			</div>
 			<SendForm sendFormData={sendFormData} />
 			<ToastDialog />
