@@ -86,6 +86,23 @@ export async function downloadFile(token, storageId, filename, setProgress) {
     }
 }
 
+export async function updateFile(file,token){
+    console.log('updateFile')
+    try {
+        const response = await axios.put(`${API_BASE_URL}/storage/file/${file.id}/`, file, {
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+        })
+        if (response.status === 200) {
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export async function getGitIfos(token) {
     console.log('getGitIfos');
     try {

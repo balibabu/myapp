@@ -18,6 +18,7 @@ export default function StorageApp() {
     const [, setInitialFetch] = useState(false);
     const [progress, setProgress] = useState(0);
     const { files, folders, fetchFilesAndFolders } = useContext(StorageContext);
+    const [cut, setCut] = useState();
 
     useEffect(() => {
         if (files === undefined && loggedIn) {
@@ -45,16 +46,13 @@ export default function StorageApp() {
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
-        <div className='text-white'
-            onDragOver={handleDragOver}
-            onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
-            <Fetching status={files} title='Files and Folders' /> <ToastDialog />
-            <BreadCrumbs {...{selected,folders}}/>
-            <hr className='m-0 mb-2'/>
-            {folders && folders.length > 0 && <FolderRenderer {...{ folders, selected }} />}
+        <div className='text-white' onDragOver={handleDragOver} onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
+            <Fetching status={files} title='Files' /> <ToastDialog />
+            <BreadCrumbs {...{ selected, folders }} />
+            {folders && folders.length > 0 && <FolderRenderer {...{ folders, selected, setCut }} />}
             {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
-            {files && files.length > 0 && <FileRenderer {...{ files, selected }} />}
-            <AddButton {...{ selected, setProgress, file, setFile }} />
+            {files && files.length > 0 && <FileRenderer {...{ files, selected, setCut }} />}
+            <AddButton {...{ selected, setProgress, file, setFile, cut, setCut,folders,token }} />
         </div>
     )
 }

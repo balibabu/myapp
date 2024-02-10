@@ -16,7 +16,7 @@ export function CombinedContextProvider({ children }) {
                     <TodoContextProvider>
                         <ExpenseContextProvider>
                             <ChatContextProvider>
-                                <CombinedContext.Provider>
+                                <CombinedContext.Provider value={{}}>
                                     {children}
                                 </CombinedContext.Provider>
                             </ChatContextProvider>

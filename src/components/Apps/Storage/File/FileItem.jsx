@@ -3,7 +3,7 @@ import LoadingUI from '../../../../utility/LoadingUI';
 import fileImg from '../../../../images/file.png';
 import convertUtcToLocal from '../../../../utility/AutoLocalTime';
 import Dropdown from './Dropdown';
-import { downloader, onDelete } from '../FileCRUD';
+import { downloader, onDelete } from './FileCRUD';
 import { downloadFile } from '../../../../http/Storage';
 import IntelligentSize from '../extra/IntelligentSize';
 import VariableContext from '../../../Contexts/VariableContext';
@@ -17,6 +17,7 @@ export default function FileItem(props) {
     const [progress, setProgress] = useState(0);
     const [downloadFileId, setDownloadFileId] = useState(null);
     const { setFiles } = useContext(StorageContext);
+    const [isCutted, setIsCutted] = useState(false);
 
     const deleteHandler = async () => {
         onDelete(props.file.id, token, SetloadingFileItem, showToast, setFiles);
@@ -30,12 +31,17 @@ export default function FileItem(props) {
         setProgress(0);
     }
 
+    const cutHandler = () => {
+        props.setCut(props.file);
+        setIsCutted(true);
+    }
+
     const onClickHandler = () => {
         downloader(props.file, username);
     }
 
     return (
-        <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' style={{ position: "relative", opacity: loadingFileItem === props.file.id ? "50%" : "" }}>
+        <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' style={{ position: "relative", opacity: (loadingFileItem === props.file.id || isCutted) ? "50%" : "" }}>
             {loadingFileItem === props.file.id && <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <LoadingUI width="40px" />
             </div>}
@@ -52,7 +58,7 @@ export default function FileItem(props) {
                             <div className='text-secondary' style={{ fontSize: "14px" }}>{IntelligentSize(props.file.fileSize)}</div>
                         </div>
                     </div>
-                    <Dropdown deleteHandler={deleteHandler} downLoadhandler={downLoadhandler} />
+                    <Dropdown deleteHandler={deleteHandler} downLoadhandler={downLoadhandler} cutHandler={cutHandler}/>
                 </div>
             </div>
         </div>

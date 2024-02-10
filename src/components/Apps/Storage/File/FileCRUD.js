@@ -1,4 +1,4 @@
-import { UploadFile, deleteFile } from "../../../http/Storage";
+import { UploadFile, deleteFile, updateFile } from "../../../../http/Storage";
 
 export const onDelete = async (id, token, SetloadingFileItem, showToast, setFiles) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this item?");
@@ -67,4 +67,7 @@ export async function uploadFile(formData, token, loadingFileItem, showToast, Se
     }
 }
 
-
+export async function updaterFile(updatableFile, token, setFiles) {
+    const updatedFile = await updateFile(updatableFile, token);
+    setFiles((prev) => prev.map((file) => file.id === updatedFile.id ? updatedFile : file));
+}

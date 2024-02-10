@@ -18,15 +18,15 @@ export default function MessageArea(props) {
 			}
 			return true;
 		})
+		dummy.current.scrollIntoView({ behavior: 'smooth' });
 		const id = setTimeout(() => {
 			setInitialFetch(false);
-			dummy.current.scrollIntoView({ behavior: 'smooth' });
 		}, 1000);
 		return () => {
 			clearTimeout(id);
 		}
 		// eslint-disable-next-line
-	}, [props.activeUser])
+	}, [props.activeUser,messages])
 
 
 	const sendFormData = {

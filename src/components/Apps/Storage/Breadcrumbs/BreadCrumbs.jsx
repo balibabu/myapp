@@ -32,7 +32,7 @@ export default function BreadCrumbs({ selected, folders }) {
 
     return (
         <nav className="breadcrumbs m-2">
-            {paths.map((path, index) => {
+            {paths.length>1 && paths.map((path, index) => {
                 if ((index + 1) === paths.length) {
                     return <span key={index} className='breadcrumbs__item is-active'>{path.title}</span>
                 }
