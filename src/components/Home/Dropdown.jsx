@@ -3,7 +3,7 @@ import profileImg from '../../images/contactProfile.jpg'
 import { UploadProfile } from '../../http/User';
 import AuthContext from '../Contexts/AuthContext';
 
-export default function Dropdown() {
+export default function Dropdown(props) {
     const { logout } = useContext(AuthContext);
     const [profile, setProfile] = useState(profileImg);
     return (
@@ -16,6 +16,7 @@ export default function Dropdown() {
                     data-bs-toggle="modal" data-bs-target="#profileUrl"
                 >Upload Pic</button></li>
                 <li><button className="dropdown-item" onClick={logout}>Logout</button></li>
+                <button className="dropdown-item" onClick={() => props.setClipShow(!props.clipShow)}>{props.clipShow ? 'hide' : 'show'} clip icon</button>
             </ul>
             <Modal setProfile={setProfile} />
         </div>

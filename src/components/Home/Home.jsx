@@ -9,6 +9,7 @@ import linkIcon from '../../images/AppIcon/link2.png'
 import lunarIcon from '../../images/AppIcon/lunar.png'
 import storageIcon from '../../images/AppIcon/storage.png'
 import photoIcon from '../../images/AppIcon/photoIcon.png'
+import shareitIcon from '../../images/shareit.png'
 import Navbar from './Navbar'
 import AppName from './AppName'
 
@@ -26,6 +27,7 @@ export default function Home() {
 				<Link to='/lunar' style={{ textDecoration: 'none' }}><AppName image={lunarIcon} appname='Calendar' /></Link>
 				<Link to='/chat' style={{ textDecoration: 'none' }}><AppName image={chatIcon} appname='Chat' /></Link>
 				<Link to='/photo' style={{ textDecoration: 'none' }}><AppName image={photoIcon} appname='Photu' /></Link>
+				<Link to='/share' style={{ textDecoration: 'none' }}><AppName image={shareitIcon} appname='Share' /></Link>
 			</div>
 		</div>
 	)

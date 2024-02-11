@@ -1,18 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import bellIcon from '../../images/bell.png';
 import AuthContext from '../Contexts/AuthContext';
+import ClipboardSync from './ClipboardSync';
 
 
 export default function Navbar() {
-    const { loggedIn, username } = useContext(AuthContext);
+    const { loggedIn, username,token } = useContext(AuthContext);
+    const [clipShow, setClipShow] = useState(false);
 
     return (
         <>
             <nav className="navbar navbar-expand bg-primary data-bs-theme='dark'">
                 <div className="container-fluid">
-                    <h1 className="navbar-brand">Welcome</h1>
+                    {clipShow ?
+                        <ClipboardSync token={token}/> :
+                        <h1 className="navbar-brand">Welcome</h1>
+                    }
                     <div className="nav">
                         {loggedIn ?
                             <><h4 className='mt-2'>Hello {username}</h4>
@@ -25,7 +30,7 @@ export default function Navbar() {
                                         </span>
                                     </button>
                                 </div>
-                                <Dropdown /></>
+                                <Dropdown {...{ clipShow, setClipShow }} /></>
                             :
                             <><Link style={linkStyle} to="/login">Login</Link>
                                 <Link style={linkStyle} to="/register" className='ms-2'>Register</Link></>}
