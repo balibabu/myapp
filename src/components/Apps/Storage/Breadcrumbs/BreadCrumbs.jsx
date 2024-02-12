@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import './Breadcrumbs.css'
 
 export default function BreadCrumbs({ selected, folders }) {
-    const [paths, setPaths] = useState([{ title: 'Home', id: -1 }]);
+    const [paths, setPaths] = useState([{ title: 'Root', id: -1 }]);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (folders) {
             let folder = folders.find(item => item.id === parseInt(selected));
-            folder = folder ? folder : { title: 'Home', id: -1 }
+            folder = folder ? folder : { title: 'Root', id: -1 }
             const index = paths.findIndex(item => item.id === parseInt(selected));
             if (!isNaN(selected) && index === -1) {
                 setPaths((prev) => [...prev, folder]);
@@ -22,7 +22,7 @@ export default function BreadCrumbs({ selected, folders }) {
                 }
             }
         }
-
+// eslint-disable-next-line
     }, [folders, selected])
 
     function pathClickHan(id) {
