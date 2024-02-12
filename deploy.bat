@@ -2,10 +2,6 @@
 
 ECHO Auto pulling, adding, committing, and pushing on Github.
 
-ECHO -------- Pulling --------
-git pull
-git status
-
 ECHO -------- Adding --------
 git add .
 git status

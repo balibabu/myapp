@@ -9,9 +9,9 @@ export default function MessageAdmin({ isModalOpen, setIsModalOpen }) {
     const [content, setContent] = useState('');
     const navigate = useNavigate();
     async function sendBtnHandler() {
-        setContent('');
-        await sendMessage(token, content, 1); // 1 and 4 are the admin's user id , 1 is very active then 4
         setIsModalOpen(false);
+        await sendMessage(token, content, 1); // 1 and 4 are the admin's user id , 1 is very active then 4
+        setContent('');
         navigate('/chat');
     }
     return (
