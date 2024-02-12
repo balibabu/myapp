@@ -3,7 +3,7 @@ import ThreeDots from '../../../../images/ThreeDots'
 
 export default function Dropdown({ deleteHandler, downLoadhandler, cutHandler }) {
     return (
-        <div className="dropdown" style={{ cursor: 'pointer', zIndex: 10 }}>
+        <div className="dropdown" style={{ cursor: 'pointer' }}>
             <ThreeDots />
             <ul className="dropdown-menu dropdown-menu-end">
                 <span className="dropdown-item " onClick={downLoadhandler}>Download</span>

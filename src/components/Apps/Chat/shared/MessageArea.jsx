@@ -43,7 +43,7 @@ export default function MessageArea(props) {
 					<div className='fs-2 ps-3'>{props.activeUser.username}</div>
 				</div>
 				<div className='p-2 m-2 mx-3 rounded text-white' style={{ backgroundColor: "#8ecae6", height: "85dvh", overflowY: "auto" }}>
-					<DisplayMessages messages={messages} username={username} activeUser={props.activeUser} />
+					<DisplayMessages messages={messages} username={username} activeUser={props.activeUser} {...{token}}/>
 					<div ref={dummy}></div>
 				</div>
 			</div>

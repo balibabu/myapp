@@ -16,7 +16,7 @@ export default function Home() {
 	return (
 		<div style={{ backgroundColor: "rgb(54, 54, 54)", height: "100dvh" }}>
 			<Navbar />
-			<div className='row m-0 mt-2'>
+			<div className='row m-0 pt-2 px-1'>
 				<AppIcon image={chatIcon} appname='Chat' openApp='/chat' />
 				<AppIcon image={storageIcon} appname='Storage' openApp='/storage/null' />
 				<AppIcon image={notepadIcon} appname='Notepad' openApp='/notepad' />

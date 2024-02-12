@@ -5,8 +5,13 @@ export async function UploadProfile(url) {
     alert('profile updated locally, implement the backend for permanent changes');
 }
 
-export async function ClipSync(token, showToast) {
-    const clipboardContent = await navigator.clipboard.readText();
+export async function ClipSync(token) {
+    let clipboardContent = 'other device doesnt support clipboard';
+    try {
+        clipboardContent = await navigator.clipboard.readText();
+    } catch (error) {
+        console.log('not supported');
+    }
     try {
         const response = await axios.post(`${API_BASE_URL}/user/clip/sync/`,
             { clip: clipboardContent },
@@ -18,11 +23,9 @@ export async function ClipSync(token, showToast) {
         );
 
         if (response.status === 200) {
-            navigator.clipboard.writeText(response.data);
-            showToast('synced','success');
+            return response.data;
         } else {
-            showToast('smt went wrong check console for details','success');
-            console.error(`Request failed with status ${response.status}`);
+            return response.status;
         }
     } catch (error) {
         console.error(error);
