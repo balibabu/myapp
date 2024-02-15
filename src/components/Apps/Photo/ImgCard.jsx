@@ -13,7 +13,7 @@ export default function ImgCard({ photo }) {
         setInitialFetch((prev) => {
             if (!prev) {
                 if (!photo.url) {
-                    setFetchNsetThumbUrl(photo, setPhotos, token);
+                    fetchNsetThumbUrl(photo, setPhotos, token);
                 }
             }
             return true;
@@ -21,13 +21,13 @@ export default function ImgCard({ photo }) {
     }, [])
 
     return (
-        <>
-            <Preview {...{ photo,token,setPhotos }} />
-        </>
+        <div className='col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6 p-0 text-center'>
+            <Preview {...{ photo, token, setPhotos }} />
+        </div>
     );
 }
 
-async function setFetchNsetThumbUrl(photo, setPhotos, token) {
+async function fetchNsetThumbUrl(photo, setPhotos, token) {
     const data = await getAThumbnail(token, photo.uname);
     const blob = new Blob([data], { type: 'application/octet-stream' })
     const url = URL.createObjectURL(blob);

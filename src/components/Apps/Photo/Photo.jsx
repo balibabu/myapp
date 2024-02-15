@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Header from './Header'
-import { getAThumbnail, getPhotos } from '../../../http/Photo';
-import AuthContext from '../../Contexts/AuthContext';
 import ThumbRend from './ThumbRend';
 import PhotoContext from '../../Contexts/PhotoContext';
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import CustomModal from '../../../utility/CustomModal';
 import { downloadFullImage, saveImage } from './CRUD';
+import personIcon from '../../../images/contactProfile.jpg';
+
 
 export default function Preview({ photo, token, setPhotos }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +20,7 @@ export default function Preview({ photo, token, setPhotos }) {
     return (
         <>
             <div onClick={photoClickHandler}>
-                <img src={photo.url} alt={photo.oname} style={{ width: '128px' }} className='px-1 py-1 bg-white' />
+                <img src={photo.url ? photo.url : personIcon} alt={photo.oname} style={{}} className='px-1 py-1 bg-white col-12' />
             </div>
             <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} top='50'>
                 <div className='position-relative'>
@@ -34,14 +36,4 @@ export default function Preview({ photo, token, setPhotos }) {
             </CustomModal>
         </>
     )
-}
-
-
-function getBlobSizeFromURL(url) {
-    return new Promise((resolve, reject) => {
-        fetch(url)
-            .then(response => response.blob())
-            .then(blob => resolve(blob.size))
-            .catch(error => reject(error));
-    });
 }
