@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PhotoContext from '../../Contexts/PhotoContext';
-import AuthContext from '../../Contexts/AuthContext';
+// import AuthContext from '../../Contexts/AuthContext';
 import { getAThumbnail } from '../../../http/Photo';
 import Preview from './Preview';
 
-export default function ImgCard({ photo }) {
+export default function ImgCard({ photo,token }) {
     const [, setInitialFetch] = useState(false);
-    const { token } = useContext(AuthContext);
+    // const { token } = useContext(AuthContext);
     const { setPhotos } = useContext(PhotoContext);
 
     useEffect(() => {

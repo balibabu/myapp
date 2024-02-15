@@ -44,7 +44,7 @@ export async function uploadImages(formData, token, setProgress = () => { }) {
 export async function getAThumbnail(token, uname, setProgress = () => { }) {
     console.log('getAThumbnail');
     try {
-        const response = await axios.get(`${API_BASE_URL}//photu/thumbnail/${uname}/`, {
+        const response = await axios.get(`${API_BASE_URL}/photu/thumbnail/${uname}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
@@ -67,7 +67,7 @@ export async function getAThumbnail(token, uname, setProgress = () => { }) {
 export async function downloadImage(token, id, setProgress = () => { }) {
     console.log('downloadImage');
     try {
-        const response = await axios.get(`${API_BASE_URL}//photu/download/${id}/`, {
+        const response = await axios.get(`${API_BASE_URL}/photu/download/${id}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
@@ -84,4 +84,14 @@ export async function downloadImage(token, id, setProgress = () => { }) {
         console.error(error);
         return false;
     }
+}
+
+export async function pingServerAboutThumbnails(token){
+    console.log('pingServerAboutThumbnails');
+    const res=await axios.get(`${API_BASE_URL}/photu/thumbnails/ping/`,{
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
+    })
+    console.log(res.data);
 }
