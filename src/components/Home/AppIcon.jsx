@@ -12,7 +12,7 @@ export default function AppIcon(props) {
         <div className='col-xl-1 col-lg-2 col-md-2 col-sm-3 col-3 p-0 text-center mb-2 px-1'
             style={{ cursor: 'pointer',order:(-order) }}
             onClick={appClick}>
-            <div className='rounded-4' style={{ backgroundColor: '#edede9' }}>
+            <div className='rounded-3' style={{ backgroundColor: '#edede9' }}>
                 <img src={props.image} alt={props.appname} className='col-12 p-2' />
                 <hr className='p-0 m-0' />
                 <div className=''>{props.appname}</div>

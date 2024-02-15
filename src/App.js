@@ -16,6 +16,7 @@ import LunarCalendarApp from './components/Apps/Public/Lunar/LunarCalendarApp';
 import { AuthProvider } from './components/Contexts/AuthContext';
 import { CombinedContextProvider } from './components/Contexts/CombinedContext';
 import Fileshare from './components/Apps/Public/Fileshare/Fileshare';
+import Photo from './components/Apps/Photo/Photo';
 
 function App() {
     return (
@@ -36,7 +37,7 @@ function App() {
                         <Route path="/a/:linkId" element={<RedirectPage />} />
                         <Route path='/lunar' element={<LunarCalendarApp />} />
                         <Route path='/storage/:selected' element={<StorageApp />} />
-                        <Route path='/photo' element={<UnderDevelopment />} />
+                        <Route path='/photo' element={<Photo />} />
                         <Route path='/share' element={<Fileshare />} />
                     </Routes>
                 </HashRouter>

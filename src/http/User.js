@@ -13,7 +13,7 @@ export async function ClipSync(token) {
         console.log('not supported');
     }
     try {
-        const response = await axios.post(`${API_BASE_URL}/user/clip/sync/`,
+        const response = await axios.post(`${API_BASE_URL}/utility/clip/sync/`,
             { clip: clipboardContent },
             {
                 headers: {

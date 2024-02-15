@@ -9,7 +9,7 @@ const CustomModal = ({ children, isModalOpen, setIsModalOpen, col = 'col-xl-6 co
                     className='z-1 top-0 start-0 position-fixed' 
                     style={{ height: '100%', width: '100%', backgroundColor:'black', opacity:'85%' }}></div>
 
-                    <div className={`z-2 position-fixed ${col}`}
+                    <div className={`z-3 position-fixed ${col}`}
                         style={{
                             top: `${top}%`, left: "50%",
                             transform: "translate(-50%, -50%)",
