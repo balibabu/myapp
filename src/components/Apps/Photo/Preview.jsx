@@ -23,15 +23,17 @@ export default function Preview({ photo, token, setPhotos }) {
                 <img src={photo.url ? photo.url : personIcon} alt={photo.oname} style={{}} className='px-1 py-1 bg-white col-12' />
             </div>
             <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} top='50'>
-                <div className='position-relative'>
-                    <div className='bg-white row m-1'>
-                        <img src={photo.url} alt={photo.oname} className='px-1 py-1 bg-white' />
+                <div className='position-relative overflow-auto' style={{maxHeight:'100dvh'}}>
+                    <div className='position-relative'>
+                        <div className='bg-white row m-1'>
+                            <img src={photo.url} alt={photo.oname} className='px-1 py-1 bg-white' />
+                        </div>
+                        <button className='position-absolute z-3 top-0 end-0 btn btn-outline-secondary text-black' onClick={() => setIsModalOpen(false)}>x</button>
                     </div>
-                    <button className='position-absolute z-3 top-0 end-0 btn btn-outline-secondary text-black' onClick={() => setIsModalOpen(false)}>x</button>
-                </div>
-                <div className='input-group mt-2'>
-                    <button className='btn btn-success form-control' onClick={() => saveImage(photo)}>download</button>
-                    <button className='btn btn-primary form-control disabled' onClick={() => setIsModalOpen(false)}>close</button>
+                    <div className='input-group mt-2'>
+                        <button className='btn btn-success form-control' onClick={() => saveImage(photo)}>download</button>
+                        <button className='btn btn-primary form-control' onClick={() => setIsModalOpen(false)}>close</button>
+                    </div>
                 </div>
             </CustomModal>
         </>
