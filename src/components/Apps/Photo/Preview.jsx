@@ -31,7 +31,7 @@ export default function Preview({ photo, token, setPhotos }) {
                 </div>
                 <div className='input-group mt-2'>
                     <button className='btn btn-success form-control' onClick={() => saveImage(photo)}>download</button>
-                    <button className='btn btn-primary form-control disabled'>open full img in new tab</button>
+                    <button className='btn btn-primary form-control disabled' onClick={() => setIsModalOpen(false)}>close</button>
                 </div>
             </CustomModal>
         </>
