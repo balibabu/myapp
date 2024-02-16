@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { uploadImages } from '../../../http/Photo';
 import AuthContext from '../../Contexts/AuthContext';
-import { useMediaQuery } from 'react-responsive';
+import Uploadbar from './Header/Uploadbar';
 
 export default function Header({ setPhotos }) {
     const { token } = useContext(AuthContext);
     const [files, setFiles] = useState(null);
     const [progress, setProgress] = useState(0);
-    const isWindows = navigator.platform.toLowerCase().includes('win');
 
     const handleInputChange = (event) => {
         const sel_files = event.target.files;
@@ -33,29 +32,18 @@ export default function Header({ setPhotos }) {
 
     return (
         <div className="row m-0">
-            {progress !== 0 &&
-                <div>
-                    <div className="progress mb-3" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                        <div className="progress-bar progress-bar-striped progress-bar-animated" style={{ width: `${progress}%` }}>{`${progress}%`}</div>
+            {progress === 0 ?
+                <>
+                    <Uploadbar {...{ handleInputChange, uploadhandler }} />
+                </>
+                :
+                <div className='position-fixed z-3'>
+                    <div className="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div className="progress-bar progress-bar-striped progress-bar-animated" style={{ width: `${progress}%` }}>{`${progress < 100 ? progress + '%' : 'processing'}`}</div>
                     </div>
                 </div>
             }
-            {isWindows ?
-                <div className="col">
-                    <div className='input-group'>
-                        <input className='form-control' type="file" multiple onChange={handleInputChange} />
-                        <button className="btn btn-info z-1" onClick={uploadhandler}>upload</button>
-                    </div>
-                </div> :
-                <>
-                    <div className='position-fixed bottom-0'>
-                        <div className='input-group'>
-                            <input className='form-control' type="file" multiple onChange={handleInputChange} />
-                            <button className="btn btn-info z-1" onClick={uploadhandler}>upload</button>
-                        </div>
-                    </div>
-                </>
-            }
+
         </div>
     )
 }

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import CustomModal from '../../../utility/CustomModal';
 import { downloadFullImage, saveImage } from './CRUD';
 import personIcon from '../../../images/contactProfile.jpg';
+import Image from '../../../images/Image';
 
 
-export default function Preview({ photo, token, setPhotos }) {
+export default function Preview({ photo, token, setPhotos, sectionRef }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -19,11 +20,17 @@ export default function Preview({ photo, token, setPhotos }) {
 
     return (
         <>
-            <div onClick={photoClickHandler}>
-                <img src={photo.url ? photo.url : personIcon} alt={photo.oname} style={{}} className='px-1 py-1 bg-white col-12' />
+            <div onClick={photoClickHandler} ref={sectionRef}>
+                {photo.url ?
+                    <img src={photo.url} alt={photo.oname} style={{}} className='px-1 py-1 bg-white col-12' />
+                    :
+                    <div>
+                        <Image />
+                    </div>
+                }
             </div>
             <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} top='50'>
-                <div className='position-relative overflow-auto' style={{maxHeight:'100dvh'}}>
+                <div className='position-relative overflow-auto' style={{ maxHeight: '100dvh' }}>
                     <div className='position-relative'>
                         <div className='bg-white row m-1'>
                             <img src={photo.url} alt={photo.oname} className='px-1 py-1 bg-white' />
