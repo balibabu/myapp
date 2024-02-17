@@ -11,6 +11,7 @@ export default function ImgCard({ photo }) {
     const { setPhotos } = useContext(PhotoContext);
     const sectionRef = useRef(null);
     const [visible, setVisible] = useState(false);
+    const [hiddenCard, setHiddenCard] = useState(true);
 
     useEffect(() => {
         if (visible) {
@@ -22,12 +23,15 @@ export default function ImgCard({ photo }) {
                 }
                 return true;
             });
+            setHiddenCard(false);
+        }else{
+            setHiddenCard(true);
         }
     }, [visible])
 
     return (
-        <div className='col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6 p-0 text-center'>
-            <Preview {...{ photo, token, setPhotos, sectionRef }} />
+        <div>
+            <Preview {...{ photo, token, setPhotos, sectionRef,hiddenCard }} />
             <ComponentObserver {...{ sectionRef, setVisible }} />
         </div>
     );

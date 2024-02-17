@@ -5,7 +5,7 @@ import personIcon from '../../../images/contactProfile.jpg';
 import Image from '../../../images/Image';
 
 
-export default function Preview({ photo, token, setPhotos, sectionRef }) {
+export default function Preview({ photo, token, setPhotos, sectionRef, hiddenCard }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -21,6 +21,19 @@ export default function Preview({ photo, token, setPhotos, sectionRef }) {
     return (
         <>
             <div onClick={photoClickHandler} ref={sectionRef}>
+                {/* {hiddenCard ?
+                    <div style={{ height: '100px', background: 'red' }}>
+                    </div> :
+                    <>
+                        {photo.url ?
+                            <img src={photo.url} alt={photo.oname} style={{}} className='px-1 py-1 bg-white col-12' />
+                            :
+                            <div>
+                                <Image />
+                            </div>
+                        }
+                    </>
+                } */}
                 {photo.url ?
                     <img src={photo.url} alt={photo.oname} style={{}} className='px-1 py-1 bg-white col-12' />
                     :

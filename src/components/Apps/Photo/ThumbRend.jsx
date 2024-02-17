@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import ImgCard from './ImgCard';
 import PhotoContext from '../../Contexts/PhotoContext';
 import ProgressUI from '../../Shared/ProgressUI';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
 export default function ThumbRend({ photos }) {
     const { helpedServer, ping } = useContext(PhotoContext);
@@ -20,9 +21,15 @@ export default function ThumbRend({ photos }) {
     return (
         <div className='row m-0 pt-2 px-1'>
             {helpedServer ?
-                photos.map((photo) => {
-                    return <ImgCard {...{ photo }} key={photo.id} />
-                })
+                <>
+                    <ResponsiveMasonry columnsCountBreakPoints={{ 350: 3, 750: 4, 900: 5, 1200: 6 }}>
+                        <Masonry>
+                            {photos.map((photo) => {
+                                return <ImgCard {...{ photo }} key={photo.id} />
+                            })}
+                        </Masonry>
+                    </ResponsiveMasonry>
+                </>
                 :
                 <>
                     <div className='bg-secondary px-3'>

@@ -17,14 +17,14 @@ export default function Home() {
 		<div style={{ backgroundColor: "rgb(54, 54, 54)", height: "100dvh" }}>
 			<Navbar />
 			<div className='row m-0 pt-2 px-1'>
+				<AppIcon image={shareitIcon} appname='Share' openApp='/share' />
+				<AppIcon image={lunarIcon} appname='Calendar' openApp='/lunar' />
+				<AppIcon image={linkIcon} appname='Shrink-URL' openApp='/link-short' />
+				<AppIcon image={simonIcon} appname='Simon' openApp='/simon-game' />
 				<AppIcon image={chatIcon} appname='Chat' openApp='/chat' />
 				<AppIcon image={storageIcon} appname='Storage' openApp='/storage/null' />
 				<AppIcon image={notepadIcon} appname='Notepad' openApp='/notepad' />
-				<AppIcon image={shareitIcon} appname='Share' openApp='/share' />
 				<AppIcon image={todoIcon} appname='Todo' openApp='/todo' />
-				<AppIcon image={simonIcon} appname='Simon' openApp='/simon-game' />
-				<AppIcon image={linkIcon} appname='Shrink-URL' openApp='/link-short' />
-				<AppIcon image={lunarIcon} appname='Calendar' openApp='/lunar' />
 				<AppIcon image={expenseIcon} appname='Expenses' openApp='/expense' />
 				<AppIcon image={photoIcon} appname='Photu' openApp='/photo' />
 			</div>

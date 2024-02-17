@@ -14,19 +14,21 @@ export default function Dropdown(props) {
                 style={{ width: "50px", height: "50px" }} src={profile} alt="" />
 
             <ul className="dropdown-menu dropdown-menu-end">
-                <button className="dropdown-item" onClick={clearAppOrders}>clear app orders</button>
-                <li><button className="dropdown-item" onClick={logout}>Logout</button></li>
-                <button className="dropdown-item" onClick={() => props.setClipShow(!props.clipShow)}>{props.clipShow ? 'hide' : 'show'} clip icon</button>
                 <button className="dropdown-item" onClick={() => setIsModalOpen(true)}>msg admin</button>
+                <button className="dropdown-item" onClick={clearAppOrders}>clear app orders</button>
+                <button className="dropdown-item" onClick={() => props.setClipShow(!props.clipShow)}>{props.clipShow ? 'hide' : 'show'} clip icon</button>
+                <li><button className="dropdown-item" onClick={logout}>Logout</button></li>
             </ul>
             <MessageAdmin {...{isModalOpen, setIsModalOpen}}/>
         </div>
     )
 }
 
-
+// next time implement setting up order using single key with values in list
 function clearAppOrders() {
-    const token = localStorage.getItem('token'); // Assuming your token key is 'token'
-    localStorage.clear();
-    localStorage.setItem('token', token);
+    const appnames='Share,Calendar,Shrink-URL,Simon,Chat,Storage,Notepad,Todo,Expenses,Photu'
+    appnames.split(',').map((appname)=>{
+        localStorage.removeItem(appname)
+    })
+    const token = localStorage.getItem('token');
 }
