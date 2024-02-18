@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ImgCard from './ImgCard';
+import LazyThumbnails from './LazyThumbnails';
 import PhotoContext from '../../Contexts/PhotoContext';
 import ProgressUI from '../../Shared/ProgressUI';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import Header from './Header';
 
 export default function ThumbRend({ photos }) {
-    const { helpedServer, ping } = useContext(PhotoContext);
+    const { setPhotos, helpedServer, ping } = useContext(PhotoContext);
     const [, setInitialFetch] = useState(false);
 
     useEffect(() => {
@@ -19,13 +20,14 @@ export default function ThumbRend({ photos }) {
     }, [])
 
     return (
-        <div className='row m-0 pt-2 px-1'>
+        <div className='row m-0'>
+            <Header {...{ setPhotos }} />
             {helpedServer ?
                 <>
                     <ResponsiveMasonry columnsCountBreakPoints={{ 350: 3, 750: 4, 900: 5, 1200: 6 }}>
-                        <Masonry>
+                        <Masonry gutter="5px">
                             {photos.map((photo) => {
-                                return <ImgCard {...{ photo }} key={photo.id} />
+                                return <LazyThumbnails {...{ photo }} key={photo.id} />
                             })}
                         </Masonry>
                     </ResponsiveMasonry>

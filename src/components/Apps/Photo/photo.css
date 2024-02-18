@@ -1,0 +1,6 @@
+.navigation-bar {
+    opacity: 0%;
+}
+.navigation-bar:hover {
+    opacity: 30%;
+}

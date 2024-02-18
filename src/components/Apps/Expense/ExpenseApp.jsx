@@ -6,6 +6,7 @@ import { onCreate } from './ExpenseCRUD';
 import Fetching from '../../Shared/Fetching';
 import AuthContext from '../../Contexts/AuthContext';
 import ExpenseContext from '../../Contexts/ExpenseContext';
+import { Navigate } from 'react-router-dom';
 
 export default function ExpenseApp() {
     const { token, loggedIn } = useContext(AuthContext);
@@ -23,6 +24,8 @@ export default function ExpenseApp() {
         }
         // eslint-disable-next-line
     }, []);
+
+    if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
         <div style={{ backgroundColor: "#403d39", height: "100dvh", color: "wheat" }}>

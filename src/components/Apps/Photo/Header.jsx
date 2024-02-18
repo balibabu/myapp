@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import { uploadImages } from '../../../http/Photo';
 import AuthContext from '../../Contexts/AuthContext';
 import Uploadbar from './Header/Uploadbar';
+import UploadIcon from '../../../images/UploadIcon';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header({ setPhotos }) {
     const { token } = useContext(AuthContext);
@@ -31,7 +33,7 @@ export default function Header({ setPhotos }) {
     }
 
     return (
-        <div className="row m-0">
+        <div className="row m-0 mb-2">
             {progress === 0 ?
                 <>
                     <Uploadbar {...{ handleInputChange, uploadhandler }} />

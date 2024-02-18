@@ -37,7 +37,7 @@ function App() {
                         <Route path="/a/:linkId" element={<RedirectPage />} />
                         <Route path='/lunar' element={<LunarCalendarApp />} />
                         <Route path='/storage/:selected' element={<StorageApp />} />
-                        <Route path='/photo' element={<Photo />} />
+                        <Route path='/photo/*' element={<Photo />} />
                         <Route path='/share' element={<Fileshare />} />
                     </Routes>
                 </HashRouter>
