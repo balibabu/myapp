@@ -38,6 +38,8 @@ export function PhotoContextProvider({ children }) {
             let compressedImage;
             if (compress < 1) {
                 compressedImage = await ImageCompressor(selectedImages[i], compress);
+            }else{
+                compressedImage=selectedImages[i];
             }
             if (compressedImage.size > selectedImages[i].size) {
                 compressedImage = selectedImages[i];
