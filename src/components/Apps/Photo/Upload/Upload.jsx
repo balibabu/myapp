@@ -26,8 +26,8 @@ export default function Upload() {
                         <input className='form-control my-2' type="file" accept="image/*" multiple onChange={(e) => setImages(e.target.files)} />
                     </>
                 }
-                {/* <button className='btn btn-success btn-full form-control' onClick={upload}>Upload All</button> */}
-                <CustomeUploadButton progress={(current * 100 + progress) / selectedImages.length} clickHandler={upload} />
+                {selectedImages.length > 0 && <CustomeUploadButton progress={(current * 100 + progress) / selectedImages.length} clickHandler={upload} />}
+
             </div>
         </div>
     )
@@ -44,8 +44,8 @@ function CustomeUploadButton({ progress, clickHandler }) {
     } else {
         title = 'Processing Files';
     }
-    return <div class="progress position-relative" style={{ height: '50px', cursor: 'pointer' }} onClick={progress === 0 ? clickHandler : () => { }}>
-        <div class="progress-bar bg-success" style={{ width: `${progress === 0 ? 100 : progress}%` }}></div>
-        <div className='position-absolute start-50 top-50 translate-middle text-black fs-2'>{title}</div>
+    return <div className="progress position-relative" style={{ height: '50px', cursor: 'pointer' }} onClick={progress === 0 ? clickHandler : () => { }}>
+        <div className="progress-bar bg-success" style={{ width: `${progress === 0 ? 100 : progress}%` }}></div>
+        <div className='position-absolute start-50 top-50 translate-middle text-black fs-2' style={{ whiteSpace: 'nowrap' }}>{title}</div>
     </div>
 }

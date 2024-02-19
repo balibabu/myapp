@@ -1,0 +1,3 @@
+function upload(files,setProgress) {
+    
+}

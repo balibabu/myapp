@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { GetLink } from "../../../http/ShortenLink";
+import { GetLink } from "../../../../http/ShortenLink";
 
 export default function RedirectPage() {
     const { linkId } = useParams();

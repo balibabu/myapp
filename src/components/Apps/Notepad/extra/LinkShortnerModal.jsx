@@ -1,4 +1,4 @@
-import InputAndCopy from "../../LinkShortner/InputAndCopy";
+import InputAndCopy from "../../Public/LinkShortner/InputAndCopy";
 
 export default function LinkShortnerModal() {
     return (

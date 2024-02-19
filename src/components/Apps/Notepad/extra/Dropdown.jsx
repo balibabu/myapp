@@ -13,8 +13,8 @@ export default function Dropdown({ color }) {
                     </button>
                 </li>
                 <li>
-                    <button className="dropdown-item"
-                        data-bs-toggle="modal" data-bs-target="#ToDoModal">Open ToDo
+                    <button className="dropdown-item" onClick={()=>alert('needs to be implemted')}
+                        >Open ToDo
                     </button>
                 </li>
             </ul>

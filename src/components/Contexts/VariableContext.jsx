@@ -17,7 +17,8 @@ export const VariableProvider = ({ children }) => {
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState({});
     const [files, setFiles] = useState();
-    const [folders, setFolders] = useState();
+    const [fileShareSendProgress, setFileShareSendProgress] = useState(0);
+    const [fileShareReceiveProgress, setFileShareReceiveProgress] = useState(0);
 
     const [toast, setToast] = useState(null);
     const [loadingNoteItem, SetloadingNoteItem] = useState(null);
@@ -102,7 +103,9 @@ export const VariableProvider = ({ children }) => {
         fetchConversations,
         messages,
         setMessages,
-        fetchMessage
+        fetchMessage,
+        fileShareSendProgress, setFileShareSendProgress,
+        fileShareReceiveProgress, setFileShareReceiveProgress
     }
     return (
         <VariableContext.Provider value={contextData}>
@@ -110,7 +113,6 @@ export const VariableProvider = ({ children }) => {
         </VariableContext.Provider>
     )
 }
-
 
 
 function playSound(sound) {

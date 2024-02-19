@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import { AddLink } from '../../../http/ShortenLink';
-import { copyToClipboard } from '../../../utility/utilities';
+import { AddLink } from '../../../../http/ShortenLink';
+import { copyToClipboard } from '../../../../utility/utilities';
 
-export default function InputAndCopy({isInModal}) {
+export default function InputAndCopy({ isInModal }) {
     const [copy, setCopy] = useState('copy');
     const [link, setLink] = useState('');
     const [shortlink, setShortlink] = useState('');
 
     const onShrink = async () => {
-        if(shortlink){
+        if (shortlink) {
             return;
         }
         if (link.trim().length > 0 && isValidURL(link)) {
             setShortlink('wait...generating...')
             const linkid = await AddLink(link);
             setShortlink(`balibabu.github.io/myapp#/a/${linkid}`);
-        }else{
+        } else {
             setShortlink('please paste valid url')
         }
     }
@@ -49,14 +49,14 @@ export default function InputAndCopy({isInModal}) {
                             onClick={onShrink}
                         >shrink</button>
                     </div>
-                    <div>
+                    {shortlink.length > 0 && <div>
                         <pre style={{ backgroundColor: "black" }} className='rounded-3 text-primary d-flex justify-content-between align-items-center ps-2'>
                             <code>
                                 {shortlink}
                             </code>
                             <button className='btn btn-info' data-bs-dismiss={isInModal} onClick={onCopy}>{copy}</button>
                         </pre>
-                    </div>
+                    </div>}
                 </div>
             </div>
         </div>
