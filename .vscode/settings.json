@@ -14,5 +14,6 @@
     "workbench.tree.indent": 25,
     "material-icon-theme.hidesExplorerArrows": true,
     "workbench.tree.renderIndentGuides": "onHover",
-    "explorer.compactFolders": true
+    "explorer.compactFolders": true,
+    "window.density.editorTabHeight": "compact"
 }
