@@ -6,7 +6,7 @@ import { ImageCompressor } from '../Apps/Photo/Compressor';
 const PhotoContext = createContext();
 export default PhotoContext;
 export function PhotoContextProvider({ children }) {
-    const [compress, setCompress] = useState(0.8);
+    const [compress, setCompress] = useState(0.9);
     const [photos, setPhotos] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]);
     const [helpedServer, setHelpedServer] = useState(false);
@@ -33,21 +33,24 @@ export function PhotoContextProvider({ children }) {
     }
 
     async function upload() {
+        if (selectedImages.length === 0) { return }
+        let compressedImg;
         for (let i = 0; i < selectedImages.length; i++) {
+            const selectedimg = selectedImages[i];
             setCurrent(i);
-            let compressedImage;
             if (compress < 1) {
-                compressedImage = await ImageCompressor(selectedImages[i], compress);
-            }else{
-                compressedImage=selectedImages[i];
-            }
-            if (compressedImage.size > selectedImages[i].size) {
-                compressedImage = selectedImages[i];
+                compressedImg = await ImageCompressor(selectedimg, compress);
+                if (compressedImg.size >= selectedimg.size) {
+                    compressedImg = selectedimg;
+                }
+            } else {
+                compressedImg = selectedimg;
             }
             const formData = new FormData();
-            formData.append('files', compressedImage, selectedImages[i].name);
+            formData.append('files', compressedImg, selectedimg.name);
             const res = await uploadImages(formData, token, setProgress);
-            setPhotos((prev) => [...prev, { ...res[0], url: URL.createObjectURL(compressedImage) }])
+            // eslint-disable-next-line
+            setPhotos((prev) => [...prev, { ...res[0], url: URL.createObjectURL(compressedImg) }])
         }
         setSelectedImages([]);
     }

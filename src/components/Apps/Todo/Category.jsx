@@ -26,7 +26,7 @@ export default function Category(props) {
     return (
         <>
             <div style={tabContainerStyle}>
-                <div className='d-flex overflow-x-scroll' style={{ backgroundColor: 'rgb(75,77,90)' }}>
+                <div className='d-flex overflow-x-scroll custom-scrollbar' style={{ backgroundColor: 'rgb(75,77,90)' }}>
                     {props.tabs.map((tab, index) =>
                         <div style={index !== props.selectedTab ? {backgroundColor: 'rgb(109, 184, 255)'} : {}} key={index}>
                             <div
@@ -46,20 +46,16 @@ export default function Category(props) {
 }
 
 const tabContainerStyle = {
-    fontSize: '18px',
-    height: '43px',
-    overflow: 'hidden',
+    fontSize: '20px',
     cursor: 'pointer',
 }
 const defaulTabStyle = {
     color: 'wheat',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    // width: '70px',
     backgroundColor: 'rgb(75,77,90)',
     padding: '.5rem',
     paddingRight: '1.2rem',
     paddingLeft: '1.2rem',
-    // paddingTop: '1.2rem',
     whiteSpace: 'nowrap'
 }

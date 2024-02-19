@@ -31,6 +31,7 @@ export async function uploadImages(formData, token, setProgress = () => { }) {
                 setProgress((progressEvent.progress * 100).toFixed(1));
             },
         });
+        setProgress(0);
         if (response.status === 200) {
             return response.data
         }
