@@ -1,16 +1,19 @@
 import { sendMessage } from '../../../../http/chat'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import sendSound from '../sound/send.mp3';
+import VariableContext from '../../../Contexts/VariableContext';
 
 export default function SendForm({ sendFormData }) {
 	const {
-		showToast, token, dummy,
+		token, dummy,
 		activeUser, fetchMessage
 	} = sendFormData;
 
 	const [lineType, setLineType] = useState('s');
 	const [content, setContent] = useState('');
 	const [isSending, setIsSending] = useState(false);
+	const { notify } = useContext(VariableContext);
+
 	const inputFieldRef = useRef();
 	useEffect(() => {
 		inputFieldRef.current.focus();
@@ -35,24 +38,24 @@ export default function SendForm({ sendFormData }) {
 
 	const onLineChange = () => {
 		if (lineType === 's') {
-			showToast('changed into multiline text', 'info');
+			notify('ChatApp', 'multiline line msg activated', 'success');
 			setLineType('m');
 		} else {
-			showToast('changed into singleline text', 'info');
+			notify('ChatApp', 'single line msg activated', 'success');
 			setLineType('s');
 		}
 	}
 	return (
-		<form onSubmit={sendBtnHandler}>
-			<div className='input-group px-3' >
+		<form onSubmit={sendBtnHandler} className='d-flex px-3'>
+			<div className='input-group me-1' >
 				<input type='button' style={inputTextStyle} value={lineType} onClick={onLineChange} />
 				{
 					lineType === 'm' ?
 						<textarea ref={inputFieldRef} className='form-control' rows={content.split('\n').length} value={content} onChange={(e) => setContent(e.target.value)} /> :
 						<input ref={inputFieldRef} type="text" className='form-control' value={content} onChange={(e) => setContent(e.target.value)} />
 				}
-				<button className='btn btn-success' onClick={sendBtnHandler} >Send</button>
 			</div>
+			<button className='btn btn-success' onClick={sendBtnHandler} >Send</button>
 		</form>
 	)
 }

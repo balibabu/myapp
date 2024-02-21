@@ -1,13 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import convertUtcToLocal from '../../../../utility/AutoLocalTime';
 import deleteImg from '../../../../images/delete.png'
 
 export default function DisplayMessages({ messages, username, activeUser, token }) {
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
+        }
+    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
     return (
-        <div>
-            {messages[activeUser.id] && messages[activeUser.id].map((message) => {
-                return <Message key={message.id} message={message} isSent={message.sender.username === username} {...{ token }} />
-            })}
+        <div className='mb-2 mx-3 rounded-3' style={{ position: 'relative', height: "90dvh", backgroundColor: "#8ecae6" }}>
+            <div className='col-12 custom-scrollbar px-1 pt-2' style={{ position: 'absolute', bottom: '0', overflowY: 'auto', maxHeight: "90dvh" }}>
+                {messages[activeUser.id] && messages[activeUser.id].map((message) => {
+                    return <Message key={message.id} message={message} isSent={message.sender.username === username} {...{ token }} />
+                })}
+                <div ref={messagesEndRef}></div>
+            </div>
         </div>
     )
 }
@@ -27,7 +41,7 @@ function Message({ message, isSent, token }) {
         textAlign = 'text-end';
     }
 
-    function deleteHandler(){
+    function deleteHandler() {
         alert(message.id)
     }
     return (

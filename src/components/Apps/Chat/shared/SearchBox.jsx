@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import ContactRender from './ContactRender';
-import VariableContext from '../../../Contexts/VariableContext';
+import ChatContext from '../../../Contexts/ChatContext';
 
 export default function SearchBox({ modalId, onSelect }) {
     const [username, setUsername] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const { users } = useContext(VariableContext);
+    const { users } = useContext(ChatContext);
 
 
     const onNameChange = (event) => {

@@ -8,6 +8,7 @@ export function StorageContextProvider({ children }) {
     const [files, setFiles] = useState();
     const [folders, setFolders] = useState();
     const { token } = useContext(AuthContext);
+    const [loadingFileItem, SetloadingFileItem] = useState(null);
 
     const fetchFilesAndFolders = async () => {
         const res = await getFilesAndFolders(token);
@@ -21,6 +22,8 @@ export function StorageContextProvider({ children }) {
         folders,
         setFolders,
         fetchFilesAndFolders,
+        loadingFileItem,
+        SetloadingFileItem,
     }
 
     return (

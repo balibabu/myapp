@@ -4,11 +4,11 @@ import { Link, Navigate } from 'react-router-dom';
 import { onDelete } from './utility/NoteCRUD';
 import ProgressUI from '../../Shared/ProgressUI';
 import Fetching from '../../Shared/Fetching';
-import VariableContext from '../../Contexts/VariableContext';
 import AuthContext from '../../Contexts/AuthContext';
+import NoteContext from '../../Contexts/NoteContext';
 
 export default function NotepadApp() {
-    const { notes, setNotes, fetchNotes, loadingNoteItem } = useContext(VariableContext);
+    const { notes, setNotes, fetchNotes, loadingNoteItem } = useContext(NoteContext);
     const { token, loggedIn } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
 

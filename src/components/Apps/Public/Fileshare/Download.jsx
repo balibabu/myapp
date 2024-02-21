@@ -13,7 +13,7 @@ export default function Download({ setWork, setFileShareReceiveProgress }) {
     return (
         <div className='mt-4'>
             <div className="d-flex justify-content-center">
-                <div className='col-lg-2 d-flex'>
+                <div className='col-lg-2 col-6 d-flex'>
                     <div className='input-group'>
                         <input type="number" className="form-control" placeholder="file key" value={key} onChange={(e) => setKey(e.target.value)} />
                         <button className="btn btn-primary" onClick={proceedHandler}>{key ? 'Proceed' : 'cancel'}</button>

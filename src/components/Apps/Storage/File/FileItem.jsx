@@ -6,13 +6,12 @@ import Dropdown from './Dropdown';
 import { downloader, onDelete } from './FileCRUD';
 import { downloadFile } from '../../../../http/Storage';
 import IntelligentSize from '../extra/IntelligentSize';
-import VariableContext from '../../../Contexts/VariableContext';
 import AuthContext from '../../../Contexts/AuthContext';
 import StorageContext from '../../../Contexts/StorageContext';
 
 
 export default function FileItem(props) {
-    const { loadingFileItem, SetloadingFileItem, showToast } = useContext(VariableContext);
+    const { loadingFileItem, SetloadingFileItem } = useContext(StorageContext);
     const { token, username } = useContext(AuthContext);
     const [progress, setProgress] = useState(0);
     const [downloadFileId, setDownloadFileId] = useState(null);
@@ -20,11 +19,10 @@ export default function FileItem(props) {
     const [isCutted, setIsCutted] = useState(false);
 
     const deleteHandler = async () => {
-        onDelete(props.file.id, token, SetloadingFileItem, showToast, setFiles);
+        onDelete(props.file.id, token, SetloadingFileItem, ()=>{}, setFiles);
     }
 
     const downLoadhandler = async () => {
-        showToast('Downloading file', 'success');
         setDownloadFileId(props.file.id);
         await downloadFile(token, props.file.id, props.file.originalName, setProgress);
         setDownloadFileId(null);

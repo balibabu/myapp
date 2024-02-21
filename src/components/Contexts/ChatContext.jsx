@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getConversationsList } from "../../http/chat";
+import { getConversationsList, getMessages, getUserList } from "../../http/chat";
 import AuthContext from "./AuthContext";
 
 const ChatContext = createContext();
@@ -9,6 +9,13 @@ export function ChatContextProvider({ children }) {
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState({});
 	const { token } = useContext(AuthContext);
+    const [users, setUsers] = useState();
+
+
+    const fetchUserList = async () => {
+        const list = await getUserList(token);
+        setUsers(list);
+    }
 
     const fetchConversations = async (sound) => {
         const list = await getConversationsList(token);
@@ -21,12 +28,20 @@ export function ChatContextProvider({ children }) {
         });
     }
 
+    const fetchMessage = async (activeUser) => {
+        const messages_userx = await getMessages(token, activeUser.id);
+        setMessages((prev) => ({ ...prev, [activeUser.id]: messages_userx }));
+    }
+
     const contextData = {
         conversations,
         setConversations,
         fetchConversations,
         messages,
-        setMessages
+        setMessages,
+        fetchMessage,
+        users, setUsers,
+        fetchUserList
     };
     return (
         <ChatContext.Provider value={contextData}>

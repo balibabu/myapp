@@ -26,7 +26,7 @@ export default function AddExpenseUI(props) {
     };
 
     return (
-        <div className='fixed-bottom'>
+        <div className='position-fixed bottom-0 col-12'>
             <div className="row justify-content-center">
                 <div className="col-lg-6">
                     <div className="accordion" id="addExpenseAccordion">

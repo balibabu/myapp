@@ -5,7 +5,8 @@ import { createUpdateHandler } from './utility/NoteCRUD';
 import currentDateToColor from './utility/Colors';
 import { Confirm } from '../../../utility/utilities';
 import AuthContext from '../../Contexts/AuthContext';
-import VariableContext from '../../Contexts/VariableContext';
+import NoteContext from '../../Contexts/NoteContext';
+
 
 const blankDetails = { title: "", description: "", color: currentDateToColor() };
 export default function NoteEditor() {
@@ -13,7 +14,7 @@ export default function NoteEditor() {
 
     const [noteDetails, setNoteDetails] = useState(blankDetails);
     const [changed, setChanged] = useState(false);
-    const { notes, setNotes, SetloadingNoteItem, fetchNotes } = useContext(VariableContext);
+    const { notes, setNotes, SetloadingNoteItem, fetchNotes } = useContext(NoteContext);
     const { token } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
     const titleFieldRef = useRef();

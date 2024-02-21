@@ -4,11 +4,11 @@ import { onCreate, onDelete, onUpdate } from './TodoCRUD';
 import { Navigate } from 'react-router-dom';
 import Category from './Category';
 import Fetching from '../../Shared/Fetching';
-import VariableContext from '../../Contexts/VariableContext';
 import AuthContext from '../../Contexts/AuthContext';
+import TodoContext from '../../Contexts/TodoContext';
 
 export default function TodoApp() {
-    const { todoList, setTodoList, fetchTodoList } = useContext(VariableContext);
+    const { todoList, setTodoList, fetchTodoList } = useContext(TodoContext);
     const { token, loggedIn } = useContext(AuthContext);
     const [, setInitialFetch] = useState(false);
     const [selectedTab, setSelectedTab] = useState(0);

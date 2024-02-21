@@ -4,16 +4,14 @@ import { PrivateDetailForm } from '../extra/PrivateDetailForm';
 import FilePresence from '../extra/FilePresence';
 import CustomModal from '../../../../utility/CustomModal';
 import DragDrop from './DragDrop';
-import VariableContext from '../../../Contexts/VariableContext';
 import AuthContext from '../../../Contexts/AuthContext';
 import StorageContext from '../../../Contexts/StorageContext';
 
 export default function UploadFileModal({ file, setFile, setProgress, fileModal, setFileModal, selected }) {
-    const { showToast, loadingFileItem, SetloadingFileItem } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
     const [isPrivate, setIsPrivate] = useState(false);
     const [privateDetails, setPrivateDetails] = useState({});
-    const { files, setFiles } = useContext(StorageContext);
+    const { files, setFiles, loadingFileItem, SetloadingFileItem  } = useContext(StorageContext);
 
 
     useEffect(() => {
@@ -41,7 +39,7 @@ export default function UploadFileModal({ file, setFile, setProgress, fileModal,
             formData.append("inside", selected);
         }
         if (FilePresence(file, files)) {
-            uploadFile(formData, token, loadingFileItem, showToast, SetloadingFileItem, setFiles, setProgress);
+            uploadFile(formData, token, loadingFileItem, ()=>{}, SetloadingFileItem, setFiles, setProgress);
         }
         setFile(null);
     };

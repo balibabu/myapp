@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import deleteImg from '../../../images/delete.png';
 import convertUtcToLocal from '../../../utility/AutoLocalTime';
 import LoadingUI from '../../../utility/LoadingUI';
-import VariableContext from '../../Contexts/VariableContext';
+import NoteContext from '../../Contexts/NoteContext';
 
 export default function NoteItem(props) {
-    const { loadingNoteItem, SetloadingNoteItem } = useContext(VariableContext);
+    const { loadingNoteItem, SetloadingNoteItem } = useContext(NoteContext);
     const navigate = useNavigate();
     const onClickHandler = () => {
         navigate(`/notepad/edit/${props.note.id}`);
