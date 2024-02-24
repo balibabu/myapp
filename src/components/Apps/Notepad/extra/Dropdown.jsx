@@ -28,5 +28,5 @@ export default function Dropdown({ color }) {
 const dropdownStyle = {
     cursor: 'pointer',
     borderRadius: "0 6px 6px 0",
-    borderLeft:'solid 1px'
+    borderLeft:'solid 1px grey'
 }

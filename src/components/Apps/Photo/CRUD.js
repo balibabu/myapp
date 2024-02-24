@@ -9,7 +9,7 @@ export async function saveImage(photo) {
 
 export async function downloadFullImage(photo, token, setPhotos, setProgress) {
     const s = await getBlobSizeFromURL(photo.url);
-    if (s < 10_000) {
+    if (s < photo.size) {
         const data = await downloadImage(token, photo.id, setProgress);
         if (data) {
             const blob = new Blob([data], { type: 'application/octet-stream' })

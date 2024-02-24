@@ -76,24 +76,23 @@ export default function NoteEditor() {
     };
 
     return (
-        <div style={{ ...containerStyle, backgroundColor: "rgb(0,62,75)" }} onKeyDown={handleKeyDown}>
+        <div style={{ backgroundColor: hexToRGBA(noteDetails.color, 0.4) }} onKeyDown={handleKeyDown}>
             <div className='row m-0  justify-content-center'>
-                <div className='col-xl-8 col-md-10 col-sm-11 p-4'>
+                <div className='col-xl-8 col-md-10 col-sm-11 p-2'>
                     <div className="input-group mb-2">
-                        <button className="btn" style={{ backgroundColor: noteDetails.color, borderRight: 'solid 1px white' }} onClick={Cancel}>{'<-'}</button>
+                        <button className="btn" style={{ backgroundColor: noteDetails.color, borderRight: 'solid 1px grey' }} onClick={Cancel}>{'<-'}</button>
                         <input ref={titleFieldRef} style={{ ...titleStyle, backgroundColor: noteDetails.color }} name='title' type="text" onChange={onValueChange} className='col-lg-10 col-9' placeholder='give a title' value={noteDetails.title} />
-                        <input type="color" className="form-control p-0" style={{ height: "auto", margin: "0px", border: 'none' }} name='color' value={noteDetails.color} onChange={onValueChange} />
+                        <input type="color" className="form-control p-0" style={{ height: "auto", margin: "0px", borderColor: 'grey' }} name='color' value={noteDetails.color} onChange={onValueChange} />
                         <Dropdown color={noteDetails.color} />
                     </div>
                     <textarea className='col-12' name="description"
                         rows='16'
-                        // style={textareaStyle}
                         style={{ ...textareaStyle, backgroundColor: noteDetails.color }}
                         onChange={onValueChange}
                         placeholder='give a description'
                         value={noteDetails.description}
                     />
-                    <div className='input-group mt-2'>
+                    <div className='input-group'>
                         <button className='col-6 btn btn-danger' onClick={Cancel}>Cancel</button>
                         <button className="col-6 btn btn-success" onClick={saveUpdateHandler}>{isNaN(noteId) ? 'Add' : 'Update'}</button>
                     </div>
@@ -103,23 +102,14 @@ export default function NoteEditor() {
     );
 }
 
-
-
-const containerStyle = {
-    // maxWidth: "100vw",
-    // minHeight: "100vh",
-    // maxHeight: "100vh",
-    // height:"100dvh",
-}
-
 const textareaStyle = {
     border: 'none',
     outline: 'none',
     padding: '10px',
     backgroundColor: '#a5d3fb',
     // borderRadius: '0 0 15px 15px',
-    borderRadius: '15px',
-    height: "80dvh"
+    borderRadius: '5px',
+    height: "85dvh"
 };
 
 const titleStyle = {
@@ -130,3 +120,9 @@ const titleStyle = {
     backgroundColor: '#a5d3fb',
 };
 
+const hexToRGBA = (hex, alpha) => {
+    const r = parseInt(hex.substring(1, 3), 16);
+    const g = parseInt(hex.substring(3, 5), 16);
+    const b = parseInt(hex.substring(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
