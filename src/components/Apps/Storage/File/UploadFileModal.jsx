@@ -39,7 +39,7 @@ export default function UploadFileModal({ file, setFile, setProgress, fileModal,
             formData.append("inside", selected);
         }
         if (FilePresence(file, files)) {
-            uploadFile(formData, token, loadingFileItem, ()=>{}, SetloadingFileItem, setFiles, setProgress);
+            uploadFile(formData, token, loadingFileItem, SetloadingFileItem, setFiles, setProgress);
         }
         setFile(null);
     };

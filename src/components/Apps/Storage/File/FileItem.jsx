@@ -19,7 +19,7 @@ export default function FileItem(props) {
     const [isCutted, setIsCutted] = useState(false);
 
     const deleteHandler = async () => {
-        onDelete(props.file.id, token, SetloadingFileItem, ()=>{}, setFiles);
+        onDelete(props.file.id, token, SetloadingFileItem,setFiles);
     }
 
     const downLoadhandler = async () => {

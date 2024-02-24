@@ -11,7 +11,7 @@ export default function History({ history, setHistory }) {
                 </div>
                 {history && history.split(';').slice(1).map((hist, index) => {
                     const [file, code] = hist.split('-');
-                    return <div className='' key={index}>{file} - {code}</div>
+                    return <div className='' key={index}>{code} - [{file}]</div>
                 })}
             </div>:<div onClick={()=>setShow(true)}>show</div>}
         </div>
