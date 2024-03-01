@@ -7,6 +7,7 @@ export const VariableProvider = ({ children }) => {
     const [fileShareSendProgress, setFileShareSendProgress] = useState(0);
     const [fileShareReceiveProgress, setFileShareReceiveProgress] = useState(0);
     const [notifications, setNotifications] = useState([]);
+    const [clipShow, setClipShow] = useState(false);
 
     function notify(title, content, bg = 'success') {
         setNotifications((prev) => [...prev, { title, content, bg, id: Date.now() }]);
@@ -15,7 +16,8 @@ export const VariableProvider = ({ children }) => {
     const contextData = {
         fileShareSendProgress, setFileShareSendProgress,
         fileShareReceiveProgress, setFileShareReceiveProgress,
-        notifications, setNotifications, notify, toastColor
+        notifications, setNotifications, notify, toastColor,
+        clipShow, setClipShow
     }
     return (
         <VariableContext.Provider value={contextData}>

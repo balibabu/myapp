@@ -3,6 +3,7 @@ import ClipIcon from '../../images/ClipIcon'
 import { ClipSync } from '../../http/User'
 import { copyToClipboard } from '../../utility/utilities';
 import VariableContext from '../Contexts/VariableContext';
+import Tooltip from '../../utility/Tooltip/Tooltip';
 
 export default function ClipboardSync(props) {
     const { notify } = useContext(VariableContext);
@@ -21,7 +22,9 @@ export default function ClipboardSync(props) {
             style={{ width: '30px', marginLeft: '10px', cursor: 'pointer' }}
             onClick={clipClickHandler}
         >
-            <ClipIcon />
+            <Tooltip text='sync clipboard'>
+                <ClipIcon />
+            </Tooltip>
         </div>
     )
 }

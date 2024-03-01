@@ -17,7 +17,7 @@ import { CombinedContextProvider } from './components/Contexts/CombinedContext';
 import Fileshare from './components/Apps/Public/Fileshare/Fileshare';
 import Photo from './components/Apps/Photo/Photo';
 import Toast from './components/Shared/Toast';
-import Test from './Test/Test';
+import Test from './R&D/Test';
 
 function App() {
     return (

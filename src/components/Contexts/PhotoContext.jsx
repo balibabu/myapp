@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react'
 import AuthContext from './AuthContext';
 import { getPhotos, pingServerAboutThumbnails, uploadImages } from '../../http/Photo';
 import { ImageCompressor } from '../Apps/Photo/Compressor';
+import { duplicateCheck } from '../Apps/Photo/Upload/duplicateCheck';
 
 const PhotoContext = createContext();
 export default PhotoContext;
@@ -46,11 +47,14 @@ export function PhotoContextProvider({ children }) {
             } else {
                 compressedImg = selectedimg;
             }
-            const formData = new FormData();
-            formData.append('files', compressedImg, selectedimg.name);
-            const res = await uploadImages(formData, token, setProgress);
-            // eslint-disable-next-line
-            setPhotos((prev) => [...prev, { ...res[0], url: URL.createObjectURL(compressedImg) }])
+            if (duplicateCheck(photos, selectedimg)) {
+                const formData = new FormData();
+                formData.append('files', compressedImg, selectedimg.name);
+                const res = await uploadImages(formData, token, setProgress);
+                uploadImages(formData, token, setProgress).then((res)=>{
+                    setPhotos((prev) => [{ ...res[0], url: URL.createObjectURL(compressedImg) }, ...prev])
+                })
+            }
         }
         setSelectedImages([]);
     }

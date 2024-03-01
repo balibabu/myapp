@@ -13,7 +13,7 @@ export default function Folder({ folder, setCut }) {
     }
 
     function cutHandler() {
-        setCut(folder)
+        setCut([folder,'folder'])
     }
 
     return (

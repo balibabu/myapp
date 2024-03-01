@@ -24,13 +24,13 @@ export default function FileItem(props) {
 
     const downLoadhandler = async () => {
         setDownloadFileId(props.file.id);
-        await downloadFile(token, props.file.id, props.file.originalName, setProgress);
+        await downloadFile(token, props.file.id, props.file.file_info.name, setProgress);
         setDownloadFileId(null);
         setProgress(0);
     }
 
     const cutHandler = () => {
-        props.setCut(props.file);
+        props.setCut([props.file,'file']);
         setIsCutted(true);
     }
 
@@ -49,11 +49,11 @@ export default function FileItem(props) {
                         <img className='rounded-3' src={fileImg} alt="type" style={{ maxWidth: '100%', maxHeight: '100%', cursor: 'pointer' }} />
                     </div>
                     <div className='col-10 ps-2' >
-                        <div className='m-0' style={{ overflow: "hidden", whiteSpace: "nowrap" }}>{props.file.originalName}</div>
+                        <div className='m-0' style={{ overflow: "hidden", whiteSpace: "nowrap" }}>{props.file.file_info.name}</div>
                         {downloadFileId === props.file.id && <DownloadingUI progress={progress} />}
                         <div className='d-flex justify-content-between'>
                             <small className='text-secondary pt-2' style={{ fontSize: "10px" }}>{convertUtcToLocal(props.file.timestamp).toString()}</small>
-                            <div className='text-secondary' style={{ fontSize: "14px" }}>{IntelligentSize(props.file.fileSize)}</div>
+                            <div className='text-secondary' style={{ fontSize: "14px" }}>{IntelligentSize(props.file.file_info.size)}</div>
                         </div>
                     </div>
                     <Dropdown deleteHandler={deleteHandler} downLoadhandler={downLoadhandler} cutHandler={cutHandler}/>

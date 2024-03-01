@@ -76,7 +76,7 @@ export default function NoteEditor() {
     };
 
     return (
-        <div style={{ backgroundColor: hexToRGBA(noteDetails.color, 0.4) }} onKeyDown={handleKeyDown}>
+        <div style={{ backgroundColor: hexToRGBA(noteDetails.color, 0.6) }} onKeyDown={handleKeyDown}>
             <div className='row m-0  justify-content-center'>
                 <div className='col-xl-8 col-md-10 col-sm-11 p-2'>
                     <div className="input-group mb-2">
@@ -105,11 +105,12 @@ export default function NoteEditor() {
 const textareaStyle = {
     border: 'none',
     outline: 'none',
-    padding: '10px',
+    padding: '5px',
     backgroundColor: '#a5d3fb',
     // borderRadius: '0 0 15px 15px',
     borderRadius: '5px',
-    height: "85dvh"
+    height: "85dvh",
+    lineHeight:'1.2rem'
 };
 
 const titleStyle = {

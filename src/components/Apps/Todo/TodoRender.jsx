@@ -18,7 +18,7 @@ export default function TodoRender(props) {
 					</button>
 				</h2>
 				<div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-					<div className="accordion-body body-uncomplete">
+					<div className="accordion-body body-uncomplete p-1 px-3">
 						<div>
 							<div className="row">
 								{uncompleted.length > 0 ? uncompleted.map((item) => {
@@ -36,7 +36,7 @@ export default function TodoRender(props) {
 					</button>
 				</h2>
 				<div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
-					<div className="accordion-body body-complete">
+					<div className="accordion-body body-complete p-1 px-3">
 						<div>
 							<div className="row">
 								{completed.length > 0 ? completed.map((item) => {

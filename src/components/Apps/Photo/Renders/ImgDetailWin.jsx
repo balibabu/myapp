@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import PhotoContext from '../../../Contexts/PhotoContext';
 import Details from './Details';
 import Image from './Image';
 import { downloadFullImage, fetchNsetThumbUrl, saveImage } from '../CRUD';
 import AuthContext from '../../../Contexts/AuthContext';
 import Progress from '../../../Shared/Progress';
+import { deletePhotos } from '../../../../http/Photo';
+import { Confirm } from '../../../../utility/utilities';
 
 export default function ImgDetailWin() {
     const { id } = useParams()
+    const navigate = useNavigate();
     const [photo, setPhoto] = useState({});
     const { photos, setPhotos } = useContext(PhotoContext);
     const { token } = useContext(AuthContext);
@@ -36,13 +39,22 @@ export default function ImgDetailWin() {
             })
         }, 500);
     }
+    const deleteBtnHandler = async () => {
+        const op = Confirm('Do you want to delete this photo?');
+        if (!op) { return; }
+        navigate(-1);
+        const status = await deletePhotos(token, photo.id);
+        if (status) {
+            setPhotos((prev) => prev.filter((_photo) => _photo.id !== photo.id));
+        }
+    }
 
     return (
         <div className='row m-0' >
             <div className='col p-0'>
                 {(progress > 0 && progress < 100) ?
                     <Progress {...{ progress, title: 'downloading full quality', bg: 'success', css: 'm-1' }} /> :
-                    <Controls {...{ fullQuality, setFullQuality, downloadBtnhandler, showInfo, setShowInfo }} />
+                    <Controls {...{ fullQuality, setFullQuality, downloadBtnhandler, showInfo, setShowInfo, deleteBtnHandler }} />
                 }
                 <Image {...{ photo, photos }} />
             </div>
@@ -55,9 +67,9 @@ export default function ImgDetailWin() {
     )
 }
 
-function Controls({ fullQuality, setFullQuality, downloadBtnhandler, showInfo, setShowInfo }) {
+function Controls({ fullQuality, setFullQuality, downloadBtnhandler, showInfo, setShowInfo, deleteBtnHandler }) {
     return (
-        <div className='bg-info d-flex'>
+        <div className='bg-info d-flex' style={{ cursor: 'pointer' }}>
             <div className='pe-3'>
                 <div className="form-check form-switch">
                     <input className="form-check-input" type="checkbox" role="switch" checked={fullQuality} onChange={() => setFullQuality(!fullQuality)} />
@@ -65,6 +77,7 @@ function Controls({ fullQuality, setFullQuality, downloadBtnhandler, showInfo, s
                 </div>
             </div>
             <div className='pe-3' onClick={downloadBtnhandler}>download</div>
+            <div className='pe-3' onClick={deleteBtnHandler}>delete</div>
             <div onClick={() => setShowInfo(!showInfo)}>{showInfo ? 'hide ' : 'show '}info</div>
         </div>
     );

@@ -96,3 +96,17 @@ export async function pingServerAboutThumbnails(token){
     })
     console.log(res.data);
 }
+
+export async function deletePhotos(token,id){
+    console.log('deletePhotos');
+    const res=await axios.delete(`${API_BASE_URL}/photu/delete/${id}/`,{
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
+    })
+    if (res.status === 204) {
+        return true;
+    }
+    console.log(res);
+    return false;
+}

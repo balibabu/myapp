@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import profileImg from '../../images/contactProfile.jpg'
-import { UploadProfile } from '../../http/User';
 import AuthContext from '../Contexts/AuthContext';
 import MessageAdmin from './MessageAdmin';
 

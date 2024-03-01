@@ -13,11 +13,11 @@ export default function AddButton({ selected, file, setFile, setProgress, cut, s
     const { folders, setFolders, setFiles } = useContext(StorageContext);
 
     const pasteHandler = () => {
-        if (cut.hasOwnProperty('fileSize')) {
-            updaterFile({ ...cut, inside: eval(selected) }, token, setFiles);
-        } else {
-            if (isMovable(cut, folders, eval(selected))) {
-                updater(setFolders, token, { ...cut, inside: eval(selected) });
+        if(cut[1]==='file'){
+            updaterFile({ ...cut[0], inside: eval(selected) }, token, setFiles);
+        }else{
+            if (isMovable(cut[0], folders, eval(selected))) {
+                updater(setFolders, token, { ...cut[0], inside: eval(selected) });
             } else {
                 alert('sorry, moving folder inside it\'s children is not possible');
             }

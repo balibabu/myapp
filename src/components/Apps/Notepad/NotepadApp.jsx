@@ -28,7 +28,7 @@ export default function NotepadApp() {
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
-        <div style={{ maxHeight: "99dvh", overflowY: "auto" }}>
+        <div style={{ maxHeight: "100dvh", overflowY: "auto" }} className='custom-scrollbar'>
             <Fetching status={notes} title='Notes'/>
             {loadingNoteItem === 'newItem' && <ProgressUI title='Creating New Note Please wait' />}
             {/* {notes === undefined && <ProgressUI title='Fetching notes please wait' />} */}

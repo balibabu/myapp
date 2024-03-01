@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { uploadFile } from './FileCRUD';
+import { uploadFile, uploadFileInChunks } from './FileCRUD';
 import { PrivateDetailForm } from '../extra/PrivateDetailForm';
 import FilePresence from '../extra/FilePresence';
 import CustomModal from '../../../../utility/CustomModal';
@@ -24,23 +24,29 @@ export default function UploadFileModal({ file, setFile, setProgress, fileModal,
     const onUploadClick = async (file) => {
         setFileModal(false);
         if (!file) { return; }
-        if (file.size > 100_000_000) {
-            alert('size limit 100MB exceeded, please choose smaller size');
-            return;
-        }
-        const formData = new FormData();
-        formData.append("file", file);
-        if (isPrivate) {
-            formData.append("repo_owner", privateDetails.repo_owner);
-            formData.append("repo_name", privateDetails.repo_name);
-            formData.append("token", privateDetails.token);
-        }
-        if(selected!=='null'){
-            formData.append("inside", selected);
-        }
-        if (FilePresence(file, files)) {
-            uploadFile(formData, token, loadingFileItem, SetloadingFileItem, setFiles, setProgress);
-        }
+        // if (file.size > 100_000_000) {
+        //     alert('size limit 100MB exceeded, please choose smaller size');
+        //     return;
+        // }
+        // const formData = new FormData();
+        // formData.append("file", file);
+        // if (isPrivate) {
+        //     formData.append("repo_owner", privateDetails.repo_owner);
+        //     formData.append("repo_name", privateDetails.repo_name);
+        //     formData.append("token", privateDetails.token);
+        // }
+        // if(selected!=='null'){
+        //     formData.append("inside", selected);
+        // }
+        // if (FilePresence(file, files)) {
+        //     uploadFile(formData, token, loadingFileItem, SetloadingFileItem, setFiles, setProgress);
+        // }
+
+
+
+        uploadFileInChunks(file,token,loadingFileItem,SetloadingFileItem,setFiles,setProgress,selected);
+
+
         setFile(null);
     };
     return (
