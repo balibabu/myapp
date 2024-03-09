@@ -45,9 +45,8 @@ export function PhotoContextProvider({ children }) {
             if (duplicateCheck(photos, selectedimg)) {
                 const formData = new FormData();
                 formData.append('file', compressedImg)
-                uploadImages(formData, token, setProgress).then((res) => {
-                    setPhotos((prev) => [{ ...res, url: URL.createObjectURL(compressedImg) }, ...prev])
-                })
+                const res=await uploadImages(formData, token, setProgress);
+                setPhotos((prev) => [{ ...res, url: URL.createObjectURL(compressedImg) }, ...prev])
             }
         }
         setSelectedImages([]);
