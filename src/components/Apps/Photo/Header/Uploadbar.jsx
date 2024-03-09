@@ -6,7 +6,7 @@ export default function Uploadbar() {
     const navigate = useNavigate();
     const isWindows = navigator.platform.toLowerCase().includes('win');
     return (
-        <div className='p-0 rounded overflow-hidden'>
+        <div className='p-0 rounded overflow-hidden mt-2'>
             {isWindows ?
                 <>
                     <div className='bg-secondary d-flex justify-content-between p-1'>

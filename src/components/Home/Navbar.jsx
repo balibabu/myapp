@@ -7,21 +7,19 @@ import VariableContext from '../Contexts/VariableContext';
 
 
 export default function Navbar() {
-    const { loggedIn, username,token } = useContext(AuthContext);
-    const { clipShow, setClipShow } = useContext(VariableContext);
+    const { loggedIn, username } = useContext(AuthContext);
 
     return (
         <>
             <nav className="navbar navbar-expand bg-primary data-bs-theme='dark'">
                 <div className="container-fluid">
-                    {clipShow ?
-                        <ClipboardSync token={token}/> :
-                        <h1 className="navbar-brand">Welcome</h1>
-                    }
+                    <h1 className="navbar-brand">Welcome</h1>
                     <div className="nav">
                         {loggedIn ?
-                            <><h4 className='mt-2'>Hello {username}</h4>
-                                <Dropdown {...{ clipShow, setClipShow }} /></>
+                            <>
+                                <h4 className='mt-2'>Hello {username}</h4>
+                                <Dropdown />
+                            </>
                             :
                             <><Link style={linkStyle} to="/login">Login</Link>
                                 <Link style={linkStyle} to="/register" className='ms-2'>Register</Link></>}

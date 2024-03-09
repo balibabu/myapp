@@ -13,10 +13,11 @@ export default function Details({ photo }) {
 
     return (
         <div>
-            <div className='fs-4'>{photo.oname}</div>
-            <div className=''>Size {IntelligentSize(photo.size)}</div>
-            <div>width: {resolution[0]}</div>
-            <div>height: {resolution[1]}</div>
+            <div className='fs-4'>{photo.original.name}</div>
+            <div className=''>Size {IntelligentSize(photo.original.size)}</div>
+            <div>width: {photo.width}</div>
+            <div>height: {photo.height}</div>
+            <div className=''>thumbnail size {IntelligentSize(photo.thumbnail.size)}</div>
         </div>
     )
 }

@@ -28,11 +28,6 @@ export function PhotoContextProvider({ children }) {
         setCurrent();
     }
 
-    const ping = async () => {
-        await pingServerAboutThumbnails(token);
-        setHelpedServer(true);
-    }
-
     async function upload() {
         if (selectedImages.length === 0) { return }
         let compressedImg;
@@ -49,10 +44,9 @@ export function PhotoContextProvider({ children }) {
             }
             if (duplicateCheck(photos, selectedimg)) {
                 const formData = new FormData();
-                formData.append('files', compressedImg, selectedimg.name);
-                const res = await uploadImages(formData, token, setProgress);
-                uploadImages(formData, token, setProgress).then((res)=>{
-                    setPhotos((prev) => [{ ...res[0], url: URL.createObjectURL(compressedImg) }, ...prev])
+                formData.append('file', compressedImg)
+                uploadImages(formData, token, setProgress).then((res) => {
+                    setPhotos((prev) => [{ ...res, url: URL.createObjectURL(compressedImg) }, ...prev])
                 })
             }
         }
@@ -63,7 +57,6 @@ export function PhotoContextProvider({ children }) {
         photos,
         setPhotos,
         fetchPhotos,
-        ping,
         helpedServer,
         setHelpedServer,
         selectedImages, setSelectedImages,

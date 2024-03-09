@@ -31,7 +31,7 @@ export default function LazyThumbnails({ photo }) {
     return (
         <div>
             <div onClick={() => navigate(`/photo/${photo.id}/`)} ref={sectionRef}>
-                {photo.url ? <img src={photo.url} alt={photo.oname} className='col-12' /> : <div><Image /></div>}
+                {photo.url ? <img src={photo.url} alt={photo.original.name} className='col-12' /> : <div><Image /></div>}
             </div>
             <ComponentObserver {...{ sectionRef, setVisible }} />
         </div>

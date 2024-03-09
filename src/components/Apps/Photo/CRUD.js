@@ -9,8 +9,8 @@ export async function saveImage(photo) {
 
 export async function downloadFullImage(photo, token, setPhotos, setProgress) {
     const s = await getBlobSizeFromURL(photo.url);
-    if (s < photo.size) {
-        const data = await downloadImage(token, photo.id, setProgress);
+    if (s < photo.original.size) {
+        const data = await downloadImage(token, photo.id, 1, setProgress);
         if (data) {
             const blob = new Blob([data], { type: 'application/octet-stream' })
             const newUrl = URL.createObjectURL(blob);
@@ -28,8 +28,11 @@ function getBlobSizeFromURL(url) {
     });
 }
 
+const initiatedFor = new Set();
 export async function fetchNsetThumbUrl(photo, setPhotos, token) {
-    const data = await getAThumbnail(token, photo.uname);
+    if (initiatedFor.has(photo.id)) { return }
+    initiatedFor.add(photo.id);
+    const data = await downloadImage(token, photo.id, 0); // 0 for thumbnail and 1 for original image
     const blob = new Blob([data], { type: 'application/octet-stream' })
     const url = URL.createObjectURL(blob);
     setPhotos((prev) => prev.map((ph) => ph.id === photo.id ? { ...ph, url } : ph));

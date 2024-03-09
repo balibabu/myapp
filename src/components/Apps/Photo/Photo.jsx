@@ -32,7 +32,7 @@ export default function Photo() {
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
-        <div onDragOver={(e) => e.preventDefault()} onDrop={handleDrop}>
+        <div onDragOver={(e) => e.preventDefault()} onDrop={handleDrop} style={{minHeight:'100dvh'}}>
             <Routes>
                 <Route path="/" element={<ThumbRend {...{ photos }} />} />
                 <Route path=":id/" element={<ImgDetailWin {...{ photos }} />} />

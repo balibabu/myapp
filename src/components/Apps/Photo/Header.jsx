@@ -4,9 +4,11 @@ import AuthContext from '../../Contexts/AuthContext';
 import Uploadbar from './Header/Uploadbar';
 import UploadIcon from '../../../images/UploadIcon';
 import { useNavigate } from 'react-router-dom';
+import PhotoContext from '../../Contexts/PhotoContext';
 
-export default function Header({ setPhotos }) {
+export default function Header() {
     const { token } = useContext(AuthContext);
+    const { setPhotos } = useContext(PhotoContext);
     const [files, setFiles] = useState(null);
     const [progress, setProgress] = useState(0);
 

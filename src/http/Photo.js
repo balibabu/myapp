@@ -65,10 +65,10 @@ export async function getAThumbnail(token, uname, setProgress = () => { }) {
 }
 
 
-export async function downloadImage(token, id, setProgress = () => { }) {
+export async function downloadImage(token, id, typ = 0, setProgress = () => { }) {
     console.log('downloadImage');
     try {
-        const response = await axios.get(`${API_BASE_URL}/photu/download/${id}/`, {
+        const response = await axios.get(`${API_BASE_URL}/photu/download/${id}/${typ}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
@@ -87,9 +87,9 @@ export async function downloadImage(token, id, setProgress = () => { }) {
     }
 }
 
-export async function pingServerAboutThumbnails(token){
+export async function pingServerAboutThumbnails(token) {
     console.log('pingServerAboutThumbnails');
-    const res=await axios.get(`${API_BASE_URL}/photu/thumbnails/ping/`,{
+    const res = await axios.get(`${API_BASE_URL}/photu/thumbnails/ping/`, {
         headers: {
             'Authorization': `Token ${token}`,
         },
@@ -97,9 +97,9 @@ export async function pingServerAboutThumbnails(token){
     console.log(res.data);
 }
 
-export async function deletePhotos(token,id){
+export async function deletePhotos(token, id) {
     console.log('deletePhotos');
-    const res=await axios.delete(`${API_BASE_URL}/photu/delete/${id}/`,{
+    const res = await axios.delete(`${API_BASE_URL}/photu/delete/${id}/`, {
         headers: {
             'Authorization': `Token ${token}`,
         },
