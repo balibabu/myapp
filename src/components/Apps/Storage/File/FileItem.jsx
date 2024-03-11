@@ -3,39 +3,36 @@ import LoadingUI from '../../../../utility/LoadingUI';
 import fileImg from '../../../../images/file.png';
 import convertUtcToLocal from '../../../../utility/AutoLocalTime';
 import Dropdown from './Dropdown';
-import { downloader, onDelete } from './FileCRUD';
-import { downloadFile } from '../../../../http/Storage';
+import { fileDownloader, onDelete } from './FileCRUD';
 import IntelligentSize from '../extra/IntelligentSize';
 import AuthContext from '../../../Contexts/AuthContext';
 import StorageContext from '../../../Contexts/StorageContext';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function FileItem(props) {
     const { loadingFileItem, SetloadingFileItem } = useContext(StorageContext);
-    const { token, username } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
     const [progress, setProgress] = useState(0);
     const [downloadFileId, setDownloadFileId] = useState(null);
     const { setFiles } = useContext(StorageContext);
     const [isCutted, setIsCutted] = useState(false);
+    const navigate = useNavigate();
 
     const deleteHandler = async () => {
-        onDelete(props.file.id, token, SetloadingFileItem,setFiles);
+        onDelete(props.file.id, token, SetloadingFileItem, setFiles);
     }
 
     const downLoadhandler = async () => {
         setDownloadFileId(props.file.id);
-        await downloadFile(token, props.file.id, props.file.title, setProgress);
+        await fileDownloader(token, props.file.id, props.file.title, setProgress);
         setDownloadFileId(null);
         setProgress(0);
     }
 
     const cutHandler = () => {
-        props.setCut([props.file,'file']);
+        props.setCut([props.file, 'file']);
         setIsCutted(true);
-    }
-
-    const onClickHandler = () => {
-        downloader(props.file, username);
     }
 
     return (
@@ -45,18 +42,18 @@ export default function FileItem(props) {
             </div>}
             <div className='mt-2 p-2 rounded-3 bg-info'>
                 <div className='d-flex justify-content-between'>
-                    <div className='col-1' onClick={onClickHandler}>
-                        <img className='rounded-3' src={fileImg} alt="type" style={{ maxWidth: '100%', maxHeight: '100%', cursor: 'pointer' }} />
+                    <div className='col-1'>
+                        <img className='rounded-3' src={fileImg} alt="type" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                     </div>
-                    <div className='col-10 ps-2' >
-                        <div className='m-0' style={{ overflow: "hidden", whiteSpace: "nowrap" }}>{props.file.title}</div>
+                    <div className='col-10 ps-2' onClick={() => navigate(`/storage/open/${props.file.id}`)}>
+                        <div className='m-0' style={{ overflow: "hidden", whiteSpace: "nowrap", cursor: 'pointer' }}>{props.file.title}</div>
                         {downloadFileId === props.file.id && <DownloadingUI progress={progress} />}
                         <div className='d-flex justify-content-between'>
                             <small className='text-secondary pt-2' style={{ fontSize: "10px" }}>{convertUtcToLocal(props.file.timestamp).toString()}</small>
                             <div className='text-secondary' style={{ fontSize: "14px" }}>{IntelligentSize(props.file.size)}</div>
                         </div>
                     </div>
-                    <Dropdown deleteHandler={deleteHandler} downLoadhandler={downLoadhandler} cutHandler={cutHandler}/>
+                    <Dropdown deleteHandler={deleteHandler} downLoadhandler={downLoadhandler} cutHandler={cutHandler} />
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { API_BASE_URL } from "./_baseURL";
-import { saveAs } from 'file-saver';
 
 export async function UploadFile(token, formData, setProgress) {
     console.log('UploadFile');
@@ -63,7 +62,7 @@ export async function deleteFile(token, id) {
 }
 
 
-export async function downloadFile(token, storageId, filename, setProgress) {
+export async function downloadFile(token, storageId, setProgress) {
     console.log('downloadFile');
     try {
         const response = await axios.get(`${API_BASE_URL}/storage/download/${storageId}/`, {
@@ -76,8 +75,8 @@ export async function downloadFile(token, storageId, filename, setProgress) {
             responseType: 'blob',
         });
         if (response.status === 200) {
-            saveAs(new Blob([response.data], { type: response.headers['content-type'] }), filename);
-            return true;
+            // saveAs(new Blob([response.data], { type: response.headers['content-type'] }), filename);
+            return response.data;
         }
         return false;
     } catch (error) {

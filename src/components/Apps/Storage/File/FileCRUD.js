@@ -1,4 +1,5 @@
-import { UploadFile, deleteFile, updateFile } from "../../../../http/Storage";
+import { UploadFile, deleteFile, downloadFile, updateFile } from "../../../../http/Storage";
+import { saveAs } from 'file-saver';
 
 export const onDelete = async (id, token, SetloadingFileItem, setFiles) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this item?");
@@ -14,39 +15,7 @@ export const onDelete = async (id, token, SetloadingFileItem, setFiles) => {
     }
 };
 
-// https://github.com/balibabu/tester_drf/blob/main/babu/1704186896.png
-export const downloader = (file, username) => {
-    var anchor = document.createElement("a");
-    anchor.href = `https://github.com/${file.github_info.repo_owner}/${file.github_info.repo_name}/blob/main/${username}/${file.uploadedName}`;
-    anchor.target = "_blank";
-    anchor.download = file.originalName;
-    var clickEvent = new MouseEvent("click", {
-        view: window,
-        bubbles: true,
-        cancelable: false
-    });
-    anchor.dispatchEvent(clickEvent);
-};
 
-export const directDownload = (file, username) => {
-    fetch(`https://raw.githubusercontent.com/${file.github_info.repo_owner}/${file.github_info.repo_name}/main/${username}/${file.uploadedName}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.status}`);
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = file.originalName; // Set the desired file name
-            link.click();
-        })
-        .catch(error => {
-            console.log('Fetch error:', error);
-        });
-};
 
 export async function uploadFile(formData, token, loadingFileItem, SetloadingFileItem, setFiles, setProgress) {
     if (loadingFileItem === 'newfile') {
@@ -93,4 +62,9 @@ export async function uploadFileInChunks(file, token, loadingFileItem, Setloadin
             }
         });
     }
+}
+
+export async function fileDownloader(token, storageId, filename, setProgress) {
+    const data = await downloadFile(token, storageId, setProgress);
+    saveAs(new Blob([data]), filename);
 }
