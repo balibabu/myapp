@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import IntelligentSize from '../../Storage/extra/IntelligentSize'
+import { getBlobSizeFromURL } from '../utility/CRUD';
 
 export default function Details({ photo }) {
     const [resolution, setResolution] = useState([]);
@@ -11,13 +12,17 @@ export default function Details({ photo }) {
         };
     }, [photo])
 
+    const [size, setSize] = useState(0)
+    getBlobSizeFromURL(photo.url).then((value) => setSize(value));
+
     return (
         <div>
-            <div className='fs-4'>{photo.original.name}</div>
-            <div className=''>Size {IntelligentSize(photo.original.size)}</div>
+            <div className='fs-4'>{photo.title}</div>
+            <div>Size {IntelligentSize(photo.size)}</div>
             <div>width: {photo.width}</div>
             <div>height: {photo.height}</div>
-            <div className=''>thumbnail size {IntelligentSize(photo.thumbnail.size)}</div>
+
+            {size !== photo.size && <div>thumbnail size {IntelligentSize(size)}</div>}
         </div>
     )
 }

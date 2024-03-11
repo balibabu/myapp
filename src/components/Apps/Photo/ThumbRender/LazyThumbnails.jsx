@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import PhotoContext from '../../Contexts/PhotoContext';
-import AuthContext from '../../Contexts/AuthContext';
-import { getAThumbnail } from '../../../http/Photo';
-import ComponentObserver from '../../Shared/ComponentObserver';
+import PhotoContext from '../../../Contexts/PhotoContext';
+import AuthContext from '../../../Contexts/AuthContext';
+import { getAThumbnail } from '../../../../http/Photo';
+import ComponentObserver from '../../../Shared/ComponentObserver';
 import { useNavigate } from 'react-router-dom';
-import Image from '../../../images/Image';
-import { fetchNsetThumbUrl } from './CRUD';
+import Image from '../../../../images/Image';
+import { fetchNsetThumbUrl } from '../utility/CRUD';
 
 export default function LazyThumbnails({ photo }) {
     const [, setInitialFetch] = useState(false);
@@ -31,7 +31,7 @@ export default function LazyThumbnails({ photo }) {
     return (
         <div>
             <div onClick={() => navigate(`/photo/${photo.id}/`)} ref={sectionRef}>
-                {photo.url ? <img src={photo.url} alt={photo.original.name} className='col-12' /> : <div><Image /></div>}
+                {photo.url ? <img src={photo.url} alt={photo.title} className='col-12' /> : <div><Image /></div>}
             </div>
             <ComponentObserver {...{ sectionRef, setVisible }} />
         </div>

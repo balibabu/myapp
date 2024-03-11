@@ -3,13 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PhotoContext from '../../../Contexts/PhotoContext';
 import Details from './Details';
 import Image from './Image';
-import { downloadFullImage, fetchNsetThumbUrl, saveImage } from '../CRUD';
+import { downloadFullImage, fetchNsetThumbUrl, saveImage } from '../utility/CRUD';
 import AuthContext from '../../../Contexts/AuthContext';
 import Progress from '../../../Shared/Progress';
 import { deletePhotos } from '../../../../http/Photo';
 import { Confirm } from '../../../../utility/utilities';
 
-export default function ImgDetailWin() {
+export default function ShowImage() {
     const { id } = useParams()
     const navigate = useNavigate();
     const [photo, setPhoto] = useState({});

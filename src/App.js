@@ -17,7 +17,7 @@ import { CombinedContextProvider } from './components/Contexts/CombinedContext';
 import Fileshare from './components/Apps/Public/Fileshare/Fileshare';
 import Photo from './components/Apps/Photo/Photo';
 import Toast from './components/Shared/Toast';
-import Test from './R&D/Test';
+import ResearchAndDevelopment from './R&D/ResearchAndDevelopment';
 
 function App() {
     return (
@@ -40,7 +40,7 @@ function App() {
                         <Route path='/storage/:selected' element={<StorageApp />} />
                         <Route path='/photo/*' element={<Photo />} />
                         <Route path='/share' element={<Fileshare />} />
-                        <Route path='/testing' element={<Test />} />
+                        <Route path='/testing' element={<ResearchAndDevelopment />} />
                     </Routes>
                 </HashRouter>
                 <Toast />

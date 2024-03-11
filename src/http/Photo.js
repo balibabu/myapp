@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_BASE_URL } from "./_baseURL";
+import progressHandler from "../components/Apps/Photo/utility/progressHandler";
 
 export async function getPhotos(token) {
     console.log('getPhotos');
@@ -20,7 +21,7 @@ export async function getPhotos(token) {
 }
 
 
-export async function uploadImages(formData, token, setProgress = () => { }) {
+export async function uploadImages(formData, token, setProgressList, index) {
     console.log('uploadImages');
     try {
         const response = await axios.post(`${API_BASE_URL}/photu/upload/`, formData, {
@@ -28,10 +29,11 @@ export async function uploadImages(formData, token, setProgress = () => { }) {
                 'Authorization': `Token ${token}`,
             },
             onUploadProgress: (progressEvent) => {
-                setProgress((progressEvent.progress * 100).toFixed(1));
+                progressHandler(setProgressList, index, (progressEvent.progress * 100).toFixed(1))
+                // setProgress((progressEvent.progress * 100).toFixed(1));
             },
         });
-        setProgress(0);
+        progressHandler(setProgressList, index, undefined);
         if (response.status === 200) {
             return response.data
         }
