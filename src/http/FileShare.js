@@ -7,7 +7,7 @@ export async function UploadFile(formData, setProgress) {
     try {
         const response = await axios.post(`${API_BASE_URL}/utility/file/share/`, formData, {
             onUploadProgress: (progressEvent) => {
-                setProgress((progressEvent.progress * 100).toFixed(1));
+                setProgress((progressEvent.progress * 100).toFixed(0));
             },
         });
         setProgress(0);
@@ -26,7 +26,7 @@ export async function downloadHandler(fileKey, setProgress) {
     if (fileKey.length > 0) {
         const response = await axios.get(`${API_BASE_URL}/utility/file/share/?key=${fileKey}`, {
             onDownloadProgress: (progressEvent) => {
-                setProgress((progressEvent.progress * 100).toFixed(1));
+                setProgress((progressEvent.progress * 100).toFixed(0));
             }, responseType: 'blob'
         });
         const filename = response.headers['content-disposition']

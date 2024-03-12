@@ -10,8 +10,8 @@ export async function UploadFile(token, formData, setProgressList, index) {
                 'Authorization': `Token ${token}`,
             },
             onUploadProgress: (progressEvent) => {
-                progressHandler(setProgressList, index, (progressEvent.progress * 100).toFixed(1));
-                // setProgress((progressEvent.progress * 100).toFixed(1));
+                progressHandler(setProgressList, index, (progressEvent.progress * 100).toFixed(0));
+                // setProgress((progressEvent.progress * 100).toFixed(0));
             },
         });
         if (response.status === 200) {
@@ -73,7 +73,7 @@ export async function downloadFile(token, storageId, setProgress) {
                 'Authorization': `Token ${token}`,
             },
             onDownloadProgress: (progressEvent) => {
-                setProgress((progressEvent.progress * 100).toFixed(1));
+                setProgress((progressEvent.progress * 100).toFixed(0));
             },
             responseType: 'blob',
         });
