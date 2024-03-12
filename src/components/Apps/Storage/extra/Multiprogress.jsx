@@ -8,7 +8,7 @@ export default function Multiprogress({ progressList }) {
         <>
             {av > 0 &&
                 <div className='my-2 mx-3'>
-                    <div className='text-secondary'>Uploading File - {av}%</div>
+                    <div className='text-secondary'><Progress {...{ title: 'Uploading File', progress:av }} /></div>
                     <div className='row m-0 '>
                         {progressList.map((progress, index) => {
                             return <div className='col ps-0 pe-0' key={index}><Progress {...{ title: `chunk-${index + 1}`, progress }} /></div>
