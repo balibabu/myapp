@@ -37,8 +37,10 @@ export async function updaterFile(updatableFile, token, setFiles) {
 }
 
 export async function uploadFileInChunks(file, token, setFiles, selected, setProgressList) {
+    const fileKey = (Date.now()/1000).toFixed(0);
+    console.log(fileKey);
     const formData = new FormData();
-    formData.append("fileKey", 1);
+    formData.append("fileKey", fileKey);
     formData.append("filename", file.name);
     formData.append("size", file.size);
     formData.append("inside", selected);
@@ -52,7 +54,7 @@ export async function uploadFileInChunks(file, token, setFiles, selected, setPro
         const end = Math.min(file.size, start + max_chunk_size);
         const chunk = file.slice(start, end);
         const chunkForm = new FormData();
-        chunkForm.append("fileKey", 1);
+        chunkForm.append("fileKey", fileKey);
         chunkForm.append('chunkIndex', i);
         chunkForm.append('file', chunk);
         UploadFile(token, chunkForm, setProgressList, i).then((fileData) => {
