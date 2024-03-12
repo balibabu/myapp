@@ -7,14 +7,15 @@ import FileRenderer from './File/FileRenderer';
 import StorageContext from '../../Contexts/StorageContext';
 import AuthContext from '../../Contexts/AuthContext';
 import BreadCrumbs from './Breadcrumbs/BreadCrumbs';
+import Progress from '../../Shared/Progress';
+import Multiprogress from './extra/Multiprogress';
 
 export default function StorageApp() {
     const { selected } = useParams();
     const { loggedIn, token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
     const [, setInitialFetch] = useState(false);
-    const [progress, setProgress] = useState(0);
-    const { files, folders, fetchFilesAndFolders, loadingFileItem } = useContext(StorageContext);
+    const { files, folders, fetchFilesAndFolders, progressList } = useContext(StorageContext);
 
     const [cut, setCut] = useState();
 
@@ -47,9 +48,9 @@ export default function StorageApp() {
             <Fetching status={files} title='Files' />
             <BreadCrumbs {...{ selected, folders }} />
             {folders && folders.length > 0 && <FolderRenderer {...{ folders, selected, setCut }} />}
-            {loadingFileItem === 'newfile' && <UploadingUI progress={progress} />}
+            <Multiprogress {...{ progressList }} />
             {files && files.length > 0 && <FileRenderer {...{ files, selected, setCut }} />}
-            <AddButton {...{ selected, setProgress, file, setFile, cut, setCut, folders, token }} />
+            <AddButton {...{ selected, file, setFile, cut, setCut, folders, token }} />
         </div>
     )
 }

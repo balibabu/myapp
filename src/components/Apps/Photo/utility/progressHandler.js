@@ -1,8 +1,11 @@
 export default function progressHandler(setAllProgress, index, newValue) {
     setAllProgress((prev) => {
-        const oldValues = [...prev];
-        oldValues[index] = newValue;
-        return oldValues;
+        if(prev.length>0){
+            const oldValues = [...prev];
+            oldValues[index] = newValue;
+            return oldValues;
+        }
+        return prev;
     })
 }
 

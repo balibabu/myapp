@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Progress({ title, progress, height = '1rem', bg='',css='' }) {
+export default function Progress({ title, progress=10, height = '1rem', bg='',css='' }) {
     return (
         <div style={{ height }} className={"progress position-relative "+css}>
             <div className='position-absolute start-0 ps-1'>{progress}%</div>

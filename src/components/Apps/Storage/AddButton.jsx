@@ -2,20 +2,19 @@ import React, { useContext, useState } from 'react'
 import CreateFolder from './Folder/CreateFolder'
 import UploadFileModal from './File/UploadFileModal';
 import isMovable from './Folder/FolderMoveValidator';
-import { updateFolder } from '../../../http/Folder';
 import { updater } from './Folder/CRUD';
 import StorageContext from '../../Contexts/StorageContext';
 import { updaterFile } from './File/FileCRUD';
 
-export default function AddButton({ selected, file, setFile, setProgress, cut, setCut, token }) {
+export default function AddButton({ selected, file, setFile, cut, setCut, token }) {
     const [folderModal, setFolderModal] = useState(false);
     const [fileModal, setFileModal] = useState(false);
     const { folders, setFolders, setFiles } = useContext(StorageContext);
 
     const pasteHandler = () => {
-        if(cut[1]==='file'){
+        if (cut[1] === 'file') {
             updaterFile({ ...cut[0], inside: eval(selected) }, token, setFiles);
-        }else{
+        } else {
             if (isMovable(cut[0], folders, eval(selected))) {
                 updater(setFolders, token, { ...cut[0], inside: eval(selected) });
             } else {
@@ -34,7 +33,7 @@ export default function AddButton({ selected, file, setFile, setProgress, cut, s
                 {cut && <li><span className="dropdown-item " onClick={pasteHandler}>Paste</span></li>}
             </ul>
             <CreateFolder {...{ folderModal, setFolderModal, selected }} />
-            <UploadFileModal {...{ file, setFile, setProgress, fileModal, setFileModal, selected }} />
+            <UploadFileModal {...{ file, setFile, fileModal, setFileModal, selected }} />
         </div>
     )
 }

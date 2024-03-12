@@ -7,9 +7,9 @@ import DragDrop from './DragDrop';
 import AuthContext from '../../../Contexts/AuthContext';
 import StorageContext from '../../../Contexts/StorageContext';
 
-export default function UploadFileModal({ file, setFile, setProgress, fileModal, setFileModal, selected }) {
+export default function UploadFileModal({ file, setFile, fileModal, setFileModal, selected }) {
     const { token } = useContext(AuthContext);
-    const { files, setFiles, loadingFileItem, SetloadingFileItem  } = useContext(StorageContext);
+    const { setFiles, setProgressList } = useContext(StorageContext);
 
     useEffect(() => {
         if (file) {
@@ -21,7 +21,7 @@ export default function UploadFileModal({ file, setFile, setProgress, fileModal,
     const onUploadClick = async (file) => {
         setFileModal(false);
         if (!file) { return; }
-        uploadFileInChunks(file,token,loadingFileItem,SetloadingFileItem,setFiles,setProgress,selected);
+        uploadFileInChunks(file, token, setFiles, selected, setProgressList);
         setFile(null);
     };
 

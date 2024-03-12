@@ -36,17 +36,17 @@ export async function updaterFile(updatableFile, token, setFiles) {
     setFiles((prev) => prev.map((file) => file.id === updatedFile.id ? updatedFile : file));
 }
 
-export async function uploadFileInChunks(file, token, loadingFileItem, SetloadingFileItem, setFiles, setProgress, selected) {
-    SetloadingFileItem('newfile');
+export async function uploadFileInChunks(file, token, setFiles, selected, setProgressList) {
     const formData = new FormData();
     formData.append("fileKey", 1);
     formData.append("filename", file.name);
     formData.append("size", file.size);
     formData.append("inside", selected);
-    const res = await UploadFile(token, formData, setProgress);
+    const res = await UploadFile(token, formData, setProgressList, 0);
     const max_chunk_size = res['max-chunk-size']  //in bytes
 
     const totalChunks = Math.ceil(file.size / max_chunk_size);
+    setProgressList(new Array(totalChunks).fill(1));
     for (let i = 0; i < totalChunks; i++) {
         const start = i * max_chunk_size;
         const end = Math.min(file.size, start + max_chunk_size);
@@ -55,10 +55,10 @@ export async function uploadFileInChunks(file, token, loadingFileItem, Setloadin
         chunkForm.append("fileKey", 1);
         chunkForm.append('chunkIndex', i);
         chunkForm.append('file', chunk);
-        UploadFile(token, chunkForm, setProgress).then((fileData) => {
+        UploadFile(token, chunkForm, setProgressList, i).then((fileData) => {
             if (typeof (fileData) === 'object') {
                 setFiles((prev) => [fileData, ...prev])
-                SetloadingFileItem(null);
+                setProgressList([]);
             }
         });
     }

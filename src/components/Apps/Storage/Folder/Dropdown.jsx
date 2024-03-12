@@ -31,10 +31,12 @@ export default function Dropdown(props) {
                 <ul className="dropdown-menu dropdown-menu-end">
                     {props.isRenaming ?
                         <li className="dropdown-item " onClick={renameHandler}>Save</li> :
-                        <li><span className="dropdown-item " onClick={() => props.setIsRenaming(true)}>Rename</span></li>
+                        <>
+                            <li><span className="dropdown-item " onClick={() => props.setIsRenaming(true)}>Rename</span></li>
+                            <li><span className="dropdown-item " onClick={props.cutHandler}>Cut</span></li>
+                            <li><span className="dropdown-item " onClick={deleteHandler}>Delete</span></li>
+                        </>
                     }
-                    <li><span className="dropdown-item " onClick={props.cutHandler}>Cut</span></li>
-                    <li><span className="dropdown-item " onClick={deleteHandler}>Delete</span></li>
                 </ul>
             </div>
         </div>
@@ -42,7 +44,7 @@ export default function Dropdown(props) {
 }
 
 
-const delete_message=`
+const delete_message = `
 Are you sure? 
 Deleting non-empty folder wont delete files and folders inside it.
 You may have to refresh the page for changes.
