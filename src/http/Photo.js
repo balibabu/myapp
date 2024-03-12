@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "./_baseURL";
+import { API_BASE_URL, MEDIA_BASE_URL } from "./_baseURL";
 import progressHandler from "../components/Apps/Photo/utility/progressHandler";
 
 export async function getPhotos(token) {
@@ -22,9 +22,9 @@ export async function getPhotos(token) {
 
 
 export async function uploadImages(formData, token, setProgressList, index) {
-    console.log('uploadImages');
+    console.log('uploadImages - MEDIA_BASE_URL');
     try {
-        const response = await axios.post(`${API_BASE_URL}/photu/upload/`, formData, {
+        const response = await axios.post(`${MEDIA_BASE_URL}/photu/upload/`, formData, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
@@ -68,10 +68,10 @@ export async function getAThumbnail(token, uname, setProgress = () => { }) {
 
 
 export async function downloadImage(token, id, typ = 0, setProgress = () => { }) {
-    console.log('downloadImage');
+    console.log('downloadImage - MEDIA_BASE_URL');
     setProgress(5);
     try {
-        const response = await axios.get(`${API_BASE_URL}/photu/download/${id}/${typ}/`, {
+        const response = await axios.get(`${MEDIA_BASE_URL}/photu/download/${id}/${typ}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },

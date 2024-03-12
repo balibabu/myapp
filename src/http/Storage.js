@@ -1,11 +1,11 @@
 import axios from "axios";
-import { API_BASE_URL } from "./_baseURL";
+import { API_BASE_URL, MEDIA_BASE_URL } from "./_baseURL";
 import progressHandler from "../components/Apps/Photo/utility/progressHandler";
 
 export async function UploadFile(token, formData, setProgressList, index) {
-    console.log('UploadFile');
+    console.log('UploadFile - MEDIA_BASE_URL');
     try {
-        const response = await axios.post(`${API_BASE_URL}/storage/upload/`, formData, {
+        const response = await axios.post(`${MEDIA_BASE_URL}/storage/upload/`, formData, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
@@ -65,10 +65,10 @@ export async function deleteFile(token, id) {
 
 
 export async function downloadFile(token, storageId, setProgress) {
-    console.log('downloadFile');
+    console.log('downloadFile - MEDIA_BASE_URL');
     setProgress(5);
     try {
-        const response = await axios.get(`${API_BASE_URL}/storage/download/${storageId}/`, {
+        const response = await axios.get(`${MEDIA_BASE_URL}/storage/download/${storageId}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
