@@ -69,7 +69,6 @@ export async function getAThumbnail(token, uname, setProgress = () => { }) {
 
 export async function downloadImage(token, id, typ = 0, setProgress = () => { }) {
     console.log('downloadImage - MEDIA_BASE_URL');
-    setProgress(5);
     try {
         const response = await axios.get(`${MEDIA_BASE_URL}/photu/download/${id}/${typ}/`, {
             headers: {

@@ -18,6 +18,7 @@ export default function ShowImage() {
     const [fullQuality, setFullQuality] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
 
     useEffect(() => {
         const foundPhoto = photos.find((photo) => photo.id === parseInt(id));
@@ -51,7 +52,7 @@ export default function ShowImage() {
 
     return (
         <div className='row m-0' >
-            <div className='col p-0'>
+            <div className={isPortrait ? 'col-12 p-0' : 'col p-0'}>
                 {(progress > 0 && progress < 100) ?
                     <Progress {...{ progress, title: 'downloading full quality', bg: 'success', css: 'm-1' }} /> :
                     <Controls {...{ fullQuality, setFullQuality, downloadBtnhandler, showInfo, setShowInfo, deleteBtnHandler }} />
@@ -59,7 +60,7 @@ export default function ShowImage() {
                 <Image {...{ photo, photos }} />
             </div>
             {showInfo &&
-                <div className='col-md-4 bg-secondary overflow-auto custom-scrollbar'>
+                <div className='col bg-secondary overflow-auto custom-scrollbar'>
                     <Details {...{ photo }} />
                 </div>
             }

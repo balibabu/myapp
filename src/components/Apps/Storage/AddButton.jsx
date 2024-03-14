@@ -5,20 +5,24 @@ import isMovable from './Folder/FolderMoveValidator';
 import { updater } from './Folder/CRUD';
 import StorageContext from '../../Contexts/StorageContext';
 import { updaterFile } from './File/FileCRUD';
+import VariableContext from '../../Contexts/VariableContext';
 
 export default function AddButton({ selected, file, setFile, cut, setCut, token }) {
     const [folderModal, setFolderModal] = useState(false);
     const [fileModal, setFileModal] = useState(false);
     const { folders, setFolders, setFiles } = useContext(StorageContext);
+    const { notify } = useContext(VariableContext);
 
-    const pasteHandler = () => {
+    const pasteHandler = async () => {
         if (cut[1] === 'file') {
-            updaterFile({ ...cut[0], inside: eval(selected) }, token, setFiles);
+            await updaterFile({ ...cut[0], inside: eval(selected) }, token, setFiles);
+            notify('File Moved', 'successfuly', 'success');
         } else {
             if (isMovable(cut[0], folders, eval(selected))) {
-                updater(setFolders, token, { ...cut[0], inside: eval(selected) });
+                await updater(setFolders, token, { ...cut[0], inside: eval(selected) });
+                notify('Folder Moved', 'successfuly', 'success');
             } else {
-                alert('sorry, moving folder inside it\'s children is not possible');
+                notify('Folder Moved Unsuccess', 'moving folder inside it\'s children is not possible', 'danger');
             }
         }
         setCut(false);

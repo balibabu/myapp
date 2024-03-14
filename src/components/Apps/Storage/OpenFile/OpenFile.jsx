@@ -6,6 +6,7 @@ import StorageContext from '../../../Contexts/StorageContext';
 import IntelligentSize from '../extra/IntelligentSize';
 import Progress from '../../../Shared/Progress';
 import blobTypeForIframe from './fileTypes';
+import convertUtcToLocal from '../../../../utility/AutoLocalTime';
 
 
 export default function OpenFile() {
@@ -34,7 +35,8 @@ export default function OpenFile() {
                 <>
                     <div className='text-center'>
                         <div className='text-white'>
-                            <div>Title : {foundFile.title}</div>
+                            <div>{foundFile.title}</div>
+                            <div>uploaded on: {convertUtcToLocal(foundFile.timestamp)}</div>
                             <div>Size : {IntelligentSize(foundFile.size)}</div>
                         </div>
                         {progress ?

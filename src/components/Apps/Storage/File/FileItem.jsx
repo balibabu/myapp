@@ -20,12 +20,12 @@ export default function FileItem(props) {
     const navigate = useNavigate();
 
     const deleteHandler = async () => {
-        onDelete(props.file.id, token, SetloadingFileItem, setFiles);
+        onDelete(props.file.id, token, SetloadingFileItem, setFiles, props.notify);
     }
 
     const downLoadhandler = async () => {
         setDownloadFileId(props.file.id);
-        await fileDownloader(token, props.file.id, props.file.title, setProgress);
+        await fileDownloader(token, props.file.id, props.file.title, setProgress, props.notify);
         setDownloadFileId(null);
         setProgress(0);
     }

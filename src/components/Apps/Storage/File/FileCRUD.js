@@ -1,17 +1,17 @@
 import { UploadFile, deleteFile, downloadFile, updateFile } from "../../../../http/Storage";
 import { saveAs } from 'file-saver';
 
-export const onDelete = async (id, token, SetloadingFileItem, setFiles) => {
+export const onDelete = async (id, token, SetloadingFileItem, setFiles, notify) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this item?");
     if (!confirmDelete) { return false; }
     SetloadingFileItem(id);
     const status = await deleteFile(token, id);
     SetloadingFileItem(null);
     if (status) {
-        alert('file deleted successfully', 'success');
+        notify('Storage Delete', 'file deleted successfully', 'success');
         setFiles((prev) => prev.filter((file) => file.id !== id));
     } else {
-        alert('something went wrong', 'danger');
+        notify('Storage Delete', 'something went wrong, check console for details', 'danger');
     }
 };
 
@@ -37,7 +37,7 @@ export async function updaterFile(updatableFile, token, setFiles) {
 }
 
 export async function uploadFileInChunks(file, token, setFiles, selected, setProgressList) {
-    const fileKey = (Date.now()/1000).toFixed(0);
+    const fileKey = (Date.now() / 1000).toFixed(0);
     console.log(fileKey);
     const formData = new FormData();
     formData.append("fileKey", fileKey);
@@ -66,7 +66,15 @@ export async function uploadFileInChunks(file, token, setFiles, selected, setPro
     }
 }
 
-export async function fileDownloader(token, storageId, filename, setProgress) {
+const initiatedTask = new Set();
+export async function fileDownloader(token, storageId, filename, setProgress, notify) {
+    if (initiatedTask.has(storageId)) {
+        notify('Storage Download', 'your file is not ready for download yet', 'danger');
+        return
+    }
+    notify('Storage Download', 'downloading will start soon when your file is ready', 'success');
+    initiatedTask.add(storageId);
     const data = await downloadFile(token, storageId, setProgress);
     saveAs(new Blob([data]), filename);
+    // initiatedTask.delete(storageId);
 }
