@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { downloadFile } from '../../../../http/Storage';
 import AuthContext from '../../../Contexts/AuthContext';
@@ -7,43 +7,56 @@ import IntelligentSize from '../extra/IntelligentSize';
 import Progress from '../../../Shared/Progress';
 import blobTypeForIframe from './fileTypes';
 import convertUtcToLocal from '../../../../utility/AutoLocalTime';
+import { saveAs } from 'file-saver';
 
 
 export default function OpenFile() {
-    const [fileUrl, setFileUrl] = useState('');
     const [progress, setProgress] = useState();
     const { id } = useParams();
     const { token } = useContext(AuthContext);
-    const { files } = useContext(StorageContext);
-    const foundFile = files.find((file) => file.id === parseInt(id));
+    const { files, setFiles } = useContext(StorageContext);
+    const [file, setFile] = useState({});
+
+    useEffect(() => {
+        const foundFile = files.find((file) => file.id === parseInt(id));
+        setFile(foundFile);
+    }, [])
+
 
     async function proceed() {
+        setProgress(0.2);
         const data = await downloadFile(token, id, setProgress);
-        const typ = blobTypeForIframe(foundFile.title);
+        const typ = blobTypeForIframe(file.title);
+        if (typ === undefined) {
+            saveAs(new Blob([data]), file.title);
+            return;
+        }
         const blob = new Blob([data], { type: typ })
         const url = URL.createObjectURL(blob);
-        setFileUrl(url);
+        setFile((prev) => {
+            const updatedFile = { ...prev, url };
+            setFiles((prev) => prev.map((file) => file.id === updatedFile.id ? updatedFile : file));
+            return updatedFile;
+        });
     }
 
     return (
         <>
-            {fileUrl.length > 0 ?
+            {file.url ?
                 <div style={{ height: '100dvh' }}>
-                    <iframe src={fileUrl} title={foundFile.title} width='99%' height='99%'></iframe>
+                    <iframe src={file.url} title={file.title} width='99%' height='99%'></iframe>
                 </div>
                 :
                 <>
                     <div className='text-center'>
                         <div className='text-white'>
-                            <div>{foundFile.title}</div>
-                            <div>uploaded on: {convertUtcToLocal(foundFile.timestamp)}</div>
-                            <div>Size : {IntelligentSize(foundFile.size)}</div>
+                            <div>{file.title}</div>
+                            <div>uploaded on: {convertUtcToLocal(file.timestamp)}</div>
+                            <div>Size : {IntelligentSize(file.size)}</div>
                         </div>
                         {progress ?
                             <>
-                                <div className='px-5'>
-                                    <Progress {...{ title: 'please wait while your file is being ready', progress, height: '3rem', css: 'mx-5' }} />
-                                </div>
+                                <Progress {...{ title: 'please wait while your file is being ready', progress, height: '3rem', css: 'mx-4' }} />
                             </>
                             :
                             <>

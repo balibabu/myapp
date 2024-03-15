@@ -13,7 +13,6 @@ export function StorageContextProvider({ children }) {
 
     const fetchFilesAndFolders = async () => {
         const res = await getFilesAndFolders(token);
-        console.log(res);
         setFiles(res.files);
         setFolders(res.folders);
     }

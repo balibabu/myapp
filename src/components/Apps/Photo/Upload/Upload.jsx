@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import PhotoContext from '../../../Contexts/PhotoContext';
 import Selected from './Selected';
 import { uploadImage } from '../utility/CRUD';

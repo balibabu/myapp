@@ -10,13 +10,13 @@ export default function CreateFolder({ folderModal, setFolderModal, selected }) 
     const { setFolders } = useContext(StorageContext);
 
     async function createHandler() {
+        setFolderModal(false);
         let folderInfo = { title: folder }
         if (selected !== 'null') {
             folderInfo['inside'] = selected;
         }
         const res = await createFolder(token, folderInfo);
         setFolders((prev) => [...prev, res]);
-        setFolderModal(false);
         setFolder('new folder');
     }
     return (

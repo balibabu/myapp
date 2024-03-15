@@ -1,32 +1,25 @@
 import React, { useContext, useState } from 'react'
 import LoadingUI from '../../../../utility/LoadingUI';
 import fileImg from '../../../../images/file.png';
-import convertUtcToLocal from '../../../../utility/AutoLocalTime';
-import Dropdown from './Dropdown';
 import { fileDownloader, onDelete } from './FileCRUD';
-import IntelligentSize from '../extra/IntelligentSize';
 import AuthContext from '../../../Contexts/AuthContext';
 import StorageContext from '../../../Contexts/StorageContext';
-import { useNavigate } from 'react-router-dom';
+import FileInfo from './FileInfo';
 
 
 export default function FileItem(props) {
     const { loadingFileItem, SetloadingFileItem } = useContext(StorageContext);
     const { token } = useContext(AuthContext);
     const [progress, setProgress] = useState(0);
-    const [downloadFileId, setDownloadFileId] = useState(null);
     const { setFiles } = useContext(StorageContext);
     const [isCutted, setIsCutted] = useState(false);
-    const navigate = useNavigate();
 
     const deleteHandler = async () => {
         onDelete(props.file.id, token, SetloadingFileItem, setFiles, props.notify);
     }
 
     const downLoadhandler = async () => {
-        setDownloadFileId(props.file.id);
         await fileDownloader(token, props.file.id, props.file.title, setProgress, props.notify);
-        setDownloadFileId(null);
         setProgress(0);
     }
 
@@ -45,15 +38,7 @@ export default function FileItem(props) {
                     <div className='col-1'>
                         <img className='rounded-3' src={fileImg} alt="type" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                     </div>
-                    <div className='col-10 ps-2' onClick={() => navigate(`/storage/open/${props.file.id}`)}>
-                        <div className='m-0' style={{ overflow: "hidden", whiteSpace: "nowrap", cursor: 'pointer' }}>{props.file.title}</div>
-                        {downloadFileId === props.file.id && <DownloadingUI progress={progress} />}
-                        <div className='d-flex justify-content-between'>
-                            <small className='text-secondary pt-2' style={{ fontSize: "10px" }}>{convertUtcToLocal(props.file.timestamp).toString()}</small>
-                            <div className='text-secondary' style={{ fontSize: "14px" }}>{IntelligentSize(props.file.size)}</div>
-                        </div>
-                    </div>
-                    <Dropdown deleteHandler={deleteHandler} downLoadhandler={downLoadhandler} cutHandler={cutHandler} />
+                    <FileInfo {...{ file: props.file, deleteHandler, downLoadhandler, cutHandler, DownloadingUI, progress, token, setFiles }} />
                 </div>
             </div>
         </div>

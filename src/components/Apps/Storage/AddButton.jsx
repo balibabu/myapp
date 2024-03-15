@@ -36,8 +36,8 @@ export default function AddButton({ selected, file, setFile, cut, setCut, token 
                 <li><span className="dropdown-item " onClick={() => setFileModal(!fileModal)}>Upload File</span></li>
                 {cut && <li><span className="dropdown-item " onClick={pasteHandler}>Paste</span></li>}
             </ul>
-            <CreateFolder {...{ folderModal, setFolderModal, selected }} />
-            <UploadFileModal {...{ file, setFile, fileModal, setFileModal, selected }} />
+            <CreateFolder {...{ folderModal, setFolderModal, selected,notify }} />
+            <UploadFileModal {...{ file, setFile, fileModal, setFileModal, selected,notify }} />
         </div>
     )
 }

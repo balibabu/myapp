@@ -8,10 +8,10 @@ export const onDelete = async (id, token, SetloadingFileItem, setFiles, notify) 
     const status = await deleteFile(token, id);
     SetloadingFileItem(null);
     if (status) {
-        notify('Storage Delete', 'file deleted successfully', 'success');
+        notify('Storage File Delete', 'file deleted successfully', 'success');
         setFiles((prev) => prev.filter((file) => file.id !== id));
     } else {
-        notify('Storage Delete', 'something went wrong, check console for details', 'danger');
+        notify('Storage File Delete', 'something went wrong, check console for details', 'danger');
     }
 };
 
@@ -36,35 +36,35 @@ export async function updaterFile(updatableFile, token, setFiles) {
     setFiles((prev) => prev.map((file) => file.id === updatedFile.id ? updatedFile : file));
 }
 
-export async function uploadFileInChunks(file, token, setFiles, selected, setProgressList) {
-    const fileKey = (Date.now() / 1000).toFixed(0);
-    console.log(fileKey);
-    const formData = new FormData();
-    formData.append("fileKey", fileKey);
-    formData.append("filename", file.name);
-    formData.append("size", file.size);
-    formData.append("inside", selected);
-    const res = await UploadFile(token, formData, setProgressList, 0);
-    const max_chunk_size = res['max-chunk-size']  //in bytes
+// export async function uploadFileInChunks(file, token, setFiles, selected, setProgressList) {
+//     const fileKey = (Date.now() / 1000).toFixed(0);
+//     console.log(fileKey);
+//     const formData = new FormData();
+//     formData.append("fileKey", fileKey);
+//     formData.append("filename", file.name);
+//     formData.append("size", file.size);
+//     formData.append("inside", selected);
+//     const res = await UploadFile(token, formData, setProgressList, 0);
+//     const max_chunk_size = res['max-chunk-size']  //in bytes
 
-    const totalChunks = Math.ceil(file.size / max_chunk_size);
-    setProgressList(new Array(totalChunks).fill(1));
-    for (let i = 0; i < totalChunks; i++) {
-        const start = i * max_chunk_size;
-        const end = Math.min(file.size, start + max_chunk_size);
-        const chunk = file.slice(start, end);
-        const chunkForm = new FormData();
-        chunkForm.append("fileKey", fileKey);
-        chunkForm.append('chunkIndex', i);
-        chunkForm.append('file', chunk);
-        UploadFile(token, chunkForm, setProgressList, i).then((fileData) => {
-            if (typeof (fileData) === 'object') {
-                setFiles((prev) => [fileData, ...prev])
-                setProgressList([]);
-            }
-        });
-    }
-}
+//     const totalChunks = Math.ceil(file.size / max_chunk_size);
+//     setProgressList(new Array(totalChunks).fill(1));
+//     for (let i = 0; i < totalChunks; i++) {
+//         const start = i * max_chunk_size;
+//         const end = Math.min(file.size, start + max_chunk_size);
+//         const chunk = file.slice(start, end);
+//         const chunkForm = new FormData();
+//         chunkForm.append("fileKey", fileKey);
+//         chunkForm.append('chunkIndex', i);
+//         chunkForm.append('file', chunk);
+//         UploadFile(token, chunkForm, setProgressList, i).then((fileData) => {
+//             if (typeof (fileData) === 'object') {
+//                 setFiles((prev) => [fileData, ...prev])
+//                 setProgressList([]);
+//             }
+//         });
+//     }
+// }
 
 const initiatedTask = new Set();
 export async function fileDownloader(token, storageId, filename, setProgress, notify) {
@@ -77,4 +77,39 @@ export async function fileDownloader(token, storageId, filename, setProgress, no
     const data = await downloadFile(token, storageId, setProgress);
     saveAs(new Blob([data]), filename);
     // initiatedTask.delete(storageId);
+}
+
+
+export async function uploadFileInChunks(file, token, setFiles, selected, setProgressList) {
+    return new Promise((resolve, reject) => {
+        const fileKey = (Date.now() / 1000).toFixed(0);
+        console.log(fileKey);
+        const formData = new FormData();
+        formData.append("fileKey", fileKey);
+        formData.append("filename", file.name);
+        formData.append("size", file.size);
+        formData.append("inside", selected);
+        UploadFile(token, formData, setProgressList, 0).then((res)=>{
+            const max_chunk_size = res['max-chunk-size']  //in bytes
+            const totalChunks = Math.ceil(file.size / max_chunk_size);
+            setProgressList(new Array(totalChunks).fill(1));
+            for (let i = 0; i < totalChunks; i++) {
+                const start = i * max_chunk_size;
+                const end = Math.min(file.size, start + max_chunk_size);
+                const chunk = file.slice(start, end);
+                const chunkForm = new FormData();
+                chunkForm.append("fileKey", fileKey);
+                chunkForm.append('chunkIndex', i);
+                chunkForm.append('file', chunk);
+                UploadFile(token, chunkForm, setProgressList, i).then((fileData) => {
+                    if (typeof (fileData) === 'object') {
+                        setFiles((prev) => [fileData, ...prev])
+                        setProgressList([]);
+                        resolve();
+                    }
+                });
+            }
+        })
+
+    })
 }

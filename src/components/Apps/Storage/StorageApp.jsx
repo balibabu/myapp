@@ -37,8 +37,8 @@ export default function StorageApp() {
 
     const handleDrop = (event) => {
         event.preventDefault();
-        const droppedFile = event.dataTransfer.files[0];
-        setFile(droppedFile);
+        const droppedFile = event.dataTransfer.files;
+        setFile([...event.dataTransfer.files]);
     };
 
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }

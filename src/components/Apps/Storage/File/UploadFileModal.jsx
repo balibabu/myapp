@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { uploadFile, uploadFileInChunks } from './FileCRUD';
-import { PrivateDetailForm } from '../extra/PrivateDetailForm';
-import FilePresence from '../extra/FilePresence';
+import React, { useContext, useEffect } from 'react'
+import { uploadFileInChunks } from './FileCRUD';
 import CustomModal from '../../../../utility/CustomModal';
 import DragDrop from './DragDrop';
 import AuthContext from '../../../Contexts/AuthContext';
 import StorageContext from '../../../Contexts/StorageContext';
 
-export default function UploadFileModal({ file, setFile, fileModal, setFileModal, selected }) {
+export default function UploadFileModal({ file, setFile, fileModal, setFileModal, selected, notify }) {
     const { token } = useContext(AuthContext);
     const { setFiles, setProgressList } = useContext(StorageContext);
 
@@ -18,10 +16,14 @@ export default function UploadFileModal({ file, setFile, fileModal, setFileModal
     }, [file])
 
 
-    const onUploadClick = async (file) => {
+    const onUploadClick = async () => {
         setFileModal(false);
-        if (!file) { return; }
-        uploadFileInChunks(file, token, setFiles, selected, setProgressList);
+        if (file.length === 0) { return; }
+        notify('Storage', `uploading ${file.length} files`, 'success');
+        for (const _file of file) {
+            await uploadFileInChunks(_file, token, setFiles, selected, setProgressList);
+            notify('Storage', `${_file.name} uploaded`, 'success');
+        }
         setFile(null);
     };
 
