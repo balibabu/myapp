@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import VariableContext from '../../../Contexts/VariableContext';
 
 export default function Image(props) {
     const { photo, photos } = props;
+    const { notify } = useContext(VariableContext);
     const navigate = useNavigate();
     const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
     //if protrait fit image width to full else fit image height to full
@@ -12,7 +14,7 @@ export default function Image(props) {
         if (index > -1 && index < photos.length) {
             navigate(`/photo/${photos[index].id}/`, { replace: true });
         } else {
-            alert('this is end');
+            notify('Photo', 'this is end', 'danger');
         }
     }
 

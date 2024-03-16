@@ -89,7 +89,7 @@ export async function uploadFileInChunks(file, token, setFiles, selected, setPro
         formData.append("filename", file.name);
         formData.append("size", file.size);
         formData.append("inside", selected);
-        UploadFile(token, formData, setProgressList, 0).then((res)=>{
+        UploadFile(token, formData, setProgressList, 0).then((res) => {
             const max_chunk_size = res['max-chunk-size']  //in bytes
             const totalChunks = Math.ceil(file.size / max_chunk_size);
             setProgressList(new Array(totalChunks).fill(1));
@@ -103,7 +103,7 @@ export async function uploadFileInChunks(file, token, setFiles, selected, setPro
                 chunkForm.append('file', chunk);
                 UploadFile(token, chunkForm, setProgressList, i).then((fileData) => {
                     if (typeof (fileData) === 'object') {
-                        setFiles((prev) => [fileData, ...prev])
+                        setFiles((prev) => [{ ...fileData, url: URL.createObjectURL(file) }, ...prev])
                         setProgressList([]);
                         resolve();
                     }

@@ -7,7 +7,6 @@ import FileRenderer from './File/FileRenderer';
 import StorageContext from '../../Contexts/StorageContext';
 import AuthContext from '../../Contexts/AuthContext';
 import BreadCrumbs from './Breadcrumbs/BreadCrumbs';
-import Progress from '../../Shared/Progress';
 import Multiprogress from './extra/Multiprogress';
 
 export default function StorageApp() {

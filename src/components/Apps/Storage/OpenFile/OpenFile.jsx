@@ -24,7 +24,7 @@ export default function OpenFile() {
 
 
     async function proceed() {
-        setProgress(0.2);
+        setProgress(0.1);
         const data = await downloadFile(token, id, setProgress);
         const typ = blobTypeForIframe(file.title);
         if (typ === undefined) {

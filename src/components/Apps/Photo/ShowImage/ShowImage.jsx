@@ -8,6 +8,7 @@ import AuthContext from '../../../Contexts/AuthContext';
 import Progress from '../../../Shared/Progress';
 import { deletePhotos } from '../../../../http/Photo';
 import { Confirm } from '../../../../utility/utilities';
+import VariableContext from '../../../Contexts/VariableContext';
 
 export default function ShowImage() {
     const { id } = useParams()
@@ -15,6 +16,7 @@ export default function ShowImage() {
     const [photo, setPhoto] = useState({});
     const { photos, setPhotos } = useContext(PhotoContext);
     const { token } = useContext(AuthContext);
+    const { notify } = useContext(VariableContext);
     const [fullQuality, setFullQuality] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -44,6 +46,7 @@ export default function ShowImage() {
         const op = Confirm('Do you want to delete this photo?');
         if (!op) { return; }
         navigate(-1);
+        notify('Delete Photo', `deleting ${photo.title}`, 'danger');
         const status = await deletePhotos(token, photo.id);
         if (status) {
             setPhotos((prev) => prev.filter((_photo) => _photo.id !== photo.id));
