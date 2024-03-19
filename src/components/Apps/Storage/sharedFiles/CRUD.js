@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL, MEDIA_BASE_URL } from "../../../../http/_baseURL";
+import { API_BASE_URL } from "../../../../http/_baseURL";
 import { saveAs } from 'file-saver';
 import { Confirm } from "../../../../utility/utilities";
 
@@ -90,9 +90,9 @@ export async function allowFilePermission(token, fileId, shareWithUserId, anyone
 
 
 export async function downloadSharedFile(token, storageId, setProgress) {
-    console.log('downloadSharedFile - MEDIA_BASE_URL');
+    console.log('downloadSharedFile');
     try {
-        const response = await axios.get(`${MEDIA_BASE_URL}/storage/dsf/${storageId}/`, {
+        const response = await axios.get(`${API_BASE_URL}/storage/dsf/${storageId}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },
