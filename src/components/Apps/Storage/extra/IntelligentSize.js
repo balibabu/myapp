@@ -8,5 +8,9 @@ export default function IntelligentSize(size_bytes) {
         return KB.toFixed(2)+' KB'
     }
     const MB=KB/1024;
-    return MB.toFixed(2)+' MB'
+    if(MB<1000){
+        return MB.toFixed(2)+' MB'
+    }
+    const GB=MB/1024;
+    return GB.toFixed(3)+' GB'
 }

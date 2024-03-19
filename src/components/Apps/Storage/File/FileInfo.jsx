@@ -35,7 +35,7 @@ export default function FileInfo({ file, deleteHandler, downLoadhandler, cutHand
                         </div>
                     </>
             }
-            <Dropdown {...{ save, deleteHandler, downLoadhandler, cutHandler, isRenaming, setIsRenaming }} />
+            <Dropdown {...{ save, deleteHandler, downLoadhandler, cutHandler, isRenaming, setIsRenaming,navigate,file }} />
         </>
     )
 }

@@ -19,6 +19,8 @@ import Photo from './components/Apps/Photo/Photo';
 import Toast from './components/Shared/Toast';
 import ResearchAndDevelopment from './R&D/ResearchAndDevelopment';
 import OpenFile from './components/Apps/Storage/OpenFile/OpenFile';
+import SharedFiles from './components/Apps/Storage/sharedFiles/SharedFiles';
+import Share from './components/Apps/Storage/sharedFiles/Share';
 
 function App() {
     return (
@@ -40,6 +42,8 @@ function App() {
                         <Route path='/lunar' element={<LunarCalendarApp />} />
                         <Route path='/storage/:selected' element={<StorageApp />} />
                         <Route path='/storage/open/:id' element={<OpenFile />} />
+                        <Route path='/storage/shared' element={<SharedFiles />} />
+                        <Route path='/storage/share/:id' element={<Share />} />
                         <Route path='/photo/*' element={<Photo />} />
                         <Route path='/share' element={<Fileshare />} />
                         <Route path='/testing' element={<ResearchAndDevelopment />} />

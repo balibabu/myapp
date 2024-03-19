@@ -41,7 +41,7 @@ export default function NotepadApp() {
                 to='./edit/x'
                 style={floatingButtonStyle}
                 type="button"
-                className="btn btn-outline-success btn-lg"
+                className="btn btn-primary btn-lg"
             >+</Link>
         </div>
     )

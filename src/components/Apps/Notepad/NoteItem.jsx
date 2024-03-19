@@ -20,7 +20,7 @@ export default function NoteItem(props) {
         }
     }
     return (
-        <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12' onClick={onClickHandler} style={{ cursor: 'pointer', position: "relative", opacity: loadingNoteItem === props.note.id ? "50%" : "" }}>
+        <div className='col-lg-3 col-md-4 col-sm-6 col-xs-12 px-1' onClick={onClickHandler} style={{ cursor: 'pointer', position: "relative", opacity: loadingNoteItem === props.note.id ? "50%" : "" }}>
             {loadingNoteItem === props.note.id && <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <LoadingUI width="40px" />
             </div>}

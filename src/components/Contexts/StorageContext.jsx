@@ -7,6 +7,8 @@ export default StorageContext;
 export function StorageContextProvider({ children }) {
     const [files, setFiles] = useState();
     const [folders, setFolders] = useState();
+    const [sharedToMe, setSharedToMe] = useState();
+    const [sharedByMe, setSharedByMe] = useState();
     const { token } = useContext(AuthContext);
     const [loadingFileItem, SetloadingFileItem] = useState(null);
     const [progressList, setProgressList] = useState([]);
@@ -15,9 +17,12 @@ export function StorageContextProvider({ children }) {
         const res = await getFilesAndFolders(token);
         setFiles(res.files);
         setFolders(res.folders);
+        setSharedByMe(res.sharedByMe);
+        setSharedToMe(res.sharedToMe);
     }
 
     const contextData = {
+        token,
         files,
         setFiles,
         folders,
@@ -25,7 +30,9 @@ export function StorageContextProvider({ children }) {
         fetchFilesAndFolders,
         loadingFileItem,
         SetloadingFileItem,
-        progressList, setProgressList
+        progressList, setProgressList,
+        sharedByMe, setSharedByMe,
+        sharedToMe, setSharedToMe
     }
 
     return (

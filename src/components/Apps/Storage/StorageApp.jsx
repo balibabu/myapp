@@ -8,6 +8,7 @@ import StorageContext from '../../Contexts/StorageContext';
 import AuthContext from '../../Contexts/AuthContext';
 import BreadCrumbs from './Breadcrumbs/BreadCrumbs';
 import Multiprogress from './extra/Multiprogress';
+import SharedFolder from './sharedFiles/SharedFolder';
 
 export default function StorageApp() {
     const { selected } = useParams();
@@ -46,7 +47,8 @@ export default function StorageApp() {
         <div className='text-white' onDragOver={handleDragOver} onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
             <Fetching status={files} title='Files' />
             <BreadCrumbs {...{ selected, folders }} />
-            {folders && folders.length > 0 && <FolderRenderer {...{ folders, selected, setCut }} />}
+            
+            {folders && <FolderRenderer {...{ folders, selected, setCut }} />}
             <Multiprogress {...{ progressList }} />
             {files && files.length > 0 && <FileRenderer {...{ files, selected, setCut }} />}
             <AddButton {...{ selected, file, setFile, cut, setCut, folders, token }} />

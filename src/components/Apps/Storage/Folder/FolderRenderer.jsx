@@ -1,6 +1,7 @@
 import React from 'react'
 import Folder from './Folder'
 import { useEffect } from 'react'
+import SharedFolder from '../sharedFiles/SharedFolder';
 
 export default function FolderRenderer({ folders, selected, setCut }) {
     let folderId = parseInt(selected);
@@ -9,8 +10,9 @@ export default function FolderRenderer({ folders, selected, setCut }) {
 
     return (
         <div className='row m-0 px-1'>
+            <SharedFolder {...{ title: 'Shared', stroke: 'lime' }} />
             {filterdFolders.map((folder) => {
-                return <Folder key={folder.id} {...{ folder,setCut }} />
+                return <Folder key={folder.id} {...{ folder, setCut }} />
             })}
         </div>
     )

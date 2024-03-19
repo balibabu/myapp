@@ -52,7 +52,7 @@ export default function OpenFile() {
                         <div className='text-white'>
                             <div>{file.title}</div>
                             <div>uploaded on: {convertUtcToLocal(file.timestamp)}</div>
-                            <div>Size : {IntelligentSize(file.size)}</div>
+                            <div>Size : {IntelligentSize(file.size)} [{file.size} bytes]</div>
                         </div>
                         {progress ?
                             <>
