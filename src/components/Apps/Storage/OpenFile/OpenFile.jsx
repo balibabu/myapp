@@ -27,7 +27,7 @@ export default function OpenFile() {
 
 
     async function proceed() {
-        notify('Quick open', 'this feature is temporarily unavailable', bg = 'danger')
+        notify('Quick open', 'this feature is temporarily unavailable', 'danger')
         return;
         setProgress(0.1);
         const data = await downloadFile(token, id, setProgress);
