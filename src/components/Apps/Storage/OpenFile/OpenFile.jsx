@@ -8,6 +8,8 @@ import Progress from '../../../Shared/Progress';
 import blobTypeForIframe from './fileTypes';
 import convertUtcToLocal from '../../../../utility/AutoLocalTime';
 import { saveAs } from 'file-saver';
+import { fileDownloader } from '../File/FileCRUD';
+import VariableContext from '../../../Contexts/VariableContext';
 
 
 export default function OpenFile() {
@@ -16,6 +18,7 @@ export default function OpenFile() {
     const { token } = useContext(AuthContext);
     const { files, setFiles } = useContext(StorageContext);
     const [file, setFile] = useState({});
+    const { notify } = useContext(VariableContext);
 
     useEffect(() => {
         const foundFile = files.find((file) => file.id === parseInt(id));
@@ -24,8 +27,11 @@ export default function OpenFile() {
 
 
     async function proceed() {
+        notify('Quick open', 'this feature is temporarily unavailable', bg = 'danger')
+        return;
         setProgress(0.1);
         const data = await downloadFile(token, id, setProgress);
+        // const data = await fileDownloader(token, storageId, filename, notify, setProgressList);
         const typ = blobTypeForIframe(file.title);
         if (typ === undefined) {
             saveAs(new Blob([data]), file.title);
