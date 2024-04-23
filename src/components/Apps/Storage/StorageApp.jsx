@@ -8,7 +8,6 @@ import StorageContext from '../../Contexts/StorageContext';
 import AuthContext from '../../Contexts/AuthContext';
 import BreadCrumbs from './Breadcrumbs/BreadCrumbs';
 import Multiprogress from './extra/Multiprogress';
-import SharedFolder from './sharedFiles/SharedFolder';
 
 export default function StorageApp() {
     const { selected } = useParams();
@@ -47,7 +46,6 @@ export default function StorageApp() {
         <div className='text-white' onDragOver={handleDragOver} onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
             <Fetching status={files} title='Files' />
             <BreadCrumbs {...{ selected, folders }} />
-            
             {folders && <FolderRenderer {...{ folders, selected, setCut }} />}
             <Multiprogress {...{ progressList }} />
             {files && files.length > 0 && <FileRenderer {...{ files, selected, setCut }} />}
@@ -55,13 +53,3 @@ export default function StorageApp() {
         </div>
     )
 }
-
-
-const UploadingUI = ({ progress }) => {
-    return (
-        <div className="progress mx-3 mt-3" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-            <div className="progress-bar progress-bar-striped progress-bar-animated" style={{ width: `${progress}%` }}>{`${progress}%`}</div>
-        </div>
-    );
-}
-

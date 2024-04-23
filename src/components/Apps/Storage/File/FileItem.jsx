@@ -13,14 +13,14 @@ export default function FileItem(props) {
     const [progress, setProgress] = useState(0);
     const { setFiles } = useContext(StorageContext);
     const [isCutted, setIsCutted] = useState(false);
+    const [progressList, setProgressList] = useState([]);
 
     const deleteHandler = async () => {
         onDelete(props.file.id, token, SetloadingFileItem, setFiles, props.notify);
     }
 
     const downLoadhandler = async () => {
-        await fileDownloader(token, props.file.id, props.file.title, setProgress, props.notify);
-        setProgress(0);
+        await fileDownloader(token, props.file.id, props.file.title, props.notify, setProgressList);
     }
 
     const cutHandler = () => {
@@ -33,24 +33,15 @@ export default function FileItem(props) {
             {loadingFileItem === props.file.id && <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <LoadingUI width="40px" />
             </div>}
+
             <div className='mt-2 p-2 rounded-3 bg-info'>
                 <div className='d-flex justify-content-between'>
                     <div className='col-1'>
                         <img className='rounded-3' src={fileImg} alt="type" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                     </div>
-                    <FileInfo {...{ file: props.file, deleteHandler, downLoadhandler, cutHandler, DownloadingUI, progress, token, setFiles }} />
+                    <FileInfo {...{ file: props.file, deleteHandler, downLoadhandler, cutHandler, token, setFiles, progressList }} />
                 </div>
             </div>
         </div>
     )
-}
-
-
-const DownloadingUI = ({ progress }) => {
-    return (
-        <div className="progress" role="progressbar">
-            <div className="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                style={{ width: `${progress}%` }}>{`${progress}%`}</div>
-        </div>
-    );
 }
