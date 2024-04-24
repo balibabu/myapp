@@ -8,7 +8,7 @@ import Progress from '../../../Shared/Progress';
 import blobTypeForIframe from './fileTypes';
 import convertUtcToLocal from '../../../../utility/AutoLocalTime';
 import { saveAs } from 'file-saver';
-import { fileDownloader } from '../File/FileCRUD';
+// import { fileDownloader } from '../File/FileCRUD';
 import VariableContext from '../../../Contexts/VariableContext';
 
 
@@ -23,12 +23,14 @@ export default function OpenFile() {
     useEffect(() => {
         const foundFile = files.find((file) => file.id === parseInt(id));
         setFile(foundFile);
+        // eslint-disable-next-line
     }, [])
 
 
     async function proceed() {
         notify('Quick open', 'this feature is temporarily unavailable', 'danger')
         return;
+        // eslint-disable-next-line
         setProgress(0.1);
         const data = await downloadFile(token, id, setProgress);
         // const data = await fileDownloader(token, storageId, filename, notify, setProgressList);

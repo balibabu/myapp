@@ -150,7 +150,6 @@ export async function uploadFileInChunks(file, token, setFiles, selected, setPro
             if (res === totalChunks - 1) {
                 pingToGetFileData(token, key).then((fileData) => {
                     setFiles((prev) => [{ ...fileData, url: URL.createObjectURL(file) }, ...prev])
-                    setProgressList([]);
                 })
             }
         });

@@ -1,5 +1,4 @@
-import React from 'react'
-import Progress from '../../../Shared/Progress'
+import React, { useEffect, useState } from 'react'
 import { averageProgress } from '../../Photo/utility/progressHandler'
 
 export default function Multiprogress(props) {
@@ -12,7 +11,12 @@ export default function Multiprogress(props) {
         bg1 = 'success', bg2 = 'info',
     } = props;
 
-    const av = averageProgress(progressList).toFixed(0);
+    const [av, setAv] = useState(0);
+    useEffect(() => {
+        setAv(averageProgress(progressList).toFixed(0));
+    }, [progressList])
+
+
     return (
         <>
             {av > 0 &&

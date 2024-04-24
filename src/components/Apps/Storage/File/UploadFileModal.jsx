@@ -13,6 +13,7 @@ export default function UploadFileModal({ file, setFile, fileModal, setFileModal
         if (file) {
             setFileModal(true);
         }
+        // eslint-disable-next-line
     }, [file])
 
 
@@ -24,6 +25,7 @@ export default function UploadFileModal({ file, setFile, fileModal, setFileModal
             await uploadFileInChunks(_file, token, setFiles, selected, setProgressList);
             notify('Storage', `${_file.name} uploaded`, 'success');
         }
+        setProgressList([]);
         setFile(null);
     };
 
