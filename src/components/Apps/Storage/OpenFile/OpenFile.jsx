@@ -28,12 +28,13 @@ export default function OpenFile() {
 
 
     async function proceed() {
-        notify('Quick open', 'this feature is temporarily unavailable', 'danger')
-        return;
+        if(file.size>20971520){
+            notify('Large File Detected', 'you can download then open', 'danger')
+            return;
+        }
         // eslint-disable-next-line
         setProgress(0.1);
         const data = await downloadFile(token, id, setProgress);
-        // const data = await fileDownloader(token, storageId, filename, notify, setProgressList);
         const typ = blobTypeForIframe(file.title);
         if (typ === undefined) {
             saveAs(new Blob([data]), file.title);

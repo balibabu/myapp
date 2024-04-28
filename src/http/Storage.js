@@ -67,7 +67,7 @@ export async function deleteFile(token, id) {
 export async function downloadFile(token, storageId, setProgress) {
     console.log('downloadFile - MEDIA_BASE_URL');
     try {
-        const response = await axios.get(`${MEDIA_BASE_URL}/storage/download/${storageId}/`, {
+        const response = await axios.get(`${MEDIA_BASE_URL}/storage/download/small/file/${storageId}/`, {
             headers: {
                 'Authorization': `Token ${token}`,
             },

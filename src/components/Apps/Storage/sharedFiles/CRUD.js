@@ -1,114 +1,47 @@
 import axios from "axios";
 import { API_BASE_URL } from "../../../../http/_baseURL";
+import progressHandler from "../../Photo/utility/progressHandler";
 import { saveAs } from 'file-saver';
-import { Confirm } from "../../../../utility/utilities";
 
+export async function sharedFileDownloader(token, sharedId, filename, setProgressList) {
+    const response = await axios.get(`${API_BASE_URL}/storage/dsf/${sharedId}/`, {
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
+    });
+    saveFileChunks(response.data, sharedId, setProgressList, filename, token);
 
-export async function shareFile(token, storageId, setSharedByMe, shareWithUserId, anyone, notify) {
-    const data = await allowFilePermission(token, storageId, shareWithUserId, anyone);
-    if (data) {
-        setSharedByMe((prev) => [...prev, data]);
-        notify('File Shared', 'view permission granted', 'success');
-    } else {
-        notify('Something went wrong', 'check console for details', 'danger');
+}
+
+function saveFileChunks(chunkIds, sharedId, setProgressList, filename, token) {
+    const blobs = {};
+    let count = 0;
+    setProgressList(new Array(chunkIds.length).fill(0));
+    for (let i = 0; i < chunkIds.length; i++) {
+        donwloadChunk(sharedId, chunkIds[i], setProgressList, i, token).then((chunk) => {
+            blobs[i] = chunk;
+            count++;
+            if (count === chunkIds.length) {
+                const orderedBlobs = []
+                for (let j = 0; j < chunkIds.length; j++) {
+                    orderedBlobs.push(blobs[j]);
+                }
+                saveAs(new Blob(orderedBlobs), filename);
+                setProgressList([])
+            }
+        })
     }
 }
 
-
-
-const initiatedTask = new Set();
-export async function sharedFileDownloader(token, storageId, filename, setProgress, notify) {
-    if (initiatedTask.has(storageId)) {
-        notify('Storage Download', 'your file is not ready for download yet', 'danger');
-        return
-    }
-    notify('Storage Download', 'downloading will start soon when your file is ready', 'success');
-    initiatedTask.add(storageId);
-    const data = await downloadSharedFile(token, storageId, setProgress);
-    saveAs(new Blob([data]), filename);
-    initiatedTask.delete(storageId);
-    setProgress(0);
+async function donwloadChunk(sharedId, chunkId, setProgressList, index, token) {
+    const response = await axios.get(`${API_BASE_URL}/storage/dsf/${sharedId}/${chunkId}`, {
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
+        onDownloadProgress: (progressEvent) => {
+            progressHandler(setProgressList, index, (progressEvent.progress * 100).toFixed(0));
+        },
+        responseType: 'blob',
+    });
+    return response.data;
 }
-
-export async function removeShare(token, sharedId, setSharedByMe, notify) {
-    if (!Confirm('are you sure? you want to remove the permission')) { return }
-    const status = await removeShareAPI(token, sharedId);
-    if (status) {
-        notify('File Permission', 'permission revoked', 'success');
-        setSharedByMe((prev) => [...prev.filter((file) => file.sharedId !== sharedId)]);
-    } else {
-        notify('File Permission', 'failed to revoke permission', 'danger');
-    }
-}
-
-
-export async function removeShareAPI(token, id) {
-    console.log('removeShareAPI');
-    try {
-        const response = await axios.delete(`${API_BASE_URL}/storage/revoke/${id}/`, {
-            headers: {
-                'Authorization': `Token ${token}`,
-            },
-        });
-
-        if (response.status === 204) {
-            return true;
-        } else {
-            console.error(`Request failed with status ${response.status}`);
-            return false;
-        }
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
-
-
-
-
-
-export async function allowFilePermission(token, fileId, shareWithUserId, anyone) {
-    console.log('allowFilePermission');
-    try {
-        const response = await axios.post(`${API_BASE_URL}/storage/share/`,
-            { file: fileId, anyone, sharedWith: shareWithUserId }, {
-            headers: {
-                'Authorization': `Token ${token}`,
-            },
-        });
-
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            console.error(`Request failed with status ${response.status}`);
-        }
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
-
-
-export async function downloadSharedFile(token, storageId, setProgress) {
-    console.log('downloadSharedFile');
-    try {
-        const response = await axios.get(`${API_BASE_URL}/storage/dsf/${storageId}/`, {
-            headers: {
-                'Authorization': `Token ${token}`,
-            },
-            onDownloadProgress: (progressEvent) => {
-                setProgress((progressEvent.progress * 100).toFixed(0));
-            },
-            responseType: 'blob',
-        });
-        if (response.status === 200) {
-            // saveAs(new Blob([response.data], { type: response.headers['content-type'] }), filename);
-            return response.data;
-        }
-        return false;
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
-}
-

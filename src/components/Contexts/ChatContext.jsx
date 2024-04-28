@@ -8,13 +8,13 @@ export default ChatContext;
 export function ChatContextProvider({ children }) {
     const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState({});
-	const { token } = useContext(AuthContext);
+    const { token, username } = useContext(AuthContext);
     const [users, setUsers] = useState();
 
 
     const fetchUserList = async () => {
         const list = await getUserList(token);
-        setUsers(list);
+        setUsers([...list.filter((user) => user.username !== username)]);
     }
 
     const fetchConversations = async (sound) => {

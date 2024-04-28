@@ -21,7 +21,7 @@ export default function Multiprogress(props) {
         <>
             {av > 0 &&
                 <div className={`position-relative rounded-3 overflow-hidden ` + css} style={{ height }}>
-                    <span className='ps-1 bg-primary' style={{ fontSize, position: 'absolute', zIndex: '1' }}>{av}%</span>
+                    <span className='ps-1 bg-success' style={{ fontSize, position: 'absolute', zIndex: '1' }}>{av}%</span>
 
                     <div style={{ height: h1 }} className={"progress position-relative " + css1}>
                         <div className={"progress-bar progress-bar-striped progress-bar-animated bg-" + bg1} style={{ width: `${av}%` }}></div>
