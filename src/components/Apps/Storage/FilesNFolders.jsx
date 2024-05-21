@@ -48,7 +48,7 @@ export default function FilesNFolders() {
         for (let item of items) {
             if (item.type.startsWith('image/')) {
                 const blob = item.getAsFile();
-                const file = new File([blob], `clipImg-${new Date().toISOString()}.png`, { type: blob.type });
+                const file = new File([blob], `clipImg-${new Date().toISOString().slice(0,-5)}.png`, { type: blob.type });
                 setFile([file]);
             }
         }
@@ -57,7 +57,7 @@ export default function FilesNFolders() {
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
-        <div className='text-white bg-primary' onPaste={handlePaste} onDragOver={handleDragOver} onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
+        <div className='text-white' onPaste={handlePaste} onDragOver={handleDragOver} onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
             <Fetching status={files} title='Files' />
             <BreadCrumbs {...{ selected, folders }} />
             {folders && <FolderRenderer {...{ folders, selected, setCut }} />}
