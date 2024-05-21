@@ -9,6 +9,7 @@ import lunarIcon from '../../images/AppIcon/lunar.png'
 import storageIcon from '../../images/AppIcon/storage.png'
 import photoIcon from '../../images/AppIcon/photoIcon.png'
 import shareitIcon from '../../images/AppIcon/shareit.png'
+import blogIcon from '../../images/AppIcon/blog.png'
 import Navbar from './Navbar'
 import AppIcon from './AppIcon'
 
@@ -27,6 +28,7 @@ export default function Home() {
 				<AppIcon image={todoIcon} appname='Todo' openApp='/todo' />
 				<AppIcon image={expenseIcon} appname='Expenses' openApp='/expense' />
 				<AppIcon image={photoIcon} appname='Photu' openApp='/photo' />
+				<AppIcon image={blogIcon} appname='Blog' openApp='/blogs' />
 			</div>
 		</div>
 	)

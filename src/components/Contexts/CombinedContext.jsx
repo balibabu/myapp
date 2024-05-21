@@ -6,6 +6,7 @@ import { TodoContextProvider } from './TodoContext';
 import { ExpenseContextProvider } from './ExpenseContext';
 import { ChatContextProvider } from './ChatContext';
 import { PhotoContextProvider } from './PhotoContext';
+import { BlogContextProvider } from './BlogContext';
 
 const CombinedContext = createContext();
 export default CombinedContext;
@@ -18,9 +19,11 @@ export function CombinedContextProvider({ children }) {
                         <ExpenseContextProvider>
                             <ChatContextProvider>
                                 <PhotoContextProvider>
-                                    <CombinedContext.Provider value={{}}>
-                                        {children}
-                                    </CombinedContext.Provider>
+                                    <BlogContextProvider>
+                                        <CombinedContext.Provider value={{}}>
+                                            {children}
+                                        </CombinedContext.Provider>
+                                    </BlogContextProvider>
                                 </PhotoContextProvider>
                             </ChatContextProvider>
                         </ExpenseContextProvider>

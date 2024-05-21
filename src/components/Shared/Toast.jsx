@@ -18,7 +18,7 @@ export default function Toast() {
 function ToasMessageCard({ msg, closeHandler, toastColor }) {
     const [width, setWidth] = useState(100);
     const timeoutTime = 5000;
-    const intervalTime = 50;
+    const intervalTime = 10;
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -45,7 +45,10 @@ function ToasMessageCard({ msg, closeHandler, toastColor }) {
                     <button className='btn-close' onClick={() => closeHandler(msg.id)}></button>
                 </div>
             </div>
-            <div style={{ width: `${width}%`, height: '3px', backgroundColor: `rgb(${255 - width * 2},0,${width * 2 + 55})` }}></div>
+            <div className='d-flex'>
+                <div style={{ width: `${width}%`, height: '3px', backgroundColor: `rgb(${255 - width * 2},0,${width * 2})` }}></div>
+                <div style={{ width: `${100 - width}%`, height: '3px', backgroundColor: toastColor[msg.bg] }}></div>
+            </div>
         </div>
     );
 }

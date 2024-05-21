@@ -8,6 +8,7 @@ import StorageContext from '../../Contexts/StorageContext';
 import AuthContext from '../../Contexts/AuthContext';
 import BreadCrumbs from './Breadcrumbs/BreadCrumbs';
 import Multiprogress from './extra/Multiprogress';
+import VariableContext from '../../Contexts/VariableContext';
 
 
 export default function FilesNFolders() {
@@ -16,6 +17,7 @@ export default function FilesNFolders() {
     const [file, setFile] = useState(null);
     const [, setInitialFetch] = useState(false);
     const { files, folders, fetchFilesAndFolders, progressList } = useContext(StorageContext);
+    const { notify } = useContext(VariableContext);
 
     const [cut, setCut] = useState();
 
@@ -24,6 +26,7 @@ export default function FilesNFolders() {
             setInitialFetch((prev) => {
                 if (!prev) {
                     fetchFilesAndFolders()
+                    notify('New Feature','ctrl+v to upload your clip-image');
                 }
                 return true;
             })
@@ -40,10 +43,21 @@ export default function FilesNFolders() {
         setFile([...event.dataTransfer.files]);
     };
 
+    const handlePaste = (event) => {
+        const items = event.clipboardData.items;
+        for (let item of items) {
+            if (item.type.startsWith('image/')) {
+                const blob = item.getAsFile();
+                const file = new File([blob], `clipImg-${new Date().toISOString()}.png`, { type: blob.type });
+                setFile([file]);
+            }
+        }
+    };
+
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
-        <div className='text-white' onDragOver={handleDragOver} onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
+        <div className='text-white bg-primary' onPaste={handlePaste} onDragOver={handleDragOver} onDrop={handleDrop} style={{ minHeight: '100dvh' }}>
             <Fetching status={files} title='Files' />
             <BreadCrumbs {...{ selected, folders }} />
             {folders && <FolderRenderer {...{ folders, selected, setCut }} />}
