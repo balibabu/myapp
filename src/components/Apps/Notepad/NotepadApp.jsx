@@ -10,20 +10,6 @@ import NoteContext from '../../Contexts/NoteContext';
 export default function NotepadApp() {
     const { notes, setNotes, fetchNotes, loadingNoteItem } = useContext(NoteContext);
     const { token, loggedIn } = useContext(AuthContext);
-    const [, setInitialFetch] = useState(false);
-
-
-    useEffect(() => {
-        if (notes === undefined && loggedIn) {
-            setInitialFetch((prev) => {
-                if (!prev) {
-                    fetchNotes();
-                }
-                return true;
-            })
-        }
-        // eslint-disable-next-line
-    }, [])
 
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 

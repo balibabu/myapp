@@ -8,23 +8,13 @@ import AuthContext from '../../Contexts/AuthContext';
 import TodoContext from '../../Contexts/TodoContext';
 
 export default function TodoApp() {
-    const { todoList, setTodoList, fetchTodoList } = useContext(TodoContext);
+    const { todoList, setTodoList } = useContext(TodoContext);
     const { token, loggedIn } = useContext(AuthContext);
-    const [, setInitialFetch] = useState(false);
     const [selectedTab, setSelectedTab] = useState(0);
     const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
-        if (todoList === undefined && loggedIn) {
-            setInitialFetch((prev) => {
-                if (!prev) {
-                    fetchTodoList();
-                }
-                return true;
-            })
-        }
         setTabs([...new Set(todoList && todoList.map(item => item.category))])
-        // eslint-disable-next-line
     }, [todoList])
 
     if (!loggedIn) {

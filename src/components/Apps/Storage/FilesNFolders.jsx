@@ -15,24 +15,8 @@ export default function FilesNFolders() {
     const { selected } = useParams();
     const { loggedIn, token } = useContext(AuthContext);
     const [file, setFile] = useState(null);
-    const [, setInitialFetch] = useState(false);
-    const { files, folders, fetchFilesAndFolders, progressList } = useContext(StorageContext);
-    const { notify } = useContext(VariableContext);
-
+    const { files, folders, progressList } = useContext(StorageContext);
     const [cut, setCut] = useState();
-
-    useEffect(() => {
-        if (files === undefined && loggedIn) {
-            setInitialFetch((prev) => {
-                if (!prev) {
-                    fetchFilesAndFolders()
-                    notify('New Feature','ctrl+v to upload your clip-image');
-                }
-                return true;
-            })
-        }
-        // eslint-disable-next-line
-    }, [])
 
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -48,7 +32,7 @@ export default function FilesNFolders() {
         for (let item of items) {
             if (item.type.startsWith('image/')) {
                 const blob = item.getAsFile();
-                const file = new File([blob], `clipImg-${new Date().toISOString().slice(0,-5)}.png`, { type: blob.type });
+                const file = new File([blob], `clipImg-${new Date().toISOString().slice(0, -5)}.png`, { type: blob.type });
                 setFile([file]);
             }
         }

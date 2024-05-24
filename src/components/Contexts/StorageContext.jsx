@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import AuthContext from './AuthContext';
 import { getFilesAndFolders } from '../../http/Storage';
 
@@ -12,6 +12,18 @@ export function StorageContextProvider({ children }) {
     const { token } = useContext(AuthContext);
     const [loadingFileItem, SetloadingFileItem] = useState(null);
     const [progressList, setProgressList] = useState([]);
+    const [, setInitialFetch] = useState(false);
+
+    useEffect(() => {
+        if (token) {
+            setInitialFetch((prev) => {
+                if (!prev) {
+                    fetchFilesAndFolders()
+                }
+                return true;
+            })
+        }
+    }, [token])
 
     const fetchFilesAndFolders = async () => {
         const res = await getFilesAndFolders(token);

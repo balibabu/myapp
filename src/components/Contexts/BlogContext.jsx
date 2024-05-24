@@ -33,7 +33,7 @@ export function BlogContextProvider({ children }) {
     }
 
     async function fetchBlogs() {
-        const blogs = await getBlogs(token);
+        const blogs = await getBlogs();
         setBlogs(blogs);
     }
 
