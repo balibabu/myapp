@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import BlogContext from '../../../../Contexts/BlogContext';
 
 export default function Editor() {
-    const { content, setContent, saveFileHandler } = useContext(BlogContext);
+    const { content, setContent } = useContext(BlogContext);
     const [theme, setTheme] = useState(localStorage.getItem('editor-theme') || 'light');
     const navigate = useNavigate();
 
@@ -17,19 +17,11 @@ export default function Editor() {
         [setContent]
     );
 
-    function saveHandler() {
-        saveFileHandler('index.html');
-        navigate(-1);
-    }
 
     return (
         <div style={{ all: 'initial' }}>
-            <div style={{ height: '5dvh', backgroundColor: theme === 'light' ? 'white' : 'grey' }} className='p-1 d-flex justify-content-between'>
-                <div>
-                    <button onClick={saveHandler}>save</button>
-                    <button onClick={()=>navigate(-1)}>cancel</button>
-                    <button>upload</button>
-                </div>
+            <div style={{ backgroundColor: theme === 'light' ? 'white' : 'grey' }} className='p-1 d-flex justify-content-between'>
+                <button className='btn btn-success btn-sm' onClick={() => navigate(-1)}>save</button>
                 <ThemeToggler {...{ theme, setTheme }} />
             </div>
             <JoditEditor

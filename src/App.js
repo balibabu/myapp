@@ -42,7 +42,7 @@ function App() {
                         <Route path='/storage/*' element={<StorageApp />} />
                         <Route path='/photo/*' element={<Photo />} />
                         <Route path='/share' element={<Fileshare />} />
-                        <Route path='/blogs/*' element={<UnderDevelopment />} />
+                        <Route path='/blogs/*' element={<Blogs />} />
                         <Route path='/testing' element={<ResearchAndDevelopment />} />
                     </Routes>
                 </HashRouter>
