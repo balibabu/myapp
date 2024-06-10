@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Register } from '../../http/Auth';
 import { Link, Navigate } from 'react-router-dom';
 import AuthContext from '../Contexts/AuthContext';
+import profileImg from '../../images/contactProfile.jpg';
 
 const formate = { username: "", email: "", password: "", password2: "" };
 export default function RegisterPage() {
@@ -43,10 +44,10 @@ export default function RegisterPage() {
     return (
         <div className="wrapper">
             <div className="logo">
-                <img src="https://www.freepnglogos.com/uploads/twitter-logo-png/twitter-bird-symbols-png-logo-0.png" alt="" />
+                <img src={profileImg} alt="" />
             </div>
             <div className="text-center mt-4 name">
-                Daily
+                Please provide details
             </div>
             <form className="p-3 mt-3" onSubmit={onSubmit}>
                 <div className="form-field d-flex align-items-center">

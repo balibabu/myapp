@@ -36,7 +36,7 @@ export default function Login() {
                 <img src={profileImg} alt="" />
             </div>
             <div className="text-center mt-4 name">
-                Daily
+                Log in to myapp
             </div>
             <form className="p-3 mt-3" onSubmit={onSubmit}>
                 <div className="form-field d-flex align-items-center">
@@ -64,7 +64,7 @@ export default function Login() {
                 <button className="btn mt-3">Login</button>
             </form>
             <div className="text-center fs-6">
-                <a href="/notepad">Forget password?</a> or <Link to="/register">Sign up</Link>
+                <Link to="/register">Sign up</Link>
             </div>
         </div>
     )
