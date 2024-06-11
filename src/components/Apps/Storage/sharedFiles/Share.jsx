@@ -14,7 +14,7 @@ export default function Share() {
     const [selectedFile, setSelectedFile] = useState(id);
     const [seletedUser, setSeletedUser] = useState('');
     const [, setInitialFetch] = useState(false);
-    const foundFile = files.find((file) => file.id === parseInt(id));
+    const foundFile = files && files.find((file) => file.id === parseInt(id));
 
 
     useEffect(() => {

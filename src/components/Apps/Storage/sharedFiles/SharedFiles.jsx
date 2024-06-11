@@ -11,9 +11,8 @@ export default function SharedFiles() {
     const { notify } = useContext(VariableContext);
     const [sharedByMe, setSharedByMe] = useState([]);
     useEffect(() => {
-        const sharedFiles = files.filter((file) => file.access !== undefined);
+        const sharedFiles = files && files.filter((file) => file.access !== undefined);
         setSharedByMe(sharedFiles);
-        console.log(sharedToMe);
     }, [files])
 
     return (
@@ -41,7 +40,7 @@ export default function SharedFiles() {
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{file.title}</td>
-                                <td>{file.access.map((access, i) => (<span>{access.sharedWith || 'anyone'}, </span>))}</td>
+                                <td>{file.access.map((access, i) => (<span key={i}>{access.sharedWith || 'anyone'}, </span>))}</td>
                             </tr>
                         ))}
                     </tbody>

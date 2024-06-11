@@ -21,14 +21,14 @@ export default function OpenFile() {
     const { notify } = useContext(VariableContext);
 
     useEffect(() => {
-        const foundFile = files.find((file) => file.id === parseInt(id));
-        setFile(foundFile);
+        const foundFile = files && files.find((file) => file.id === parseInt(id));
+        if (foundFile) { setFile(foundFile) }
         // eslint-disable-next-line
-    }, [])
+    }, [files])
 
 
     async function proceed() {
-        if(file.size>20971520){
+        if (file.size > 20971520) {
             notify('Large File Detected', 'you can download then open', 'danger')
             return;
         }

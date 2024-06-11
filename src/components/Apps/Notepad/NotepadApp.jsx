@@ -8,16 +8,15 @@ import AuthContext from '../../Contexts/AuthContext';
 import NoteContext from '../../Contexts/NoteContext';
 
 export default function NotepadApp() {
-    const { notes, setNotes, fetchNotes, loadingNoteItem } = useContext(NoteContext);
+    const { notes, setNotes, loadingNoteItem } = useContext(NoteContext);
     const { token, loggedIn } = useContext(AuthContext);
 
     if (!loggedIn) { return <Navigate to="/login" replace={true} />; }
 
     return (
         <div style={{ maxHeight: "100dvh", overflowY: "auto" }} className='custom-scrollbar'>
-            <Fetching status={notes} title='Notes'/>
+            <Fetching status={notes} title='Notes' />
             {loadingNoteItem === 'newItem' && <ProgressUI title='Creating New Note Please wait' />}
-            {/* {notes === undefined && <ProgressUI title='Fetching notes please wait' />} */}
 
             <NoteRender
                 notes={notes}

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { RemoveIcon } from "../../../../../images/RemoveIcon";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import StorageContext from "../../../../Contexts/StorageContext";
 import { removeShare } from "./CRUD";
 import AuthContext from "../../../../Contexts/AuthContext";
@@ -11,9 +11,15 @@ import PublicKeyUi from "./PublicKeyUi";
 export default function AccessRenderer(props) {
     const { id } = useParams();
     const { files, setFiles } = useContext(StorageContext);
-    const file = files.find((file) => file.id === parseInt(id));
     const { notify } = useContext(VariableContext);
     const { token } = useContext(AuthContext);
+    const [file, setFile] = useState({});
+
+    useEffect(() => {
+        const foundFile = files && files.find((file) => file.id === parseInt(id));
+        if (foundFile) { setFile(foundFile) }
+    }, [files])
+
     const [users, anyoneKeys] = get_users_anyonekey(file);
     function removeHandler(shareId) {
         removeShare(token, shareId, setFiles, notify, file);
@@ -40,7 +46,7 @@ function Item(props) {
     return (
         <>
             <div className='d-flex px-4 justify-content-between'>
-                <div className='ms-2'>{props.title}</div>
+                <div className='ms-2'>{props.title.substr(0, 20)}</div>
                 <hr className='col mx-4' />
                 <div style={{ width: '20px', color: 'red' }} onClick={props.click}>
                     <RemoveIcon />

@@ -11,38 +11,19 @@ import NoteContext from '../../Contexts/NoteContext';
 const blankDetails = { title: "", description: "", color: currentDateToColor() };
 export default function NoteEditor() {
     const { noteId } = useParams();
-
     const [noteDetails, setNoteDetails] = useState(blankDetails);
     const [changed, setChanged] = useState(false);
-    const { notes, setNotes, SetloadingNoteItem, fetchNotes } = useContext(NoteContext);
+    const { notes, setNotes, SetloadingNoteItem } = useContext(NoteContext);
     const { token } = useContext(AuthContext);
-    const [, setInitialFetch] = useState(false);
     const titleFieldRef = useRef();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        setInitialFetch((prev) => {
-            if (!prev) {
-                //////////////////////////////// /main code//////////////////////////////// 
-                if (!isNaN(noteId)) {
-                    if (notes.length === 0) {
-                        fetchNotes().then((_notes) => {
-                            const foundNote = _notes.find((note) => note.id === parseInt(noteId));
-                            setNoteDetails(foundNote);
-                        })
-                    } else {
-                        const foundNote = notes.find((note) => note.id === parseInt(noteId));
-                        setNoteDetails(foundNote);
-                    }
-                }
-                ////////////////////////// /////////////////////////////////////////////////
-            }
-            return true;
-        })
+        const foundNote = notes && notes.find((note) => note.id === parseInt(noteId));
+        if (foundNote) { setNoteDetails(foundNote) }
         if (isNaN(noteId)) { titleFieldRef.current.focus() }
-        // eslint-disable-next-line
-    }, [])
+    }, [notes])
 
     const onValueChange = (e) => {
         const { name, value } = e.target;
@@ -110,7 +91,7 @@ const textareaStyle = {
     // borderRadius: '0 0 15px 15px',
     borderRadius: '5px',
     height: "85dvh",
-    lineHeight:'1.2rem'
+    lineHeight: '1.2rem'
 };
 
 const titleStyle = {

@@ -12,7 +12,7 @@ import { public_url } from "./utility";
 export default function ShareAccess(props) {
     const { id } = useParams();
     const { files, setFiles } = useContext(StorageContext);
-    const file = files.find((file) => file.id === parseInt(id));
+    const file = files && files.find((file) => file.id === parseInt(id));
     const [username, setUsername] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
     const { users, fetchUserList } = useContext(ChatContext);
@@ -56,7 +56,7 @@ export default function ShareAccess(props) {
     return (
         <div className='row justify-content-center p-2'>
             <div style={{ color: '#ccc' }} className='col-xl-6 col-lg-8 col-md-9 col-12'>
-                <div>{file.title}</div>
+                <div>{file && file.title}</div>
                 <div className='d-grid my-2'>
                     <button className='btn btn-primary btn-lg' onClick={() => shareHandler(true)}>Create a public url</button>
                 </div>

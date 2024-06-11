@@ -19,7 +19,6 @@ import Photo from './components/Apps/Photo/Photo';
 import Toast from './components/Shared/Toast';
 import ResearchAndDevelopment from './R&D/ResearchAndDevelopment';
 import Blogs from './components/Apps/Public/Blogs/Blogs';
-import UnderDevelopment from './R&D/UnderDevelopment';
 
 function App() {
     return (

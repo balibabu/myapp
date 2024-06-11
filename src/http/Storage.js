@@ -138,5 +138,6 @@ export async function getFilesAndFolders(token) {
         return {}
     } catch (error) {
         console.log(error);
+        return {}
     }
 }

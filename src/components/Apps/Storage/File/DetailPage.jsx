@@ -11,9 +11,13 @@ import PublicKeyUi from './Access/PublicKeyUi';
 export default function DetailPage() {
     const { id } = useParams();
     const { files } = useContext(StorageContext);
-    const file = files.find((file) => file.id === parseInt(id));
+    const [file, setFile] = useState({});
     const [users, anyoneKeys] = get_users_anyonekey(file);
 
+    useEffect(() => {
+        const foundFile = files && files.find((file) => file.id === parseInt(id));
+        if (foundFile) { setFile(foundFile) }
+    }, [files])
     return (
         <div style={{ color: '#ccc' }} className='p-3'>
             <div className='fs-2'>{file.title}</div>
